@@ -1,0 +1,30 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'DIY' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for DIY
+  
+  pod 'IQKeyboardManager'
+
+  target 'DIYTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+target 'DIY-tvOS' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for DIY-tvOS
+
+  target 'DIY-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
