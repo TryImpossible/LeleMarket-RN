@@ -84,8 +84,16 @@ export default class Banner extends BaseWidget {
             this.canResponseClick = false; //TouchStart时，不响应点击
             this.stopPlay();
           }}
+          /**
+           * 1.拖拽结束时，ios响应onTouchEnd，android响应onTouchCancel
+           * 2.点击结束时，ios和android正常响应onTouchEnd
+           */
           onTouchEnd={() => {
-            this.canResponseClick = true; //TouchEnd时，不响应点击
+            this.canResponseClick = true; //TouchEnd时，响应点击
+            this.autoPlay();
+          }}
+          onTouchCancel={()=>{
+            this.canResponseClick = true; //TouchEnd时，响应点击
             this.autoPlay();
           }}
           ref={ref => this.bannersFlatList = ref}
