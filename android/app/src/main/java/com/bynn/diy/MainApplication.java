@@ -6,10 +6,9 @@ import android.support.multidex.MultiDex;
 
 import com.bynn.diy.bridge.EnhanceWebViewPackage;
 import com.bynn.diy.bridge.RichEditorPackage;
-import com.bynn.diy.bridge.WordpressEditorPackage;
 import com.facebook.react.ReactApplication;
 import org.reactnative.camera.RNCameraPackage;
-import org.reactnative.camera.RNCameraPackage;
+
 import com.rnim.rn.audio.ReactNativeAudioPackage;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
@@ -58,7 +57,6 @@ public class MainApplication extends Application implements ReactApplication {
           new FastImageViewPackage(),
           new RNDeviceInfo(),
           new RichEditorPackage(),
-              new WordpressEditorPackage(),
               new EnhanceWebViewPackage()
       );
     }

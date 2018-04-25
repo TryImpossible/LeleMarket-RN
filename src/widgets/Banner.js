@@ -6,6 +6,9 @@ import BaseWidget from './BaseWidget';
 
 import PropTypes from 'prop-types';
 
+import EnhanceImage from './EnhanceImage';
+
+
 //测试数据
 const BANNER = [
   "https://api.51app.cn/resource/diymall/uu20/special/752ced27.png",
@@ -16,7 +19,7 @@ const BANNER = [
 export default class Banner extends BaseWidget {
 
   static propTypes = {
-    images: PropTypes.array, //图片数组
+    images: PropTypes.array.isRequired, //图片数组
     height: PropTypes.number, //Banner高度
     defaultIndex: PropTypes.number, //初始化
     onClick: PropTypes.func, //点击
@@ -105,7 +108,7 @@ export default class Banner extends BaseWidget {
           renderItem={({ item, index }) => {
             return (
               <TouchableOpacity activeOpacity={1} onPress={() => this.canResponseClick && onClick && onClick(index)} >
-                <Animated.Image style={{ width: Const.SCREEN_WIDTH, height, }} source={{ uri: item }} />
+                <EnhanceImage style={{ width: Const.SCREEN_WIDTH, height, }} source={{ uri: item }} />
               </TouchableOpacity>
             )
           }}

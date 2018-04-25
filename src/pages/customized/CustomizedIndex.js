@@ -12,6 +12,8 @@ import ServerApi from '../../constants/ServerApi';
 
 import SeparatorLine from '../../widgets/SeparatorLine';
 
+import CardView from '../../widgets/CardView';
+
 import AutoLoadMoreList from '../../widgets/AutoLoadMoreList';
 
 const PAGE_SIZE = 10;
@@ -36,12 +38,12 @@ export default class CustomizedIndex extends BaseComponent {
   }
 
   initSubscriptions() {
-    const {TabNavigation} = this.props;
-    if (__ANDROID__){
-      this.willFocusSubscription = TabNavigation.addListener( 'willFocus', payload => {
+    const { TabNavigation } = this.props;
+    if (__ANDROID__) {
+      this.willFocusSubscription = TabNavigation.addListener('willFocus', payload => {
         StatusBar.setBackgroundColor('#FFFFFF');
       });
-    } 
+    }
   }
 
   componentWillUnmount() {
@@ -130,7 +132,7 @@ export default class CustomizedIndex extends BaseComponent {
   render() {
     //解决奇数项，单元格布局失效的问题
     let recommendGoods = [].concat(this.state.recommendGoods);
-    if (recommendGoods.length % 2 !== 0) recommendGoods.push({}); 
+    if (recommendGoods.length % 2 !== 0) recommendGoods.push({});
 
     return (
       <View style={styles.container}>
@@ -146,13 +148,23 @@ export default class CustomizedIndex extends BaseComponent {
             getRef={ref => this.goodsFaltList = ref}
             style={{ width: getSize(283) }}
             refreshing={this.state.isRefresh}
-            onRefresh={()=>{
+            onRefresh={() => {
               this.pageIndex = 0;
               this.state.isRefresh = true;
               this.loadGoodsData(this.state.menus[this.selectedMenuIndex].id, this.pageIndex);
             }}
             data={recommendGoods}
-            ListHeaderComponent={() => <Banner data={this.state.banners} />}
+            ListHeaderComponent={() => {
+              let images = this.state.banners.map((item) => item.imgUrl);
+              return (
+                <CardView
+                  margin={{ top: getSize(6), bottom: getSize(6), left: getSize(6), right: getSize(6) }}
+                  images={images}
+                  width={getSize(220)}
+                  height={getSize(123)}
+                  onClick={(index) => this.props.showToast(`CardView${index}`)} />
+              )
+            }}
             numColumns={2}
             renderItem={({ item, index }) => <GoodsCell item={item} index={index} recommendGoods={this.state.recommendGoods} />}
             keyExtractor={(item, index) => `goods${index}`}
@@ -186,7 +198,7 @@ export default class CustomizedIndex extends BaseComponent {
       easing: Easing.linear,
     }).start();
     this.selectedMenuIndex = index;
-    
+
     this.goodsFaltList && this.goodsFaltList.scrollToOffset({ animated: false, offset: 0 }); //自动滚动到顶部
     if (this.memoryGoods[item.id]) {
       this.pageIndex = this.memoryGoods[item.id].page + 1;
@@ -230,40 +242,6 @@ const MenuCell = (props) => {
 }
 
 /**
- * Banner图
- * @param {} props 
- */
-const Banner = (props) => {
-  let { data = [] } = props;
-  // data = data.concat(data); //调试使用
-  return (
-    <FlatList
-      ref={ref => this.bannerFlatList = ref}
-      style={{ marginHorizontal: getSize(6) }}
-      data={data}
-      horizontal={true}
-      pagingEnabled={true}
-      showsHorizontalScrollIndicator={false}
-      renderItem={({ item, index }) => {
-        let margins = {
-          marginTop: data.length > 0 ? getSize(6) : 0 ,
-          marginBottom: data.length > 0 ? getSize(6) : 0 ,
-          marginRight: index !== data.length - 1 ? getSize(6) : 0
-        };
-        return (
-          <TouchableOpacity style={{ ...margins }} activeOpacity={1} >
-            <Image
-              style={{ width: getSize(220), height: getSize(123) }}
-              resizeMode={'stretch'}
-              source={{ uri: item.imgUrl }} />
-          </TouchableOpacity>
-        )
-      }}
-      keyExtractor={(item, index) => `banners${index}`} />
-  )
-}
-
-/**
  * 商品
  */
 const DIY_TYPE = ['', '', '可图印', '可刻字'];
@@ -278,7 +256,7 @@ const GoodsCell = (props) => {
     return <View style={[styles.goodsCell, { backgroundColor: 'transparent', ...margins }]} />;
   } else {
     return (
-      <TouchableOpacity activeOpacity={1} style={[styles.goodsCell, margins ]}>
+      <TouchableOpacity activeOpacity={1} style={[styles.goodsCell, margins]}>
         <Image style={{ width: getSize(130), height: getSize(120) }} source={{ uri: item.icoUrl }} resizeMode={'contain'} />
         <View style={styles.goodsCellDIYType}>
           <Text style={{ color: '#FFFFFF', fontSize: getSize(12) }}>{DIY_TYPE[item.companyId]}</Text>

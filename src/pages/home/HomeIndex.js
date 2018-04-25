@@ -29,6 +29,8 @@ import AutoLoadMoreList from '../../widgets/AutoLoadMoreList';
 
 import Banner from '../../widgets/Banner';
 
+import CardView from '../../widgets/CardView';
+
 import ServerApi from '../../constants/ServerApi';
 
 import LoadingView from '../../widgets/LoadingView';
@@ -59,8 +61,6 @@ export default class HomeIndex extends BaseComponent {
     this.pageIndex = 0; //默认，初始每一页
 
     this.autoLoadMoreList = {}; //所有AutoLoadMoreList的实例集合
-
-    this.handpickPath = new Animated.Value(1); //HandPick滑动动画
 
     this.state = {
       scrollTabs: [], //topNav Tab集合
@@ -134,6 +134,7 @@ export default class HomeIndex extends BaseComponent {
         if (ret.data && ret.data.topNav && ret.data.topNav[0] && ret.data.topNav[0].id) {
           this.memeryData[ret.data.topNav[0].id] = { page: 0, data: ret.data }; //保存内存中 精选 栏数据
         }
+
         this.setState({
           ...ret.data,
           selectedTab: ret.data.topNav,
@@ -369,8 +370,19 @@ export default class HomeIndex extends BaseComponent {
                   renderSectionHeader={({ section }) => <SectionHeader section={section} />}
                   renderItem={({ item, index }) => {
                     if (item.key === 0) {
-                      return <HandPick data={item.data} handpickPath={this.handpickPath} />;
+                      //开启定制之旅
+                      let images = item.data.map((item) => item.imgUrl);
+                      return ( 
+                        <CardView
+                          style={{ backgroundColor: '#ffffff' }}
+                          images={images}
+                          width={getSize(315)}
+                          height={getSize(150)}
+                          borderRadius={getSize(10)}
+                          onClick={(index) => this.props.showToast(`CardView${index}`)} />
+                      )
                     } else if (item.key == 1) {
+                      //定制推荐
                       return <Customization item={item} index={index} customization={this.state.customization} />;
                     }
                     return null;
@@ -482,43 +494,7 @@ const SectionHeader = (props) => {
   )
 }
 
-/**
- * 开启定制之旅
- * @param {*} props 
- */
-const HandPick = (props) => {
-  let { data, onPress, handpickPath } = props;
-  return (
-    <FlatList
-      ref={ref => this.handPickFlatList = ref}
-      style={{ backgroundColor: '#ffffff' }}
-      data={data}
-      horizontal={true}
-      pagingEnabled={true}
-      showsHorizontalScrollIndicator={false}
-      renderItem={({ item, index }) => {
-        // let scale = handpickPath;
-        return (
-          <TouchableOpacity activeOpacity={Const.ACTIVE_OPACITY} style={{ borderRadius: getSize(30), paddingLeft: getSize(15), paddingRight: data.length - 1 === index ? getSize(15) : 0 }} onPress={onPress} >
-            <Animated.Image style={{ width: Const.SCREEN_WIDTH - getSize(60), height: getSize(150), transform: [{ scale: 1 }] }} source={{ uri: item.imgUrl }} />
-          </TouchableOpacity>
-        )
-      }}
-      keyExtractor={(item, index) => `handpick${index}`}
-      onScrollEndDrag={({ nativeEvent })=>{
-        // 效果不太好，可以不开启
-        // const offsetX = nativeEvent.contentOffset.x;
-        // if (offsetX >= (data.length - 1) * (Const.SCREEN_WIDTH - getSize(60))) {
-        //   this.handPickFlatList && this.handPickFlatList.scrollToOffset({ animated: false, offset: 0 });
-        // } 
-      }}
-      onScroll={({ nativeEvent }) => {
-        // const offsetX = nativeEvent.contentOffset.x;
-        // const ratio = offsetX / (Const.SCREEN_WIDTH - getSize(60))
-        // handpickPath.setValue(ratio);
-      }} />
-  )
-}
+
 
 /**
  * 定制推荐
