@@ -37,6 +37,7 @@ export default class Banner extends BaseWidget {
   constructor(props) {
     super(props);
     this.currentIndex = props.defaultIndex;
+    this.canResponseClick = true; //默认响应点击事件
   }
 
   componentDidMount() {
@@ -74,17 +75,19 @@ export default class Banner extends BaseWidget {
     this.bannersFlatList && this.bannersFlatList.scrollToOffset({ animated, offset: index * Const.SCREEN_WIDTH });
   }
 
-  _onLayout = ({ nativeEvent: { layout: { x, y, width, height } } }) => {
-
-  }
-
   render() {
     let { images, height, defaultIndex, onClick } = this.props;
     return (
       <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: getSize(150) }}>
         <FlatList
-          onTouchStart={() => this.stopPlay()}
-          onTouchEnd={() => this.autoPlay()}
+          onTouchStart={() => {
+            this.canResponseClick = false; //TouchStart时，不响应点击
+            this.stopPlay();
+          }}
+          onTouchEnd={() => {
+            this.canResponseClick = true; //TouchEnd时，不响应点击
+            this.autoPlay();
+          }}
           ref={ref => this.bannersFlatList = ref}
           data={images}
           horizontal={true}
@@ -93,7 +96,7 @@ export default class Banner extends BaseWidget {
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => {
             return (
-              <TouchableOpacity activeOpacity={1} onLayout={this._onLayout} onPress={() => onClick && onClick(index)} >
+              <TouchableOpacity activeOpacity={1} onPress={() => this.canResponseClick && onClick && onClick(index)} >
                 <Animated.Image style={{ width: Const.SCREEN_WIDTH, height, }} source={{ uri: item }} />
               </TouchableOpacity>
             )
