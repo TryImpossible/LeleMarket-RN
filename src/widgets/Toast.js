@@ -70,7 +70,7 @@ export default class Toast extends BaseWidget {
       let index = Toast.positions.indexOf(position) != -1 ? Toast.positions.indexOf(position) : 1;
       let justifyContent = ['flex-start', 'center', 'flex-end'][index]; 
       return (
-        <Animated.View style={[styles.container, { opacity: this.path, justifyContent: justifyContent }]}>
+        <Animated.View style={[styles.container, { opacity: this.path, justifyContent: justifyContent }]} pointerEvents={'none'}>
           <View style={styles.view}>
             <Text numberOfLines={0} style={styles.text}>{message}</Text>
           </View>
