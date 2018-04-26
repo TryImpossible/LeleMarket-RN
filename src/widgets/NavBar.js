@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 
 import EnhanceStatusBar from './EnhanceStatusBar';
 
+import { withNavigation } from 'react-navigation';
+
 /**
  *  
  * <NavBar leftIcon={'icon_scan'} title={'导航栏'} rightIcon={'icon_msg'} />
@@ -19,7 +21,7 @@ import EnhanceStatusBar from './EnhanceStatusBar';
     <NavBar leftIcon={'icon_scan'} titleView={<TitleView />} rightIcon={'icon_msg'} showBottomLine={false} />
  * 导航栏
  */
-export default class NavBar extends BaseWidget {
+class NavBar extends BaseWidget {
 
   static propTypes = {
     leftText: PropTypes.string, //左边文字
@@ -62,7 +64,7 @@ export default class NavBar extends BaseWidget {
    * 导航栏,左方视图
    */
   renderLeft() {
-    const { leftText, leftIcon, leftPress, leftView } = this.props;
+    const { leftText, leftIcon, leftPress = () => this.props.navigation.pop(), leftView } = this.props;
     if (leftView) {
       const validLeftView = React.Children.map(leftView, child => {
         if (React.isValidElement(child)) {
@@ -218,3 +220,5 @@ const styles = StyleSheet.create({
   },
 
 });
+
+export default withNavigation(NavBar);
