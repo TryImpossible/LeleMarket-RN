@@ -10,6 +10,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <IQKeyboardManager.h>
+#import <React/RCTLinkingManager.h>
 
 @implementation AppDelegate
 
@@ -33,9 +34,6 @@
                                                       moduleName:@"DIY"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
-//  UIWebView *rootView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-//  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://192.168.0.107:8081/richEditor/editor.html"]];
-//  [rootView loadRequest:request];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -57,5 +55,12 @@
     //控制是否显示键盘上的工具条
     boardManager.enableAutoToolbar = NO;
   }
-  
+
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  return [RCTLinkingManager application:application openURL:url
+                      sourceApplication:sourceApplication annotation:annotation];
+}
 @end

@@ -51,7 +51,7 @@ class App extends PureComponent {
             // getCurrentRoutes={this.getCurrentRoutes.bind(this)}
             navigation={navigation} />
         },
-        path: item.name,
+        path: item.name === 'SearchPage' ? 'searchPage/:param' : item.name,
         navigationOptions: {  // 屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)
           gesturesEnabled: ForcePage.indexOf(item.name) == -1 ? true : false,
           gestureResponseDistance: { horizontal: 100 },
@@ -105,7 +105,7 @@ class App extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { isConnected } = nextProps;
-    // console.warn(isConnected);
+    console.warn(isConnected);
     if (!isConnected) {
       Animated.timing(this.path, {
         toValue: 1,
@@ -117,16 +117,43 @@ class App extends PureComponent {
             toValue: 0,
             easing: Easing.linear,
             duration: 200
-          }).start( () => this.timer && clearTimeout(this.timer));
+          }).start(() => this.timer && clearTimeout(this.timer));
         }, 2000);
       });
     }
   }
 
+  getCurrentRouteName(navigationState) {
+    if (!navigationState) {
+      return null;
+    }
+    const route = navigationState.routes[navigationState.index];
+    // dive into nested navigators
+    if (route.routes) {
+      return getCurrentRouteName(route);
+    }
+    return route.routeName;
+  }
+
   render() {
+    // this.initNavigator(InitPage[0]);
     return (
       <View style={styles.container}>
-        <RootStackNavigator ref={ref => this.rootStatckNavigator = ref} />
+        <RootStackNavigator
+          ref={ref => this.rootStatckNavigator = ref}
+          uriPrefix={__ANDROID__ ? 'diy://diy/' : 'diy://'} //配置Web访问App的URL Schema
+          onNavigationStateChange={(prevState, currentState, action) => {
+            // console.log(prevState);
+            // console.log(currentState);
+            // const currentScreen = getCurrentRouteName(currentState);
+            // const prevScreen = getCurrentRouteName(prevState);
+
+            // if (prevScreen !== currentScreen) {
+              // the line below uses the Google Analytics tracker
+              // change the tracker here to use other Mobile analytics SDK.
+            //   tracker.trackScreenView(currentScreen);
+            // }
+          }} />
         <Toast ref={ref => this.toast = ref} />
         <NetWorkTipView path={this.path} />
       </View>

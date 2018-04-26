@@ -19,18 +19,18 @@ import SvgUri from '../../dependencies/react-native-svg-uri';
 
 import PropTypes from 'prop-types';
 
-export const RichEditorView = requireNativeComponent('RichEditorView', { 
-  propTypes: {
-    backgroundColor: PropTypes.number,
-    backgroundUrl: PropTypes.string,
-    editorHeight: PropTypes.number,
-    editorFontSize: PropTypes.number,
-    editorFontColor: PropTypes.number,
-    placeHolder: PropTypes.string,
-    inputEnabled: PropTypes.bool,
-    ...View.propTypes // 包含默认的View的属性
-  } 
-});
+// export const RichEditorView = requireNativeComponent('RichEditorView', { 
+//   propTypes: {
+//     backgroundColor: PropTypes.number,
+//     backgroundUrl: PropTypes.string,
+//     editorHeight: PropTypes.number,
+//     editorFontSize: PropTypes.number,
+//     editorFontColor: PropTypes.number,
+//     placeHolder: PropTypes.string,
+//     inputEnabled: PropTypes.bool,
+//     ...View.propTypes // 包含默认的View的属性
+//   } 
+// });
 
 export default class SearchPage extends BasePage {
 
@@ -41,8 +41,9 @@ export default class SearchPage extends BasePage {
   render() {
     return (
       <View style={this.BasicStyle.pageContainer}>
-        <NavBar leftText={'返回'} leftPress={() => this.pop() } title={'RichEditor'} />
-        <RichEditorView style={{ width: Const.SCREEN_WIDTH, height: Const.PAGE_HEIGHT }}  />
+        <NavBar leftText={'返回'} title={'搜索'} />
+        <Text>需要搜索的参数: {this.getProps().param}</Text>
+        {/* <RichEditorView style={{ width: Const.SCREEN_WIDTH, height: Const.PAGE_HEIGHT }}  /> */}
       </View>
     )
   }
