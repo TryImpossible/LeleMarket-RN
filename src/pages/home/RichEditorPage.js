@@ -54,6 +54,7 @@ export default class RichEditorPage extends BasePage {
         <NavBar leftText={'返回'} leftPress={() => this.pop()} title={'webview-bridge-rich-editor'} />
         <RichTextEditor
           ref={(r) => this.richtext = r}
+          style={{ flex: 1 }}
           customCSS={`
           body{ 
             padding: 10px;

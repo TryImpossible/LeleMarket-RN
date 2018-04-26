@@ -105,7 +105,7 @@ class App extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { isConnected } = nextProps;
-    console.warn(isConnected);
+    // console.warn(isConnected);
     if (!isConnected) {
       Animated.timing(this.path, {
         toValue: 1,
@@ -124,7 +124,6 @@ class App extends PureComponent {
   }
 
   render() {
-    // this.initNavigator(InitPage[0]);
     return (
       <View style={styles.container}>
         <RootStackNavigator ref={ref => this.rootStatckNavigator = ref} />

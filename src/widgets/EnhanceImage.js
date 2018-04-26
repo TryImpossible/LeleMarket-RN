@@ -41,7 +41,7 @@ export default class EnhanceImage extends BaseWidget {
         <FastImage
           {...otherProps}
           onProgress={(e)=>{
-            console.warn('onProgress');
+            // console.warn('onProgress');
           }}
           onLoadEnd={() => {
             // console.warn('onLoadEnd');

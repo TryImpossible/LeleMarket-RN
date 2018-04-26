@@ -16,6 +16,7 @@ import Scene from '../widgets/Scene';
 
 import { BoxShadow } from 'react-native-shadow'
 
+import EnhanceImage from '../widgets/EnhanceImage';
 
 export default class UEWidgetPage extends BasePage {
 
@@ -40,7 +41,13 @@ export default class UEWidgetPage extends BasePage {
             <View style={{ width: getSize(40), height: getSize(40), backgroundColor: 'green' }} />
           </View>
         </View> */}
-        <Scene />
+        {/* <Scene /> */}
+        {/* <EnhanceImage style={{ width: getSize(80), height: getSize(80) }} resizeMode={'cover'}
+          source={{ uri: 'https://api.51app.cn/resource/diymall/wp/findList/907cb1af.gif' }}
+          onLoad={(event) => {
+            console.log(event.nativeEvent);
+          }} /> */}
+        <CardView style={{ flex: 1, marginTop: getSize(30 ) }} width={Const.SCREEN_WIDTH - getSize(100)} height={getSize(150)} borderRadius={getSize(20)}/>
       </View>
     )
   }

@@ -53,11 +53,12 @@ export default class HomeIndex extends BaseComponent {
     super(props);
     this.initSubscriptions();
     this.memeryData = {}; //内存中的数据
-    this.hintTranslateXPath = new Animated.Value(0); //ScrollTab的红色小提示，位移变化
-    this.hintWidthPath = new Animated.Value(0); //ScrollTab的红色小提示，宽度变化 
-    this.hintWidths = {}; //ScrollTab的红色小提示，宽度集合
+    this.scrollTabColorPath = new Animated.Value(0); //ScrollTab的文字颜色变化
+    this.scrollTabWidthPath = new Animated.Value(0); //ScrollTab的红色提示宽度变化
+    this.scrollTabTranslateXPath = new Animated.Value(0); //ScrollTab的红色提示位移变化
+    this.scrollTabWidth = {}; //ScrollTab的标题，宽度集合
 
-    this.SelectedNavIndex = 0; //上次选中的索引，默认0
+    this.selectedTabIndex = 0; //上次选中的索引，默认0
     this.pageIndex = 0; //默认，初始每一页
 
     this.autoLoadMoreList = {}; //所有AutoLoadMoreList的实例集合
@@ -135,9 +136,12 @@ export default class HomeIndex extends BaseComponent {
           this.memeryData[ret.data.topNav[0].id] = { page: 0, data: ret.data }; //保存内存中 精选 栏数据
         }
 
+        this.selectedTabIndex = 0;  
         this.setState({
           ...ret.data,
           selectedTab: ret.data.topNav,
+        },() => {
+          
         });
       } else {
         this.props.showToast(ret.message);
@@ -176,7 +180,7 @@ export default class HomeIndex extends BaseComponent {
   }
 
   loadMoreOtherTabData(page) {
-    let id = this.state.scrollTabs[this.SelectedNavIndex].id;
+    let id = this.state.scrollTabs[this.selectedTabIndex].id;
 
     let status = deepCopy(this.state.status);
     status[id] = 'LOADING';
@@ -212,119 +216,85 @@ export default class HomeIndex extends BaseComponent {
     this.loadFocusedSelectData();
   }
 
-  hintAnimate(index) {
-    let x = this.hintWidths[index].x || this.coutHintTranslateX(index);
-    let width = this.hintWidths[index].width;
-
-    // 自动滚动等待解决
-    // let p = Math.ceil(x / Const.SCREEN_WIDTH); //第几屏
-    // let offset = (x % (Const.SCREEN_WIDTH / 2)); //位移量
-    // let py = (x % Const.SCREEN_WIDTH); //每一屏元素的相对位置
-    // let hsw = (Const.SCREEN_WIDTH / 2); //半屏大小，宽
-
-
-    // console.log('p', p);
-    // console.log('py', py);
-
-    // if (p === 1 && py < hsw) {
-    //   this.tabNavFlatList && this.tabNavFlatList.scrollToOffset({ animated: true, offset: 0 });
-    // } else if ((p === 1 && py >= hsw) || (p !== 1 && py < hsw) ) {
-    //   this.tabNavFlatList && this.tabNavFlatList.scrollToOffset({ animated: true, offset: offset });
-    // } else {
-    //   this.tabNavFlatList && this.tabNavFlatList.scrollToEnd();
-    // }
-
-    Animated.parallel([
-      Animated.spring(this.state.scrollTabs[this.SelectedNavIndex].path, {
-        toValue: 0,
-        duration: 0,
-        easing: Easing.linear,
-      }),
-      Animated.spring(this.state.scrollTabs[index].path, {
-        toValue: 1,
-        duration: 0,
-        easing: Easing.linear,
-      }),
-      Animated.spring(this.hintTranslateXPath, {
-        toValue: x,
-        duration: 0,
-        easing: Easing.linear,
-      }),
-      Animated.spring(this.hintWidthPath, {
-        toValue: width,
-        duration: 0,
-        easing: Easing.linear,
-      })
-    ]).start();
-  }
-
-  coutHintTranslateX = (index) => {
-    let translateX = getSize(12);
-    let i = index;
-    while (i > 0) {
-      let x = this.hintWidths[i - 1].width;
-      translateX += (x + getSize(24));
-      i--;
-    }
-    return translateX;
-  }
-
   onTopNavSelected(item, index) {
-    if (this.SelectedNavIndex === index) return; //相同的选中，不响应以下逻辑
+    if (this.selectedTabIndex === index) return; //相同的选中，不响应以下逻辑
+    this.selectedTabIndex = index; //赋值选中的Index
 
-    this.tabMainFlatList && this.tabMainFlatList.scrollToOffset({ animated: true, offset: Const.SCREEN_WIDTH * index }); //滚动至对应页面
-    this.hintAnimate(index);
-    this.SelectedNavIndex = index; //赋值选中的Index
-
-    // this.autoLoadMoreList && this.autoLoadMoreList[item.id] && this.autoLoadMoreList[item.id].scrollToOffset({ animated: false, offset: 0 }); //自动滚动到顶部
     this.pageIndex = 0;
     if (this.memeryData[item.id]) {
       this.pageIndex = this.memeryData[item.id].page + 1;
     } else {
       this.setState({
-        isRefresh: true
+        flatListIsRefresh: true
       });
       this.loadOtherTabData(item.id);
     }
+  }
 
+  getInterpolate(index) {
+    let inputRange = [], outputRange = [];
+    this.state.scrollTabs && this.state.scrollTabs.map((item, i) => {
+      inputRange.push(i);
+      outputRange.push(i !== index ? '#333333' : '#fe3f56');
+    });
+    return {inputRange, outputRange};
+  }
+
+  countX(index) {
+    let x = getSize(12);
+    while (index > 0) {
+      let width = this.scrollTabWidth[index -1];
+      x += (width + getSize(24));
+      index--;
+    }
+    return x;
   }
 
   renderHorizontalScrollTabs() {
     return (
-      <View style={styles.scrollTabs}>
-        <FlatList
-          ref={ref => this.tabNavFlatList = ref}
-          data={this.state.scrollTabs}
-          horizontal={true}
-          keyExtractor={(item, index) => `HorizontalScrollTabNavs${index}`}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item, index }) => {
-
-            let color = item.path.interpolate({
-              inputRange: [0, 1],
-              outputRange: ['#333333', '#fe3f56']
-            });
+      <ScrollView
+        ref={ref => this.tabNavFlatList = ref}
+        style={styles.scrollTabs}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}>
+        {
+          this.state.scrollTabs.map((item, index) => {
             return (
-              <View style={{ overflow: 'visible', zIndex: this.state.scrollTabs - 1 }} removeClippedSubviews={false} >
-                <TouchableOpacity activeOpacity={1} style={{ height: getSize(24), justifyContent: 'center', alignItems: 'center' }} onPress={() => this.onTopNavSelected(item, index)} >
-                  <Animated.Text onLayout={({ nativeEvent: { layout: { x, y, width, height } } }) => {
-                    if (this.hintWidths && this.hintWidths[index]) return; //判断是否赋值
-                    this.hintWidths[index] = { width: getSize(width) };
-                    if (index == 0 && !this.hintWidths[index].x) this.hintAnimate(index);
-                  }}
-                    style={{ fontSize: getSize(12), color, marginHorizontal: getSize(12), marginBottom: getSize(6) }}>
-                    {item.name}
-                  </Animated.Text>
-                </TouchableOpacity>
-                {index === 0 ? <Animated.View style={{
-                  backfaceVisibility: 'visible', overflow: 'visible', position: 'absolute', bottom: getSize(2), width: this.hintWidthPath, height: getSize(2), backgroundColor: '#fe3f56',
-                  transform: [{ translateX: this.hintTranslateXPath }]
-                }} /> : null}
-              </View>
+              <TouchableOpacity key={`HorizontalScrollTabNavs${index}`} activeOpacity={1} style={{ height: getSize(24), justifyContent: 'center', alignItems: 'center' }} onPress={() => this.tabMainFlatList && this.tabMainFlatList.scrollToOffset({ animated: true, offset: Const.SCREEN_WIDTH * index })} >
+                <Animated.Text onLayout={({ nativeEvent: { layout: { x, y, width, height } } }) => {
+                  this.scrollTabWidth[index] = getSize(width);
+                  // if (index === this.state.scrollTabs.length - 1) console.warn(this.scrollTabWidth);
+                  if (index === 0) {
+                    Animated.parallel([
+                      Animated.spring(this.scrollTabColorPath, {
+                        toValue: index,
+                        easing: Easing.linear,
+                        duration: 50
+                      }),
+                      Animated.spring(this.scrollTabWidthPath, {
+                        toValue: width,
+                        easing: Easing.linear,
+                        duration: 50
+                      }),
+                      Animated.spring(this.scrollTabTranslateXPath, {
+                        toValue: getSize(12),
+                        easing: Easing.linear,
+                        duration: 50
+                      })
+                    ]).start();
+                  }
+                }}
+                  style={{ fontSize: getSize(12), color: this.scrollTabColorPath.interpolate(this.getInterpolate(index)), marginHorizontal: getSize(12), marginBottom: getSize(6) }}>
+                  {item.name}
+                </Animated.Text>
+              </TouchableOpacity>
             )
-          }}
-        />
-      </View>
+          })
+        }
+        <Animated.View style={{ position: 'absolute', bottom: getSize(2), width: this.scrollTabWidthPath, height: getSize(2), backgroundColor: '#fe3f56',
+          transform: [{ translateX: this.scrollTabTranslateXPath }]
+        }} />
+      </ScrollView>
     )
   }
 
@@ -335,12 +305,13 @@ export default class HomeIndex extends BaseComponent {
         {this.renderHorizontalScrollTabs()}
         <FlatList
           ref={ref => this.tabMainFlatList = ref}
+          style={{ width: Const.SCREEN_WIDTH, height: LIST_HEIGHT }}
           data={this.state.scrollTabs}
           keyExtractor={(item, index) => `HorizontalScrollTabMains${index}`}
           showsHorizontalScrollIndicator={false}
           horizontal={true}
           pagingEnabled={true}
-          scrollEnabled={false}
+          scrollEnabled={__ANDROID__ ? false : true}
           bounces={false}
           renderItem={({ item, index }) => {
             if (index === 0 && item.id == 1 && item.name === '精选') {
@@ -362,7 +333,7 @@ export default class HomeIndex extends BaseComponent {
                     let images = this.state.banners.map((item, index) => item.imgUrl);
                     return (
                       <View>
-                        <Banner images={images} height={getSize(150)} duration={3000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.showToast(`您选中了第${index}张`) } />
+                        <Banner images={images} height={getSize(150)} duration={3000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.showToast(`您选中了第${index}张`)} />
                         <GridActivity data={this.state.midNav} onPress={() => this.props.showToast('activity')} />
                       </View>
                     )
@@ -372,7 +343,7 @@ export default class HomeIndex extends BaseComponent {
                     if (item.key === 0) {
                       //开启定制之旅
                       let images = item.data.map((item) => item.imgUrl);
-                      return ( 
+                      return (
                         <CardView
                           style={{ backgroundColor: '#ffffff' }}
                           images={images}
@@ -401,7 +372,7 @@ export default class HomeIndex extends BaseComponent {
                   onRefresh={() => {
                     this.pageIndex = 0;
                     this.state.flatListIsRefresh = true;
-                    this.loadOtherTabData(this.state.scrollTabs[this.SelectedNavIndex].id);
+                    this.loadOtherTabData(this.state.scrollTabs[this.selectedTabIndex].id);
                   }}
                   data={data}
                   horizontal={false}
@@ -418,9 +389,23 @@ export default class HomeIndex extends BaseComponent {
           }}
           getItemLayout={(data, index) => (
             { length: LIST_HEIGHT, offset: LIST_HEIGHT * index, index }
-          )} />
-          <LoadingView ref={ref => this.loadingView = ref} style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }} color={'#8cadca'} />
-          <ErrorComponent ref={ref => this.errorComponent = ref} style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }} retry={()=>{ this.loadScrollTabsData(); this.loadFocusedSelectData(); }} />
+          )}
+          onScroll={({ nativeEvent })=>{
+            let offsetX = nativeEvent.contentOffset.x;
+            let index =  Math.round(offsetX / Const.SCREEN_WIDTH); 
+
+            if (index === this.selectedTabIndex) return;
+            this.scrollTabColorPath.setValue(index),
+            this.scrollTabWidthPath.setValue(this.scrollTabWidth[index]);
+            this.scrollTabTranslateXPath.setValue(this.countX(index));
+
+            this.onTopNavSelected(this.state.scrollTabs[index], index);
+          }}
+          onMomentumScrollEnd={({ nativeEvent })=>{
+            //android上不响应此方法
+          }} />
+        <LoadingView ref={ref => this.loadingView = ref} style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }} color={'#8cadca'} />
+        <ErrorComponent ref={ref => this.errorComponent = ref} style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }} retry={() => { this.loadScrollTabsData(); this.loadFocusedSelectData(); }} />
       </View>
     )
   }
