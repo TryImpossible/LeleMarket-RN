@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, Animated, Easing } from "react-native";
 
 import BasePage from '../BasePage';
 
@@ -8,14 +8,33 @@ import PropTypes from "prop-types";
 
 import { RNCamera } from 'react-native-camera';
 
-import NavBar from '../../widgets/NavBar';
-
 import SvgUri from '../../dependencies/react-native-svg-uri';
+
+import EnhanceStatusBar from '../../widgets/EnhanceStatusBar';
 
 export default class ScanPage extends BasePage {
 
   constructor(props) {
     super(props);
+    this.path = new Animated.Value(getSize(170) + Const.STATUSBAR_HEIGHT)
+  }
+
+  componentDidMount() {
+    this.paly();
+  }
+
+  paly() {
+    Animated.timing(this.path, {
+      toValue: getSize(420) + Const.STATUSBAR_HEIGHT - getSize(3),
+      easing: Easing.linear,
+      duration: 3500
+    }).start(()=>{
+      Animated.timing(this.path, {
+        toValue: getSize(170) + Const.STATUSBAR_HEIGHT,
+        easing: Easing.linear,
+        duration: 3500
+      }).start(() => this.paly());
+    });
   }
 
   render() {
@@ -41,28 +60,32 @@ export default class ScanPage extends BasePage {
         }}
         permissionDialogTitle={'Permission to use camera'}
         permissionDialogMessage={'We need your permission to use your camera phone'}>
-        <View style={{ flex: 1, width: Const.SCREEN_WIDTH, height: Const.SCREEN_HEIGHT - getSize(80) }}>
-          <View style={{ position: 'absolute', top: 0, left: 0, width: Const.SCREEN_WIDTH, height: getSize(180), backgroundColor: '#000000', opacity: 0.3 }} />
-          <View style={{ position: 'absolute', bottom: 0, left: 0, width: Const.SCREEN_WIDTH, height: getSize(130), backgroundColor: '#000000', opacity: 0.3 }} />
-          <View style={{ position: 'absolute', top: getSize(180), left: 0, width: getSize(60), height: Const.SCREEN_HEIGHT - getSize(390), backgroundColor: '#000000', opacity: 0.3 }} />
-          <View style={{ position: 'absolute', top: getSize(180), right: 0, width: getSize(60), height: Const.SCREEN_HEIGHT - getSize(390), backgroundColor: '#000000', opacity: 0.3 }} />
+        <EnhanceStatusBar backgroundColor={'rgba(0,0,0,0.3)'} />
+        <View style={{ flex: 1, width: Const.SCREEN_WIDTH, height: getSize(567) - Const.STATUSBAR_HEIGHT }}>
+          <View style={{ position: 'absolute', top: 0, left: 0, width: Const.SCREEN_WIDTH, height: getSize(170), backgroundColor: 'rgba(0,0,0,0.3)' }} />
+          <View style={{ position: 'absolute', bottom: 0, left: 0, width: Const.SCREEN_WIDTH, height: getSize(130), backgroundColor: 'rgba(0,0,0,0.3)' }} />
+          <View style={{ position: 'absolute', top: getSize(170), left: 0, width: getSize(62.5), height: getSize(267) - Const.STATUSBAR_HEIGHT, backgroundColor: 'rgba(0,0,0,0.3)' }} />
+          <View style={{ position: 'absolute', top: getSize(170), right: 0, width: getSize(62.5), height: getSize(267) - Const.STATUSBAR_HEIGHT, backgroundColor: 'rgba(0,0,0,0.3)' }} />
         </View>
-        <View style={{ backgroundColor: '#000000', width: Const.SCREEN_WIDTH, height: getSize(80), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ backgroundColor: 'rgba(0,0,0,1)', width: Const.SCREEN_WIDTH, height: getSize(100), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <TouchableOpacity
             onPress={this.takePicture.bind(this)}
-            style={styles.capture}>
-            <Text style={{ fontSize: 14 }}> 扫码 </Text>
+            style={{  }}>
+            <Text style={{ fontSize: 14, color: '#f93a54' }}> 扫码 </Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={{ position: 'absolute', top: Const.STATUSBAR_HEIGHT, width: Const.SCREEN_WIDTH, height: Const.NAVBAR_HEIGHT, paddingHorizontal: getSize(10), minWidth: getSize(44), flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }} activeOpacity={1} onPress={() => this.pop()}>
+        <TouchableOpacity style={{ position: 'absolute', top: Const.STATUSBAR_HEIGHT, width: Const.SCREEN_WIDTH, height: Const.NAVBAR_HEIGHT, paddingHorizontal: getSize(10), minWidth: getSize(44), flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}
+          activeOpacity={1} onPress={() => this.pop()}>
           <SvgUri width={getSize(24)} height={getSize(24)} source={'icon_nav_bar_back'} fill={'#ffffff'} />
         </TouchableOpacity>
+
+        <Animated.View style={{ position: 'absolute', top: this.path, left: getSize(62.5), width: getSize(250), height: getSize(3), backgroundColor: '#f93a54' }} />
       </RNCamera>
     )
   }
 
   _onBarCodeRead = obj => {
-    const { data, bounds} = obj;
+    const { data, bounds } = obj;
     let size = bounds.size;
     let origin = bounds.origin;
     if (origin.x >= getSize(60) && origin.y >= getSize(180) && size.width <= getSize(255) && size.height <= Const.SCREEN_HEIGHT - getSize(390)) {
@@ -100,17 +123,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#000000'
   },
-  preview: {
-    flex: 1,
-
-  },
-  capture: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-  }
 });
 
 // const styles = StyleSheet.create({
