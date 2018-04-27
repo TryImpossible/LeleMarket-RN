@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
     paddingVertical: getSize(5)
   },
   text: {
-    fontSize: getSize(12),
+    fontSize: getSize(15),
     color: '#ffffff',
-    lineHeight: getSize(16),
+    lineHeight: getSize(20),
     maxWidth: Const.SCREEN_WIDTH / 3 * 2
   }
 });
