@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, TouchableOpacity, View, Text, Animated, Easing } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, Animated, Easing, ScrollView, WebView } from "react-native";
 
 import BasePage from '../BasePage';
 
@@ -12,34 +12,82 @@ import SvgUri from '../../dependencies/react-native-svg-uri';
 
 import EnhanceStatusBar from '../../widgets/EnhanceStatusBar';
 
+import NavBar from '../../widgets/NavBar';
+
 export default class ScanPage extends BasePage {
 
   constructor(props) {
     super(props);
-    this.path = new Animated.Value(getSize(170) + Const.STATUSBAR_HEIGHT)
-  }
-
-  componentDidMount() {
-    this.paly();
-  }
-
-  paly() {
-    Animated.timing(this.path, {
-      toValue: getSize(420) + Const.STATUSBAR_HEIGHT - getSize(3),
-      easing: Easing.linear,
-      duration: 3500
-    }).start(()=>{
-      Animated.timing(this.path, {
-        toValue: getSize(170) + Const.STATUSBAR_HEIGHT,
-        easing: Easing.linear,
-        duration: 3500
-      }).start(() => this.paly());
-    });
+    this.path = new Animated.Value(getSize(170) + Const.STATUSBAR_HEIGHT);
+    this.state = {}
   }
 
   render() {
     return (
+      <ScrollView
+        ref={ref => this.scrollView = ref}
+        style={{ width: Const.SCREEN_WIDTH, height: Const.SCREEN_HEIGHT }}
+        contentContainerStyle={{ width: Const.SCREEN_WIDTH * 2, height: Const.SCREEN_HEIGHT }}
+        horizontal={true}
+        bounces={false}
+        pagingEnabled={true}
+        scrollEnabled={false} >
+        {
+          Array(2).fill('Scan').map((item, index) => {
+            if (index === 0) {
+              return this.renderScan();
+            } else {
+              return this.renderResult();
+            }
+          })
+        }
+      </ScrollView>
+    )
+  }
+
+  transformHtml(content) {
+    return `<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>Link App</title>
+      <style>
+      </style>
+    </head>
+    <body>
+      <div>${content}</div>
+    </body>
+    </html>`
+  }
+
+  isNetAddress(url) {
+    return /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/.test(url);
+  }
+
+  renderResult() {    
+    const props = !this.state.result ? {} : (this.isNetAddress(this.state.result) ? {source: { uri: this.state.result }} : { source: { html: this.transformHtml(this.state.result), baseUrl: '' }})
+    return (
+      <View key={`ScanResult`} style={{ width: Const.SCREEN_WIDTH, height: Const.SCREEN_HEIGHT, justifyContent: 'flex-start', alignItems: 'center' }}>
+        <NavBar />
+        <WebView
+          ref={ref => this.webView = ref}
+          style={{ backgroundColor: '#ffffff', width: Const.SCREEN_WIDTH }}
+          automaticallyAdjustContentInsets={false}
+          javaScriptEnabled={true}
+          saveFormDataDisabled={true}
+          dataDetectorTypes='all'
+          { ...props }
+        />
+      </View>
+    )
+  }
+
+  renderScan() {
+    return (
       <RNCamera
+        key={`ScanPending`}
         ref={ref => this.camera = ref}
         style={styles.container}
         type={RNCamera.Constants.Type.back}
@@ -50,7 +98,7 @@ export default class ScanPage extends BasePage {
         // barCodeTypes={[RNCamera.Constants.BarCodeType.qr]} //指定Bar的类型，二维码、条形码之类的
         onBarCodeRead={this._onBarCodeRead}
         onCameraReady={() => {
-
+          this.paly();
         }}
         onMountError={() => {
 
@@ -60,6 +108,7 @@ export default class ScanPage extends BasePage {
         }}
         permissionDialogTitle={'Permission to use camera'}
         permissionDialogMessage={'We need your permission to use your camera phone'}>
+
         <EnhanceStatusBar backgroundColor={'rgba(0,0,0,0.3)'} />
         <View style={{ flex: 1, width: Const.SCREEN_WIDTH, height: getSize(567) - Const.STATUSBAR_HEIGHT }}>
           <View style={{ position: 'absolute', top: 0, left: 0, width: Const.SCREEN_WIDTH, height: getSize(170), backgroundColor: 'rgba(0,0,0,0.3)' }} />
@@ -70,7 +119,7 @@ export default class ScanPage extends BasePage {
         <View style={{ backgroundColor: 'rgba(0,0,0,1)', width: Const.SCREEN_WIDTH, height: getSize(100), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <TouchableOpacity
             onPress={this.takePicture.bind(this)}
-            style={{  }}>
+            style={{}}>
             <Text style={{ fontSize: 14, color: '#f93a54' }}> 扫码 </Text>
           </TouchableOpacity>
         </View>
@@ -84,12 +133,30 @@ export default class ScanPage extends BasePage {
     )
   }
 
+  paly() {
+    Animated.timing(this.path, {
+      toValue: getSize(420) + Const.STATUSBAR_HEIGHT - getSize(3),
+      easing: Easing.linear,
+      duration: 2500
+    }).start(() => {
+      Animated.timing(this.path, {
+        toValue: getSize(170) + Const.STATUSBAR_HEIGHT,
+        easing: Easing.linear,
+        duration: 2500
+      }).start(() => this.paly());
+    });
+  }
+
   _onBarCodeRead = obj => {
     const { data, bounds } = obj;
     let size = bounds.size;
     let origin = bounds.origin;
-    if (origin.x >= getSize(60) && origin.y >= getSize(180) && size.width <= getSize(255) && size.height <= Const.SCREEN_HEIGHT - getSize(390)) {
-      this.showToast(data);
+    if (origin.x >= getSize(62.5) && origin.y >= (getSize(170) + Const.STATUSBAR_HEIGHT) && size.width <= getSize(250) && size.height <= getSize(250)) {
+      this.setState({
+        result: data
+      }, () => {
+        this.scrollView && this.scrollView.scrollTo({ x: Const.SCREEN_WIDTH, y: 0, animated: false });
+      });
     }
   }
 
@@ -103,17 +170,6 @@ export default class ScanPage extends BasePage {
 
 }
 
-const SimpleNavBar = (props) => {
-  const { onPress } = props;
-  return (
-    <View style={{ width: Const.SCREEN_WIDTH, height: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, backgroundColor: '#000000', opacity: 0.2 }}>
-      <TouchableOpacity style={{ marginTop: Const.STATUSBAR_HEIGHT, paddingHorizontal: getSize(10), minWidth: getSize(44) }} activeOpacity={1} onPress={onPress}>
-        <SvgUri width={getSize(24)} height={getSize(24)} source={'icon_nav_bar_back'} fill={'#ffffff'} />
-      </TouchableOpacity>
-    </View>
-  )
-}
-
 const styles = StyleSheet.create({
   container: {
     width: Const.SCREEN_WIDTH,
@@ -125,26 +181,3 @@ const styles = StyleSheet.create({
   },
 });
 
-// const styles = StyleSheet.create({
-//   container: {
-//     width: Const.SCREEN_WIDTH,
-//     height: Const.SCREEN_HEIGHT,
-//     flexDirection: 'column',
-//     justifyContent: 'flex-start',
-//     alignItems: 'center',
-//     backgroundColor: '#000000'
-//   },
-//   preview: {
-//     flex: 1,
-//     justifyContent: 'flex-start',
-//     alignItems: 'center',
-//     backgroundColor: 'red'
-//   },
-//   capture: {
-//     backgroundColor: '#fff',
-//     borderRadius: 5,
-//     padding: 15,
-//     paddingHorizontal: 20,
-//     alignSelf: 'center',
-//   }
-// });
