@@ -23,9 +23,9 @@ public class EnhanceWebViewManager extends ReactWebViewManager {
 
     @Override
     protected WebView createViewInstance(ThemedReactContext reactContext) {
-        WebView root = super.createViewInstance(reactContext);
-        root.requestFocus();
-        return root;
+        WebView webView = super.createViewInstance(reactContext);
+        webView.requestFocus();
+        return webView;
     }
 
     @ReactProp(name="autoFocus", defaultBoolean = true)

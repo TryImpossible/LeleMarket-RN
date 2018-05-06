@@ -13,8 +13,6 @@ import PropTypes from "prop-types";
 
 import KeyboardSpacer from "../../widgets/KeyboardSpacer";
 
-import EnhanceStatusBar from "../../widgets/EnhanceStatusBar";
-
 export default class SvgPage extends BasePage {
 
   constructor(props) {
@@ -22,37 +20,17 @@ export default class SvgPage extends BasePage {
   }
 
   render() {
-    // return (
-    //   <View style={{ flex: 1 }}>
-    //     <WebView
-    //       ref={ref => this.webView = ref}
-    //       automaticallyAdjustContentInsets={false}
-    //       style={{ width: Const.SCREEN_WIDTH, flex: 1, backgroundColor: '#fff' }}
-    //       source={{ uri: 'http://192.168.0.9:8081/richEditor/editor.html' }}
-    //       javaScriptEnabled={true}
-    //       dataDetectorTypes='none'
-    //       startInLoadingState={true}
-    //       scrollEnabled={true}
-    //       onMessage={(event) => {
-
-    //       }}
-    //       onLoadEnd={() => {
-
-    //       }} />
-    //       <KeyboardSpacer />
-    //   </View>
-    // )
     return (
       <View style={{ flex: 1 }}>
-        <EnhanceStatusBar backgroundColor="#fff" />
         <WebViewBridge
+          // {...this.props}
           style={{ flex: 1 }}
           hideKeyboardAccessoryView={true}
           keyboardDisplayRequiresUserAction={false}
           ref={(r) => { this.webviewBridge = r }}
           // onBridgeMessage={(message) => this.onBridgeMessage(message)}
           // injectedJavaScript={injectScript}
-          source={{ uri: 'http://192.168.0.107:8081/richEditor/editor.html' }}
+          source={{ uri: 'http://192.168.0.9:8083/richEditor/editor.html' }}
         // onLoad={() => this.init()} 
         />
         <KeyboardSpacer />

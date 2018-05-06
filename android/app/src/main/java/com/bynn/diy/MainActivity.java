@@ -15,20 +15,3 @@ public class MainActivity extends ReactActivity {
 }
 
 
-//package com.bynn.diy;
-//
-//import android.app.Activity;
-//import android.os.Bundle;
-//import android.webkit.WebView;
-//
-//public class MainActivity extends Activity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        WebView webView = (WebView) findViewById(R.id.webview);
-//        webView.loadUrl("https://www.baidu.com/");
-//        webView.requestFocus();
-//    }
-//}
