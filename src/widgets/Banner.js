@@ -84,6 +84,7 @@ export default class Banner extends BaseWidget {
       <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: getSize(150) }}>
         <FlatList
           onTouchStart={() => {
+            this.canResponseClick = false; //TouchStart时，不响应点击
             this.stopPlay();
           }}
           /**
@@ -91,9 +92,11 @@ export default class Banner extends BaseWidget {
            * 2.点击结束时，ios和android正常响应onTouchEnd
            */
           onTouchEnd={() => {
+            this.canResponseClick = true; //TouchEnd时，响应点击
             this.autoPlay();
           }}
           onTouchCancel={()=>{
+            this.canResponseClick = true; //TouchEnd时，响应点击
             this.autoPlay();
           }}
           ref={ref => this.bannersFlatList = ref}
@@ -104,9 +107,7 @@ export default class Banner extends BaseWidget {
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => {
             return (
-              <TouchableOpacity activeOpacity={1} onPress={() => {
-                this.canResponseClick && onClick && onClick(index)
-                }} >
+              <TouchableOpacity activeOpacity={1} onPress={() => this.canResponseClick && onClick && onClick(index)} >
                 <EnhanceImage style={{ width: Const.SCREEN_WIDTH, height, }} source={{ uri: item }} />
               </TouchableOpacity>
             )
@@ -116,10 +117,9 @@ export default class Banner extends BaseWidget {
             { length: height, offset: height * index, index }
           )}
           onScrollBeginDrag={({ nativeEvent }) => {
-            this.canResponseClick = false; //TouchStart时，不响应点击
+
           }}
           onScrollEndDrag={({ nativeEvent }) => {
-            this.canResponseClick = true; //TouchStart时，响应点击
             const offsetX = nativeEvent.contentOffset.x;
             if (offsetX >= (images.length - 1) * Const.SCREEN_WIDTH) {
               this._scrollTo(0);
