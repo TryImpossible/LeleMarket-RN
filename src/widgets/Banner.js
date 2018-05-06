@@ -83,22 +83,13 @@ export default class Banner extends BaseWidget {
     return (
       <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: getSize(150) }}>
         <FlatList
-          onTouchStart={() => {
-            this.canResponseClick = false; //TouchStart时，不响应点击
-            this.stopPlay();
-          }}
+          onTouchStart={() => this.stopPlay() }
           /**
            * 1.拖拽结束时，ios响应onTouchEnd，android响应onTouchCancel
            * 2.点击结束时，ios和android正常响应onTouchEnd
            */
-          onTouchEnd={() => {
-            this.canResponseClick = true; //TouchEnd时，响应点击
-            this.autoPlay();
-          }}
-          onTouchCancel={()=>{
-            this.canResponseClick = true; //TouchEnd时，响应点击
-            this.autoPlay();
-          }}
+          onTouchEnd={() => this.autoPlay() }
+          onTouchCancel={()=> this.autoPlay()}
           ref={ref => this.bannersFlatList = ref}
           data={images}
           horizontal={true}
@@ -117,9 +108,11 @@ export default class Banner extends BaseWidget {
             { length: height, offset: height * index, index }
           )}
           onScrollBeginDrag={({ nativeEvent }) => {
-
+            this.canResponseClick = false; //onScrollBeginDrag时，不响应点击
           }}
           onScrollEndDrag={({ nativeEvent }) => {
+            this.canResponseClick = true; //onScrollEndDrag时，响应点击
+
             const offsetX = nativeEvent.contentOffset.x;
             if (offsetX >= (images.length - 1) * Const.SCREEN_WIDTH) {
               this._scrollTo(0);
