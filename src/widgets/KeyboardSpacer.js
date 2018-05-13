@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import PropTypes from 'prop-types';
+
 import {
   Keyboard,
   LayoutAnimation,
@@ -10,13 +12,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-});
+import BaseWidget from "./BaseWidget";
 
 const defaultAnimation = {
   duration: 500,
@@ -31,7 +27,7 @@ const defaultAnimation = {
   }
 };
 
-export default class KeyboardSpacer extends Component {
+export default class KeyboardSpacer extends BaseWidget {
   static propTypes = {
     topSpacing: PropTypes.number,
     onToggle: PropTypes.func,
@@ -116,3 +112,11 @@ export default class KeyboardSpacer extends Component {
       <View style={[styles.container, { height: this.state.keyboardSpace }, this.props.style]} />);
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+});
