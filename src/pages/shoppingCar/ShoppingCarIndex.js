@@ -22,12 +22,12 @@ export default class ShoppingCarIndex extends BaseComponent {
   }
 
   initSubscriptions() {
-    const {TabNavigation} = this.props;
-    if (__ANDROID__){
-      this.willFocusSubscription = TabNavigation.addListener( 'willFocus', payload => {
+    const { TabNavigation } = this.props;
+    if (__ANDROID__) {
+      this.willFocusSubscription = TabNavigation.addListener('willFocus', payload => {
         StatusBar.setBackgroundColor('#FFFFFF');
       });
-    } 
+    }
   }
 
   componentWillUnmount() {
@@ -39,16 +39,16 @@ export default class ShoppingCarIndex extends BaseComponent {
     return (
       <View style={styles.container}>
         <NavBar leftIcon={''} title={'购物车'} />
-        <FlatList 
-          ref = {ref => this.flatList = ref}
+        <FlatList
+          ref={ref => this.flatList = ref}
           style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           refreshing={false}
-          onRefresh={()=>{
+          onRefresh={() => {
 
           }}
           data={[]}
-        ListEmptyComponent={()=> <EmptyView onPress={this.look} /> } />
+          ListEmptyComponent={() => <EmptyView onPress={this.look} />} />
       </View>
     )
   }
@@ -87,16 +87,16 @@ const styles = StyleSheet.create({
   emptyView: {
     width: Const.SCREEN_WIDTH,
     height: Const.PAGE_HEIGHT - getSize(49),
-    flexDirection: 'column', 
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
   },
   emptyViewButton: {
     width: getSize(90),
-    height: getSize(32), 
-    backgroundColor: '#fe3f56', 
-    flexDirection: 'row', 
-    justifyContent: 'center', 
+    height: getSize(32),
+    backgroundColor: '#fe3f56',
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center'
   }
 });

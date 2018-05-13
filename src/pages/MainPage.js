@@ -50,23 +50,23 @@ export default class MainPage extends BasePage {
   }
 
   initTabNavigator(initialRouteName) {
-    let actions = {
+    let actions = { 
       pageName: () => this.getPageName(),
       push: this.push,
       showToast: this.showToast
-    };
+     };
     return TabNavigator(
       {
-        Home: {
-          screen: ({ screenProps, navigation }) => <HomeIndex TabNavigation={navigation} {...actions} />,
-          navigationOptions: (navigation) => {  //屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)
-
-          }
+        Home: { 
+          screen: ({screenProps, navigation}) => <HomeIndex TabNavigation={navigation} { ...actions } /> ,
+          navigationOptions: ( navigation ) => {  //屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)
+            
+          } 
         },
-        Discover: { screen: ({ screenProps, navigation }) => <DiscoverIndex TabNavigation={navigation} {...actions} /> },
-        Customized: { screen: ({ screenProps, navigation }) => <CustomizedIndex TabNavigation={navigation} {...actions} /> },
-        ShoppingCar: { screen: ({ screenProps, navigation }) => <ShoppingCarIndex TabNavigation={navigation} {...actions} /> },
-        Mine: { screen: ({ screenProps, navigation }) => <MineIndex TabNavigation={navigation} {...actions} /> }
+        Discover: { screen: ({ screenProps, navigation }) => <DiscoverIndex TabNavigation={navigation} { ...actions } /> },
+        Customized: { screen: ({ screenProps, navigation }) => <CustomizedIndex TabNavigation={navigation} { ...actions } /> },
+        ShoppingCar: { screen: ({ screenProps, navigation }) => <ShoppingCarIndex TabNavigation={navigation} { ...actions } /> },
+        Mine: { screen: ({ screenProps, navigation }) => <MineIndex TabNavigation={navigation} { ...actions } /> }
       },
       {
         initialRouteName: initialRouteName,
@@ -77,13 +77,13 @@ export default class MainPage extends BasePage {
         backBehavior: 'Home',
         tabBarComponent: (event) => {
           const { navigationState, jumpToIndex } = event;
-          return <TabBar tabs={TABS} selectedIndex={navigationState.index} onTabSelected={index => jumpToIndex(index)} />;
+          return <TabBar tabs={TABS} selectedIndex={navigationState.index} onTabSelected={ index => jumpToIndex(index) } />;
         }
       }
     );
   }
 
-  render() {
+  render() { 
     return (
       <View style={styles.container}>
         <RootTabNavigator ref={ref => this.rootTabNavigator = ref} />
@@ -95,7 +95,7 @@ export default class MainPage extends BasePage {
     // console.log('willFocus');
   }
 
-  didFocus(payload) {
+  didFocus(payload) { 
     // console.log('didFocus');
   }
 
@@ -116,5 +116,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-
