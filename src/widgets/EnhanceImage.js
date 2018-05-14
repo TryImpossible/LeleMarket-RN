@@ -11,6 +11,10 @@ import FastImage from 'react-native-fast-image';
 import LoadingComponent from './LoadingComponent';
 
 /**
+ * 擴展Image
+ * 1.增加佔位圖功能
+ * 2.增加重試機制 
+ * 
  *  <EnhanceImage style={{ width: getSize(200), height: getSize(80) }} resizeMode={'cover'}
           source={{ uri: 'https://api.51app.cn/resource/diymall/wp/findList/907cb1af.gif' }}
           // source={{ uri: 'http://f8.topitme.com/8/25/80/1125177570eea80258o.jpg' }}
@@ -43,7 +47,7 @@ export default class EnhanceImage extends BaseWidget {
     loadingComponent: PropTypes.element, //Loading組件 
 
     allowTimeout: PropTypes.bool, //是否開啟超時監測
-    timout: PropTypes.number, // 圖片加載超時
+    timeout: PropTypes.number, // 圖片加載超時
 
     fail: PropTypes.shape({
       tip: PropTypes.string, //提示文字,
@@ -67,7 +71,7 @@ export default class EnhanceImage extends BaseWidget {
     },
 
     allowTimeout: false,
-    timout: 3000, //默認3秒超時
+    timeout: 3000, //默認3秒超時
 
     fail: {
       tip: '點擊重試',
@@ -140,7 +144,8 @@ export default class EnhanceImage extends BaseWidget {
   }
 
   renderFinalImage() {
-    const { showPlaceholder, placeholderUri, showLoading, loadingColor, timout, style = {}, onLoadStart, onLoadEnd, ...otherProps } = this.props;
+    const { showPlaceholder, placeholderUri, loading, loadingComponent, allowTimeout, timeout,
+      fail, failComponent, onRetry, style = {}, onLoadStart, onLoadEnd, ...otherProps } = this.props;
     // const resizeMode = this.props.resizeMode || FastImage.resizeMode.cover; //图片加载模式
     if (this.state.isFinishLoad) {
       return (
@@ -153,7 +158,7 @@ export default class EnhanceImage extends BaseWidget {
           // }}
           onLoadStart={() => {
             if (this.state.allowTimeout) {
-              this.timer = setTimeout(() => this.setState({ isFinishLoad: false, showLoading: false }), timout);
+              this.timer = setTimeout(() => this.setState({ isFinishLoad: false, showLoading: false }), timeout);
             }
             onLoadStart && onLoadStart();
           }}
