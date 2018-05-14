@@ -32,7 +32,7 @@ export default class LoadingComponent extends BaseWidget {
   constructor(props) {
     super(props);
     this.state = {
-      visible: LoadingComponent.defaultProps.visible,
+      visible: props.visible,
     }
   }
 

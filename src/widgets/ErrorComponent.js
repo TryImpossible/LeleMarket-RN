@@ -35,7 +35,7 @@ export default class ErrorComponent extends BaseWidget {
   constructor(props) {
     super(props);
     this.state = {
-      visible: ErrorComponent.defaultProps.visible,
+      visible: props.visible,
       mode: props.mode
     }
   }

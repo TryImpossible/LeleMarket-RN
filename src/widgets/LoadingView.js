@@ -30,7 +30,7 @@ export default class LoadingView extends BaseWidget {
   constructor(props) {
     super(props);
     this.state = {
-      visible: LoadingView.defaultProps.visible
+      visible: props.visible
     }
   }
 

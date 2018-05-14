@@ -28,7 +28,7 @@ export default class EmptyComponent extends BaseWidget {
   constructor(props) {
     super(props);
     this.state = {
-      visible: EmptyComponent.defaultProps.visible
+      visible: props.visible
     }
   }
 
