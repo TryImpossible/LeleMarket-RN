@@ -159,9 +159,6 @@ dependencies {
         }
     }
     compile project(':react-native-audio')
-    compile project(':wordpresseditor')
-    compile project(':react-native-webview-bridge')
-    compile 'jp.wasabeef:richeditor-android:1.2.2'
     compile project(':react-native-view-shot')
     compile project(':react-native-video')
     compile project(':react-native-svg')

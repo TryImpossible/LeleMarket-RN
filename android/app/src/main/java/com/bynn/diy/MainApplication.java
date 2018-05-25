@@ -5,12 +5,11 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.bynn.diy.bridge.EnhanceWebViewPackage;
-import com.bynn.diy.bridge.RichEditorPackage;
 import com.facebook.react.ReactApplication;
 import org.reactnative.camera.RNCameraPackage;
 
 import com.rnim.rn.audio.ReactNativeAudioPackage;
-import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
+
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.horcrux.svg.SvgPackage;
@@ -45,9 +44,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNCameraPackage(),
-            new ReactNativeAudioPackage(),
-            new WebViewBridgePackage(),
+          new RNCameraPackage(),
+          new ReactNativeAudioPackage(),
           new RNViewShotPackage(),
           new ReactVideoPackage(),
           new SvgPackage(),
@@ -56,8 +54,7 @@ public class MainApplication extends Application implements ReactApplication {
           new RNFetchBlobPackage(),
           new FastImageViewPackage(),
           new RNDeviceInfo(),
-          new RichEditorPackage(),
-              new EnhanceWebViewPackage()
+          new EnhanceWebViewPackage()
       );
     }
 
