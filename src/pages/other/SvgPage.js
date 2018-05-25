@@ -7,11 +7,11 @@ import Svg, { Line, LinearGradient, Defs, Stop, Rect, Ellipse, Circle } from "re
 
 import BasePage from '../BasePage';
 
-import WebViewBridge from 'react-native-webview-bridge-updated';
-
 import PropTypes from "prop-types";
 
 import KeyboardSpacer from "../../widgets/KeyboardSpacer";
+
+import EnhanceStatusBar from "../../widgets/EnhanceStatusBar";
 
 export default class SvgPage extends BasePage {
 
@@ -20,22 +20,6 @@ export default class SvgPage extends BasePage {
   }
 
   render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <WebViewBridge
-          // {...this.props}
-          style={{ flex: 1 }}
-          hideKeyboardAccessoryView={true}
-          keyboardDisplayRequiresUserAction={false}
-          ref={(r) => { this.webviewBridge = r }}
-          // onBridgeMessage={(message) => this.onBridgeMessage(message)}
-          // injectedJavaScript={injectScript}
-          source={{ uri: 'http://192.168.0.9:8083/richEditor/editor.html' }}
-        // onLoad={() => this.init()} 
-        />
-        <KeyboardSpacer />
-      </View>
-    )
     return (
       <View style={{ marginTop: getSize(30) }}>
         <Svg
