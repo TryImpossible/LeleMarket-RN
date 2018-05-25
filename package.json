@@ -26,8 +26,6 @@
     "react-native-svg": "^6.3.1",
     "react-native-video": "^2.0.0",
     "react-native-view-shot": "^2.3.0",
-    "react-native-webview-bridge": "^0.33.0",
-    "react-native-zss-rich-text-editor": "^1.1.0",
     "react-navigation": "^1.5.11"
   },
   "devDependencies": {
