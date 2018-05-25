@@ -1,20 +1,13 @@
 package com.bynn.diy.bridge;
 
-import android.content.Context;
-import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
-
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.views.webview.ReactWebViewManager;
-
-/**
- * Created by barry on 2018/4/22.
- */
+import android.webkit.WebView;
 
 public class EnhanceWebViewManager extends ReactWebViewManager {
 
-    private static final String REACT_CLASS = "EnhanceWebView";
+    private static final String REACT_CLASS = "RCTEnhanceWebView";
 
     @Override
     public String getName() {
@@ -23,17 +16,20 @@ public class EnhanceWebViewManager extends ReactWebViewManager {
 
     @Override
     protected WebView createViewInstance(ThemedReactContext reactContext) {
-        WebView webView = super.createViewInstance(reactContext);
-        webView.requestFocus();
-        return webView;
+        WebView root = super.createViewInstance(reactContext);
+        return root;
     }
 
-    @ReactProp(name="autoFocus", defaultBoolean = true)
-    public void autoFocus(WebView webView, boolean autoFocus) {
+
+    @ReactProp(name = "allowFileAccessFromFileURLs")
+    public void setAllowFileAccessFromFileURLs(WebView root, boolean allows) {
+        root.getSettings().setAllowFileAccessFromFileURLs(allows);
+    }
+
+    @ReactProp(name = "autoFocus")
+    public void setAutoFocus(WebView root, boolean autoFocus) {
         if (autoFocus) {
-            webView.requestFocus();
-//            ((InputMethodManager) this.context.getSystemService(
-//                this.context.INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.RESULT_SHOWN);
+            root.requestFocus();
         }
     }
 }

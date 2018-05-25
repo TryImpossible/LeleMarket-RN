@@ -1,19 +1,16 @@
 //
 //  EnhanceWebViewManager.m
-//  DIY
+//  iber
 //
-//  Created by barry on 2018/4/22.
+//  Created by barry on 2018/5/10.
 //  Copyright © 2018年 Facebook. All rights reserved.
 //
 
 #import "EnhanceWebViewManager.h"
-#import <React/RCTBridge.h>
 
 @implementation EnhanceWebViewManager
 
-RCT_EXPORT_MODULE()
-
-RCT_EXPORT_VIEW_PROPERTY(hideKeyboardAccessoryView, BOOL)
+RCT_EXPORT_MODULE(RCTEnhanceWebView)
 
 RCT_REMAP_VIEW_PROPERTY(keyboardDisplayRequiresUserAction, _webView.keyboardDisplayRequiresUserAction, BOOL)
 
