@@ -69,12 +69,8 @@ export default class EmptyComponent extends BaseWidget {
 
 const styles = StyleSheet.create({
   container: {
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: Const.MAIN_COLOR,
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
