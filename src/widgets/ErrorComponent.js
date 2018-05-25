@@ -11,12 +11,12 @@ import PropTypes from 'prop-types';
 
 export default class ErrorComponent extends BaseWidget {
 
-  static data = [
-    { mode: 'NETWORK', icon: 'icon_err_network', describe: '请点击屏幕，重新加载' },
-    { mode: 'TIMEOUT', icon: 'icon_err_timeout', describe: '请点击屏幕，重新加载' },
-    { mode: 'PROGRAM', icon: 'icon_err_program', describe: '请点击屏幕，重新加载' },
-    { mode: 'SERVER', icon: 'icon_err_server', describe: '请点击屏幕，重新加载' }
-  ]
+  static data = {
+    'NETWORK': { icon: 'icon_err_network', describe: '请点击屏幕，重新加载' },
+    'TIMEOUT': { icon: 'icon_err_timeout', describe: '请点击屏幕，重新加载' },
+    'PROGRAM': { icon: 'icon_err_program', describe: '请点击屏幕，重新加载' },
+    'SERVER': { icon: 'icon_err_server', describe: '请点击屏幕，重新加载' }
+  }
 
   static propTypes = {
     visible: PropTypes.bool, //是否显示 
@@ -40,25 +40,15 @@ export default class ErrorComponent extends BaseWidget {
     }
   }
 
-  findIndex(mode) {
-    for (let index = 0; index < ErrorComponent.data.length; index++) {
-      const obj = ErrorComponent.data[index];
-      if (obj.mode === mode) {
-        return index;
-        break;
-      }
-    }
-  }
-
   render() {
     if (this.state.visible) {
       const { style, retry } = this.props;
-      let index = this.findIndex(this.state.mode);
+      const { mode } = this.state;
       return (
         <TouchableOpacity style={[styles.container, { backgroundColor: '#fff', ...style }]} activeOpacity={1} onPress={retry} >
           <Animated.View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <SvgUri width={getSize(90)} height={getSize(90)} source={ErrorComponent.data[index].icon} fill={'#8cadca'} />
-            <Text style={{ marginTop: getSize(10), color: '#666666', fontSize: getSize(13) }}>{ErrorComponent.data[index].describe}</Text>
+            <SvgUri width={getSize(90)} height={getSize(90)} source={ErrorComponent.data[mode].icon} fill={'#8cadca'} />
+            <Text style={{ marginTop: getSize(10), color: '#666666', fontSize: getSize(13) }}>{ErrorComponent.data[mode].describe}</Text>
           </Animated.View>
         </TouchableOpacity>
       )
