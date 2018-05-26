@@ -10,6 +10,8 @@ import ScrollableTabBar from './ScrollableTabBar';
 
 import ScrollableView from "./ScrollableView";
 
+export const TabBarPosition = { top: 'top', bottom: 'bottom', overlayTop: 'overlayTop', overlayBottom: 'overlayBottom' }
+
 export default class ScrollableTabView extends BaseWidget {
 
   static propTypes = {
@@ -31,7 +33,7 @@ export default class ScrollableTabView extends BaseWidget {
     enableScrollAnimation: PropTypes.bool, //是否开启滚动动画
 
     renderTabBar: PropTypes.func, //若不使用默认的TabBar, 使用此Props传入
-    tabBarPosition: PropTypes.oneOf(['top', 'bottom', 'overlayTop', 'overlayBottom']), //TabBar位置
+    tabBarPosition: PropTypes.oneOf(Object.values(TabBarPosition)), //TabBar位置
   }
 
   static defaultProps = {
