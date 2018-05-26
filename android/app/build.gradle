@@ -182,7 +182,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-project.afterEvaluate {
-    apply from: '../../node_modules/react-native-zss-rich-text-editor/htmlCopy.gradle';
-    copyEditorHtmlToAppAssets(file('../../node_modules/react-native-zss-rich-text-editor'))
-}
