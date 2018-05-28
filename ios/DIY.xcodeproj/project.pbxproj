@@ -42,7 +42,6 @@
 		4C99B9261F534B449D40FCCA /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49AE5A710D2E4D3DA9FD0C4C /* libRNFetchBlob.a */; };
 		4CAB680D208EFA54009AC770 /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAB680C208EFA45009AC770 /* libFastImage.a */; };
 		4CAB6822208F033F009AC770 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAB6821208F032E009AC770 /* libRNCamera.a */; };
-		4CD9DE612085F55600DBBF66 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD9DE482085F50900DBBF66 /* libReact-Native-Webview-Bridge.a */; };
 		4CFD5C61208C609100B36142 /* EnhanceWebViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD5C60208C609100B36142 /* EnhanceWebViewManager.m */; };
 		7AFBC69B3D894795A116B433 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4810D350CB8A49358A90719C /* libimageCropPicker.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -390,13 +389,6 @@
 			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
 			remoteInfo = RNCamera;
 		};
-		4CD9DE472085F50900DBBF66 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CD9DE2A2085F50900DBBF66 /* React-Native-Webview-Bridge.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4114DC4C1C187C3A003CD988;
-			remoteInfo = "React-Native-Webview-Bridge";
-		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -497,7 +489,6 @@
 		4CAB6806208EFA45009AC770 /* FastImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FastImage.xcodeproj; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; };
 		4CAB681C208F032E009AC770 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
 		4CB7FAAB208ED27C004630D5 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CD9DE2A2085F50900DBBF66 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge-updated/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		4CFD5C5F208C609100B36142 /* EnhanceWebViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnhanceWebViewManager.h; sourceTree = "<group>"; };
 		4CFD5C60208C609100B36142 /* EnhanceWebViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnhanceWebViewManager.m; sourceTree = "<group>"; };
 		5A0A8EF306FC0209C98F3828 /* Pods-DIY.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DIY.release.xcconfig"; path = "Pods/Target Support Files/Pods-DIY/Pods-DIY.release.xcconfig"; sourceTree = "<group>"; };
@@ -547,7 +538,6 @@
 				4CAB680D208EFA54009AC770 /* libFastImage.a in Frameworks */,
 				4C59FEE120899CB700B1F16E /* libRCTAnimation.a in Frameworks */,
 				4C59FEE020899C1D00B1F16E /* libRNAudio.a in Frameworks */,
-				4CD9DE612085F55600DBBF66 /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -855,14 +845,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4CD9DE2B2085F50900DBBF66 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CD9DE482085F50900DBBF66 /* libReact-Native-Webview-Bridge.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4CFD5C95208C625A00B36142 /* bridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -896,7 +878,6 @@
 				4CAB681C208F032E009AC770 /* RNCamera.xcodeproj */,
 				4CAB6806208EFA45009AC770 /* FastImage.xcodeproj */,
 				4C59FE8D20899BC800B1F16E /* RNAudio.xcodeproj */,
-				4CD9DE2A2085F50900DBBF66 /* React-Native-Webview-Bridge.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -1182,10 +1163,6 @@
 				{
 					ProductGroup = 139FDEE71B06529A00C62182 /* Products */;
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
-				},
-				{
-					ProductGroup = 4CD9DE2B2085F50900DBBF66 /* Products */;
-					ProjectRef = 4CD9DE2A2085F50900DBBF66 /* React-Native-Webview-Bridge.xcodeproj */;
 				},
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
@@ -1552,13 +1529,6 @@
 			fileType = archive.ar;
 			path = libRNCamera.a;
 			remoteRef = 4CAB6820208F032E009AC770 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CD9DE482085F50900DBBF66 /* libReact-Native-Webview-Bridge.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libReact-Native-Webview-Bridge.a";
-			remoteRef = 4CD9DE472085F50900DBBF66 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {

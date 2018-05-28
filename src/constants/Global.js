@@ -1,5 +1,5 @@
 
-import { Platform, Dimensions, PixelRatio, StyleSheet } from 'react-native'
+import { Platform, StatusBar, Dimensions, PixelRatio, StyleSheet } from 'react-native'
 
 const { width, height } = Dimensions.get('window');
 
@@ -22,7 +22,7 @@ global.getSize = (size) => {
   if (size <= 1 && size > 0) {
     return (PixelRatio.get() == 3 ? 2 : 1) / PixelRatio.get()
   } else {
-    return parseInt(width * size / 375);
+    return parseInt(width * size / 375); 
   }
 }
 
@@ -67,15 +67,14 @@ global.Const = {
 
   SCREEN_WIDTH: parseInt(width), //屏幕宽度
 
-  SCREEN_HEIGHT: parseInt(height), //屏幕高度
+  SCREEN_HEIGHT: __IOS__ ? parseInt(height) : parseInt(height - StatusBar.currentHeight), //屏幕高度
 
-  STATUSBAR_HEIGHT: __IOS__ ? (__IPhoneX__ ? getSize(44) : getSize(20)) : getSize(20), //状态栏高度
+  STATUSBAR_HEIGHT: __IOS__ ? (__IPhoneX__ ? getSize(44) : getSize(20)) : 0, //状态栏高度
 
   NAVBAR_HEIGHT: getSize(44), //导航栏高度
 
   PAGE_WIDTH: parseInt(width), //页面宽度
 
-  PAGE_HEIGHT: parseInt(height) - (__IOS__ ? (__IPhoneX__ ? getSize(44) : getSize(20)) : getSize(20)) - getSize(44) - (__IPhoneX__ ? 34 : 0), //页面高度
-
-  RANDOM_COLOR: '#' + Math.floor(Math.random() * 16777215).toString(16) //随机颜色，一般调试使用 
+  PAGE_HEIGHT: parseInt(height) - (__IOS__ ? (__IPhoneX__ ? getSize(44) : getSize(20)) : 0) - getSize(44) - (__IPhoneX__ ? 34 : 0), //页面高度
+  
 }

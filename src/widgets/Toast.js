@@ -52,7 +52,7 @@ export default class Toast extends BaseWidget {
       Animated.spring(this.path, {
         toValue: 0,
         easing: Easing.ease,
-        duration: 200,
+        duration: 200
       }).start(()=>{
         this.timer && clearTimeout(this.timer);
         this.setState({ visible: false });
@@ -69,6 +69,8 @@ export default class Toast extends BaseWidget {
     if (visible) {
       let index = Toast.positions.indexOf(position) != -1 ? Toast.positions.indexOf(position) : 1;
       let justifyContent = ['flex-start', 'center', 'flex-end'][index]; 
+      // transform: [{ scale }]
+      
       return (
         <Animated.View style={[styles.container, { opacity: this.path, justifyContent: justifyContent }]} pointerEvents={'none'}>
           <View style={styles.view}>

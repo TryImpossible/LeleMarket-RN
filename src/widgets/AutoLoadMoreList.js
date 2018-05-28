@@ -8,14 +8,16 @@ import Svg, { LinearGradient, Defs, Stop, Rect } from "react-native-svg";
 
 import PropTypes from 'prop-types';
 
+import ErrorComponent from './ErrorComponent';
+
 export default class AutoLoadMoreList extends BaseWidget {
 
   static propTypes = {
     getRef: PropTypes.func, //FlatList实例，由于 ref 不能作为Props, 采用 getRef 代替
-    status: PropTypes.oneOf(['PENDING', 'LOADING', 'LOADMORE', 'FINISH', 'NOMOREDATA', 'NODATA']), //状态
+    status: PropTypes.oneOf(['NETWORK', 'TIMEOUT', 'PROGRAM', 'SERVER', 'PENDING', 'LOADING', 'LOADMORE', 'FINISH', 'NOMOREDATA', 'NODATA']), //状态
     LoadingComponent: PropTypes.element, //加载中 -> 展示组件
     LoadingMoreComponent: PropTypes.element, //加载更多 -> 展示组件
-    NoMoreDataComponent: PropTypes.element //没有数据 -> 展示组件
+    NoMoreDataComponent: PropTypes.element, //没有更多数据 -> 展示组件
   }
 
   static defaultProps = {
@@ -24,23 +26,11 @@ export default class AutoLoadMoreList extends BaseWidget {
 
   constructor(props) {
     super(props);
-    this.state = {
-      status: props.status
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.status && nextProps.status !== this.state.status) {
-      this.setState({
-        status: nextProps.status
-      });
-    }
   }
 
   render() {
-    let { getRef, refreshing = false, LoadingComponent, LoadingMoreComponent, NoMoreDataComponent,
-      NoDataComponent, ListFooterComponent, onEndReached, ...otherProps } = this.props;
-    let { status } = this.state;
+    let { getRef, status, refreshing = false, LoadingComponent, LoadingMoreComponent, NoMoreDataComponent,
+      ListEmptyComponent, ListFooterComponent, onEndReached, ...otherProps } = this.props;
     return (
       <FlatList
         ref={ref => getRef && getRef(ref)}
@@ -48,27 +38,41 @@ export default class AutoLoadMoreList extends BaseWidget {
         refreshing={refreshing}
         ListFooterComponent={() => {
           if (status === 'PENDING') { //等待加载
-            return null;
+            return <EmptyView />;
           } else if (status === 'LOADING') { //加载中
             return LoadingComponent || <LoadingView />;
           } else if (status === 'LOADMORE') { //加载失败后，手动进行加载
             return LoadingMoreComponent || <LoadingMoreView onPress={onEndReached} />;
           } else if (status === 'FINISH') { //加载完成
-            return null;
+            return <EmptyView />;
           } else if (status === 'NOMOREDATA') { //没有更多数据
             return NoMoreDataComponent || <NoMoreDataView />;
-          } else if (status === 'NODATA') { //没有数据 
-            return NoDataComponent || <NoDataView />;
+          } else if (status === 'NODATA') { //没有数据  
+            return null; //這裏使用 List 的 ListEmptyComponent 屬性
           }
         }}
         onEndReached={({ distanceFromEnd }) => {
           // distanceFromEnd > 0, 尽量保证是下拉加载 
           // !refreshing, 保证上拉刷新已经完成
           // 'PENDING' 'FINISH' 保证下拉加载不会超频
-          if ((status === 'PENDING' || status === 'FINISH') && distanceFromEnd > 0 && !refreshing) onEndReached && onEndReached();
+          // if ((status === 'PENDING' || status === 'FINISH') && distanceFromEnd > 0 && !refreshing) onEndReached && onEndReached();
+          if ((status === 'PENDING' || status === 'FINISH') && !refreshing) onEndReached && onEndReached();
+        }}
+        ListEmptyComponent={()=>{
+          if (['NETWORK', 'TIMEOUT', 'SERVER'].indexOf(status) != -1) {
+            return <ErrorComponent mode={status} retry={() => this.props.onRefresh && this.props.onRefresh()} />
+          } else if (status === 'NODATA') {
+            return ListEmptyComponent();
+          } else {
+            return null;
+          }
         }} />
     )
   }
+}
+
+const EmptyView = () => {
+  return <View style={styles.listFooterView} />;
 }
 
 const LoadingView = (props) => {
@@ -88,7 +92,7 @@ const LoadingMoreView = (props) => {
   )
 }
 
-const LinearGradientLine = (props) => {
+const LinearGradientLinePositive = (props) => {
   return (
     <Svg width={getSize(60)} height={Const.LINE_WIDTH} >
       <Defs >
@@ -105,7 +109,7 @@ const LinearGradientLine = (props) => {
   )
 }
 
-const LinearGradientLine2 = (props) => {
+const LinearGradientLineReverse = (props) => {
   return (
     <Svg width={getSize(60)} height={Const.LINE_WIDTH} >
       <Defs >
@@ -125,9 +129,9 @@ const LinearGradientLine2 = (props) => {
 const NoMoreDataView = (props) => {
   return (
     <View style={styles.listFooterView}>
-      <LinearGradientLine />
+      <LinearGradientLinePositive />
       <Text style={[styles.listFooterText, { color: '#a7a5a5', marginHorizontal: getSize(3) }]}>{`到底啦`}</Text>
-      <LinearGradientLine2 />
+      <LinearGradientLineReverse />
     </View>
   )
 }

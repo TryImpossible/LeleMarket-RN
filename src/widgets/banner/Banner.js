@@ -112,9 +112,7 @@ export default class Banner extends BaseWidget {
         onScroll={({ nativeEvent }) => {
           const offsetX = nativeEvent.contentOffset.x;
           let percent = (offsetX / width);
-          if (Number.isInteger(percent) && percent >= 0) {
-            this.currentIndex = percent;
-          }
+          this.currentIndex = Math.floor(percent);
           onScroll && onScroll(percent, this.currentIndex);
         }} />
     )

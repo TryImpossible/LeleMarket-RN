@@ -20,7 +20,7 @@ export default class Banner extends BaseWidget {
 
   static propTypes = {
     images: PropTypes.array.isRequired, //图片数组
-    height: PropTypes.number, //Banner高度
+    height: PropTypes.number.isRequired, //Banner高度
     defaultIndex: PropTypes.number, //初始化
     onClick: PropTypes.func, //点击
     duration: PropTypes.number, //轮播间隔

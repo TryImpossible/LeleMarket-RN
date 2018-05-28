@@ -38,7 +38,7 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
     this.path = new Animated.Value(0); //网络提示栏动画
-    this.initNavigator(InitPage[0]);
+    this.initNavigator(InitPage[1]);
   }
 
   initNavigator(initPageName) {
@@ -105,12 +105,15 @@ class App extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { isConnected } = nextProps;
-    console.warn(isConnected);
+    // console.warn(isConnected);
     if (!isConnected) {
-      Animated.timing(this.path, {
+      Animated.spring(this.path, {
         toValue: 1,
         easing: Easing.linear,
-        duration: 200
+        duration: 200,
+        // velocity: 100,
+        // tension: 100,
+        // friction: 100
       }).start(() => {
         this.timer = setTimeout(() => {
           Animated.timing(this.path, {
