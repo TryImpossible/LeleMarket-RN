@@ -1,10 +1,14 @@
 import React from 'react';
 
-import { View, FlatList, TouchableOpacity, Animated, Easing, Image, StyleSheet, ViewPropTypes } from 'react-native';
+import { View, FlatList, TouchableOpacity, Animated, Easing, Image, StyleSheet, ViewPropTypes, ColorPropType } from 'react-native';
 
 import BaseWidget from '../BaseWidget';
 
 import PropTypes from 'prop-types';
+
+import BannerView from './BannerView';
+
+import Indicater, { IndicaterMode, IndicaterAlign } from './Indicater';
 
 export default class Banner extends BaseWidget {
 
@@ -13,11 +17,20 @@ export default class Banner extends BaseWidget {
     width: PropTypes.number.isRequired, //Banner宽度
     height: PropTypes.number, //Banner高度
     initialIndex: PropTypes.number, //初始化Index
+    onScroll: PropTypes.func, //滚动
     duration: PropTypes.number, //轮播间隔
     autoPlay: PropTypes.bool, //是否自动播放
     autoLoop: PropTypes.bool, //是否轮播
-    onScroll: PropTypes.func, //滑动回调
-    respondChildEvent: PropTypes.func, //响应子视图事件
+
+    indicaterStyle: ViewPropTypes.style, //IndicaterStyle样式
+    title: PropTypes.array, //描述
+    dotStyle: ViewPropTypes.style, //dot样式
+    numberStyle: ViewPropTypes.style, //number样式
+    titleStyle: ViewPropTypes.style, //title样式
+    mode: PropTypes.oneOf(Object.values(IndicaterMode)), //Indicater 模式
+    align: PropTypes.oneOf(Object.values(IndicaterAlign)), //Indicater 对齐方式
+    activeColor: ColorPropType,  //非選中的顏色 
+    inactiveColor: ColorPropType, //選中的顏色
   }
 
   static defaultProps = {
@@ -25,101 +38,75 @@ export default class Banner extends BaseWidget {
     height: getSize(150), //默认高度，150
     initialIndex: 0, //默认选中第一张
     duration: 2500, //默认时长
-    autoPlay: false, //默认关闭自动播放
-    autoLoop: false, //默认关闭轮播 
+    autoPlay: true, //默认关闭自动播放
+    autoLoop: true, //默认关闭轮播 
   }
 
   constructor(props) {
     super(props);
-    this.currentIndex = props.initialIndex;
-    this.canRespondChildEvent = true; //默认响应点击事件
-  }
-
-  componentDidMount() {
-    const { respondChildEvent } = this.props;
-    this.autoPlay(); //是否播放
-    respondChildEvent && respondChildEvent(this.canRespondChildEvent);
-  }
-
-  componentWillUnmount() {
-    this.stopPlay();
-  }
-
-  autoPlay() {
-    if (!this.props.autoPlay) return;
-
-    const { children = [], duration, autoLoop } = this.props;
-    const length = children.length;
-    this.interval = setInterval(() => {
-      if (!autoLoop && this.currentIndex === length - 1) { //不轮播的情况下，播放至最后一张，停止播放
-        this.stopPlay();
-      } else {
-        let nextIndex = this.currentIndex + 1;
-        nextIndex = (nextIndex) % length;
-        this._scrollTo(nextIndex, true);
-      }
-    }, duration);
-  }
-
-  stopPlay() {
-    this.interval && clearInterval(this.interval);
-  }
-
-  _scrollTo(index, animated = false) {
-    const { widht } = this.props;
-    this.bannersFlatList && this.bannersFlatList.scrollToOffset({ animated, offset: index * Const.SCREEN_WIDTH });
   }
 
   render() {
-    let { style, width, height, initialIndex, onScroll, respondChildEvent, children = [] } = this.props;
+    const {
+      style,
+      children = [],
+      width,
+      height,
+      initialIndex,
+      onScroll,
+      duration,
+      autoPlay,
+      autoLoop,
+      respondChildEvent,
+      indicaterStyle,
+      title,
+      dotStyle,
+      numberStyle,
+      titleStyle,
+      mode,
+      align,
+      activeColor,
+      inactiveColor
+    } = this.props;
     return (
-      <FlatList
-        onTouchStart={() => this.stopPlay()}
-        /**
-         * 1.拖拽结束时，ios响应onTouchEnd，android响应onTouchCancel
-         * 2.点击结束时，ios和android正常响应onTouchEnd
-         */
-        onTouchEnd={() => this.autoPlay()}
-        onTouchCancel={() => this.autoPlay()}
-        ref={ref => this.bannersFlatList = ref}
-        style={{ ...style }}
-        data={children}
-        horizontal={true}
-        pagingEnabled={true}
-        bounces={false}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => children[index]}
-        keyExtractor={(item, index) => `Banners${index}`}
-        onScrollBeginDrag={({ nativeEvent }) => {
-          this.canRespondChildEvent = false; //onScrollBeginDrag时，不响应子视图事件
-          respondChildEvent && respondChildEvent(this.canRespondChildEvent);
-        }}
-        onScrollEndDrag={({ nativeEvent }) => {
-          this.canRespondChildEvent = true; //onScrollEndDrag时，响应子视图事件
-          respondChildEvent && respondChildEvent(this.canRespondChildEvent);
-
-          const offsetX = nativeEvent.contentOffset.x;
-          const length = children.length;
-          if (offsetX >= (length - 1) * width) {
-            this._scrollTo(0);
-          } else if (offsetX <= 0) {
-            this._scrollTo(length - 1);
-          }
-        }}
-        onMomentumScrollEnd={({ nativeEvent }) => {
-
-        }}
-        onScroll={({ nativeEvent }) => {
-          const offsetX = nativeEvent.contentOffset.x;
-          let percent = (offsetX / width);
-          this.currentIndex = Math.floor(percent);
-          onScroll && onScroll(percent, this.currentIndex);
-        }} />
+      <View style={[styles.container, { width, height }]}>
+        <BannerView
+          ref={ ref => this.banner = ref }
+          style={style}
+          width={width}
+          height={height}
+          initialIndex={initialIndex}
+          duration={duration}
+          autoPlay={autoPlay}
+          autoLoop={autoLoop}
+          respondChildEvent={respondChildEvent}
+          onScroll={(percent, selectedIndex) => {
+            this.indicater && this.indicater.scrollTo(percent);
+            onScroll && onScroll(percent, selectedIndex);
+          }} >
+          {children}
+        </BannerView>
+        <Indicater
+          ref={ref => this.indicater = ref}
+          style={{ ...indicaterStyle }}
+          count={children.length}
+          title={title}
+          initialIndex={initialIndex}
+          dotStyle={dotStyle}
+          titleStyle={titleStyle}
+          numberStyle={numberStyle}
+          mode={mode}
+          align={align}
+          activeColor={activeColor}
+          inactiveColor={inactiveColor} />
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   }
 });

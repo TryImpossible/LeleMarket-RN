@@ -1,10 +1,13 @@
 
+import { IndicaterMode, IndicaterAlign } from './Indicater';
+
 import SimpleBanner from './SimpleBanner';
 
-import { IndicaterMode, IndicaterAlign } from './Indicater'
+import Banner from './Banner';
 
 export {
   IndicaterMode,
   IndicaterAlign,
-  SimpleBanner
+  SimpleBanner,
+  Banner
 };

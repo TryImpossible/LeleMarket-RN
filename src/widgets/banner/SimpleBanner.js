@@ -6,7 +6,7 @@ import BaseWidget from '../BaseWidget';
 
 import PropTypes from 'prop-types';
 
-import Banner from './Banner';
+import BannerView from './BannerView';
 
 import Indicater, { IndicaterMode, IndicaterAlign } from './Indicater';
 
@@ -78,7 +78,7 @@ export default class SimpleBanner extends BaseWidget {
     } = this.props;
     return (
       <View style={[styles.container, { width, height }]}>
-        <Banner
+        <BannerView
           ref={ ref => this.banner = ref }
           style={style}
           width={width}
@@ -96,13 +96,13 @@ export default class SimpleBanner extends BaseWidget {
           {
             images.map((item, index) => {
               return (
-                <TouchableOpacity key={`${index}`} activeOpacity={1} onPress={() => this.canResponseChildEvent && console.log(123) } >
+                <TouchableOpacity key={`${index}`} activeOpacity={1} onPress={() => this.canResponseChildEvent && onClick && onClick() } >
                   <Image style={{ width: Const.SCREEN_WIDTH, height, }} source={{ uri: item }} />
                 </TouchableOpacity>
               )
             })
           }
-        </Banner>
+        </BannerView>
         <Indicater
           ref={ref => this.indicater = ref}
           style={{ backgroundColor: 'transparent', ...indicaterStyle }}
