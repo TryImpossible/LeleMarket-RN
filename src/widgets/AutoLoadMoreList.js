@@ -10,7 +10,18 @@ import PropTypes from 'prop-types';
 
 import ErrorComponent from './ErrorComponent';
 
-export const AutoLoadMoreListStatus = ['NETWORK', 'TIMEOUT', 'PROGRAM', 'SERVER', 'PENDING', 'LOADING', 'LOADMORE', 'FINISH', 'NOMOREDATA', 'NODATA'];
+// AutoLoadList状态值
+export const AutoLoadMoreListStatus = {
+  network: 'NETWORK',
+  timeout: 'TIMEOUT',
+  server: 'SERVER',
+  pending: 'PENDING',
+  noData: 'NODATA',
+  loading: 'LOADING',
+  loadMore: 'LOADMORE',
+  finish: 'FINISH',
+  noMoreData: 'NOMOREDATA'
+}
 
 export default class AutoLoadMoreList extends BaseWidget {
 
@@ -32,12 +43,19 @@ export default class AutoLoadMoreList extends BaseWidget {
 
   render() {
     let { getRef, status, refreshing = false, LoadingComponent, LoadingMoreComponent, NoMoreDataComponent,
-      ListEmptyComponent, ListFooterComponent, onEndReached, ...otherProps } = this.props;
+      ListHeaderComponent, ListEmptyComponent, ListFooterComponent, onEndReached, ...otherProps } = this.props;
     return (
       <FlatList
         ref={ref => getRef && getRef(ref)}
         {...otherProps}
         refreshing={refreshing}
+        ListHeaderComponent={() => {
+          if (['NETWORK', 'TIMEOUT', 'SERVER', 'NODATA'].indexOf(status) !== -1) {
+            return null;
+          } else {
+            return ListHeaderComponent ? ListHeaderComponent() : null;
+          }
+        }}
         ListFooterComponent={() => {
           if (status === 'PENDING') { //等待加载
             return <EmptyView />;
@@ -57,8 +75,11 @@ export default class AutoLoadMoreList extends BaseWidget {
           // distanceFromEnd > 0, 尽量保证是下拉加载 
           // !refreshing, 保证上拉刷新已经完成
           // 'PENDING' 'FINISH' 保证下拉加载不会超频
-          // if ((status === 'PENDING' || status === 'FINISH') && distanceFromEnd > 0 && !refreshing) onEndReached && onEndReached();
-          if ((status === 'PENDING' || status === 'FINISH') && !refreshing) onEndReached && onEndReached();
+          // console.log(status, distanceFromEnd, refreshing);
+
+          // if ((status === 'PENDING' || status === 'FINISH') && distanceFromEnd > 0 && !refreshing) onEndReached && onEndReached(); //第一次
+          // if ((status === 'PENDING' || status === 'FINISH') && !refreshing) onEndReached && onEndReached(); //第二次，測試優化
+          if (status === 'FINISH' && !refreshing) onEndReached && onEndReached(); //第三次，測試優化
         }}
         ListEmptyComponent={()=>{
           if (['NETWORK', 'TIMEOUT', 'SERVER'].indexOf(status) != -1) {
