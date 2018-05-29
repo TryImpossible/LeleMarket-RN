@@ -65,6 +65,7 @@ export default class ScrollableTabBar extends BaseWidget {
         {
           tabs.map((item, index) => {
             let color = this.textColorPath.interpolate(this._getInterpolate(index));
+            let scale = this.textColorPath.interpolate(this._getInterpolate(index, 'scale'));
             return (
               <TouchableOpacity
                 key={`ScrollableTabBar${index}`}
@@ -79,7 +80,7 @@ export default class ScrollableTabBar extends BaseWidget {
                     this.itemTabWidth[index] = __IOS__ ? getSize(width) : width;
                     if (index == 0) this.changeTabTo(0, 'spring');
                   }}
-                  style={{ ...tabBarTextStyle, color, marginHorizontal: tabBarSpace  }}>
+                  style={{ ...tabBarTextStyle, color, transform: [{ scale }], marginHorizontal: tabBarSpace  }}>
                   {item}
                 </Animated.Text>
               </TouchableOpacity>
@@ -95,13 +96,19 @@ export default class ScrollableTabBar extends BaseWidget {
    * Tab Text颜色渐变
    * @param {*} index 
    */
-  _getInterpolate(index) {
+  _getInterpolate(index, mode = 'color') {
     const { tabBarActiveTextColor, tabBarInactiveTextColor } = this.props;
     let inputRange = [];
     let outputRange = [];
     this.props && this.props.tabs.map((item, i) => {
       inputRange.push(i);
-      outputRange.push(i !== index ? tabBarInactiveTextColor : tabBarActiveTextColor);
+      if (mode === 'color') {
+        outputRange.push(i !== index ? tabBarInactiveTextColor : tabBarActiveTextColor);
+      } else if ('scale'){
+        outputRange.push(i !== index ? 1 : 1.1);
+      } else {
+        outputRange.push(i);
+      }
     });
     return { inputRange, outputRange };
   }
