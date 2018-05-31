@@ -93,7 +93,7 @@ export default class ScrollableTabBar extends BaseWidget {
   }
 
   /**
-   * Tab Text颜色渐变
+   * Tab 插值映射
    * @param {*} index 
    */
   _getInterpolate(index, mode = 'color') {
