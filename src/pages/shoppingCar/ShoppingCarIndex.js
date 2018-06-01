@@ -8,7 +8,9 @@ import NavBar from '../../widgets/NavBar';
 
 import SvgUri from '../../dependencies/react-native-svg-uri';
 
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+
+import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 
 export default class ShoppingCarIndex extends BaseComponent {
 
@@ -39,8 +41,8 @@ export default class ShoppingCarIndex extends BaseComponent {
     return (
       <View style={styles.container}>
         <NavBar leftIcon={''} title={'购物车'} />
-        <FlatList
-          ref={ref => this.flatList = ref}
+        <EnhanceList
+          getRef={ref => this.enhanceList = ref}
           style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           refreshing={false}
@@ -48,6 +50,7 @@ export default class ShoppingCarIndex extends BaseComponent {
 
           }}
           data={[]}
+          status={EnhanceListStatus.noData}
           ListEmptyComponent={() => <EmptyView onPress={this.look} />} />
       </View>
     )

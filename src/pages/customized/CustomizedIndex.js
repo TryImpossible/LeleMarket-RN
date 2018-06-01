@@ -14,7 +14,7 @@ import SeparatorLine from '../../widgets/SeparatorLine';
 
 import CardView from '../../widgets/CardView';
 
-import AutoLoadMoreList from '../../widgets/AutoLoadMoreList';
+import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 
 const PAGE_SIZE = 10;
 
@@ -30,7 +30,7 @@ export default class CustomizedIndex extends BaseComponent {
 
     this.state = {
       isRefresh: false, //是否刷新 
-      status: 'PENDING', //AutoLoadMoreList下拉状态
+      status: EnhanceListStatus.pending, //enhanceList下拉状态
       menus: [], //左侧菜单分类
       banners: [], //右侧顶部Banner图
       recommendGoods: [] //右侧商品
@@ -56,7 +56,7 @@ export default class CustomizedIndex extends BaseComponent {
    */
   loadMoreGoodsData(page) {
     let id = this.state.menus[this.selectedMenuIndex].id;
-    this.setState({ status: 'LOADING' });
+    this.setState({ status: EnhanceListStatus.loading });
     ServerApi.goods(id, page, (ret) => {
       if (ret.code == Const.REQUEST_SUCCESS) {
         let recommendGoods = deepCopy(this.state.recommendGoods.concat(ret.data));
@@ -64,15 +64,15 @@ export default class CustomizedIndex extends BaseComponent {
         let status = this.state.status;
         let length = ret.data.length;
         if (length < PAGE_SIZE) {
-          status = 'NOMOREDATA';
+          status = EnhanceListStatus.noMoreData;
         } else if (length === PAGE_SIZE) {
-          status = 'FINISH';
+          status = EnhanceListStatus.finish;
           this.pageIndex++;
         }
         this.setState({ recommendGoods, status, banners: deepCopy(this.state.menus[0].id !== id ? [] : this.memoryBanners) });
       } else {
         this.props.showToast(ret.message);
-        this.setState({ status: 'LOADMORE' });
+        this.setState({ status: EnhanceListStatus.loadMore });
       }
     }, this.props.pageName);
   }
@@ -83,7 +83,7 @@ export default class CustomizedIndex extends BaseComponent {
    * @param {*} page 
    */
   loadGoodsData(id, page) {
-    this.setState({ status: 'PENDING' });
+    this.setState({ status: EnhanceListStatus.loading });
     this.goodsFaltList && this.goodsFaltList.scrollToOffset({ animated: false, offset: 0 });
     ServerApi.goods(id, page, (ret) => {
       if (this.state.isRefresh) this.state.isRefresh = false;
@@ -95,14 +95,14 @@ export default class CustomizedIndex extends BaseComponent {
         let status = this.state.status;
         let length = ret.data.length;
         if (length < PAGE_SIZE) {
-          status = 'NOMOREDATA';
+          status = EnhanceListStatus.noMoreData;
         } else if (length === PAGE_SIZE) {
-          status = 'FINISH';
+          status = EnhanceListStatus.finish;
         }
         this.setState({ recommendGoods, status, banners: deepCopy(this.state.menus[0].id !== id ? [] : this.memoryBanners) });
       } else {
         this.props.showToast(ret.message);
-        this.setState({ status: 'LOADMORE' });
+        this.setState({ status: EnhanceListStatus.loadMore });
       }
     }, this.props.pageName);
   }
@@ -144,7 +144,7 @@ export default class CustomizedIndex extends BaseComponent {
             data={this.state.menus}
             renderItem={({ item, index }) => <MenuCell item={item} index={index} onPress={() => this.onMenuSelect(item, index)} />}
             keyExtractor={(item, index) => `menu${index}`} />
-          <AutoLoadMoreList
+          <EnhanceList
             getRef={ref => this.goodsFaltList = ref}
             style={{ width: getSize(283) }}
             refreshing={this.state.isRefresh}

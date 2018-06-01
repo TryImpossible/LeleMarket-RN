@@ -11,8 +11,7 @@ import {
   Animated,
   Easing,
   Image,
-  ScrollView,
-  NativeModules
+  ScrollView
 } from 'react-native';
 
 import BaseComponent from '../../containers/BaseComponent';
@@ -25,7 +24,7 @@ import { get, post } from '../../utils/NetUtil';
 
 import SeparatorLine from '../../widgets/SeparatorLine';
 
-import AutoLoadMoreList from '../../widgets/AutoLoadMoreList';
+import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 
 import Banner from '../../widgets/Banner';
 
@@ -61,7 +60,7 @@ export default class HomeIndex extends BaseComponent {
     this.selectedTabIndex = 0; //上次选中的索引，默认0
     this.pageIndex = 0; //默认，初始每一页
 
-    this.autoLoadMoreList = {}; //所有AutoLoadMoreList的实例集合
+    this.enhanceList = {}; //所有enhanceList的实例集合
 
     this.state = {
       scrollTabs: [], //topNav Tab集合
@@ -74,7 +73,7 @@ export default class HomeIndex extends BaseComponent {
 
       sectionListIsRefresh: false,
       flatListIsRefresh: false,
-      status: {} //AutoLoadMoreList下拉状态
+      status: {} //enhanceList下拉状态
     };
   }
 
@@ -115,7 +114,7 @@ export default class HomeIndex extends BaseComponent {
         let scrollTabs = deepCopy(this.state.scrollTabs), status = deepCopy(this.state.status);
         ret.data.topNav.map((item, index) => {
           scrollTabs.push({ ...item, path: index === 0 ? new Animated.Value(1) : new Animated.Value(0) });
-          status[item.id] = 'PENDING';
+          status[item.id] = EnhanceListStatus.pending;
         });
         this.setState({ scrollTabs, status });
         // this.errorComponent.show();
@@ -149,9 +148,9 @@ export default class HomeIndex extends BaseComponent {
 
   loadOtherTabData(id) {
     let status = deepCopy(this.state.status);
-    status[id] = 'PENDING';
+    status[id] = EnhanceListStatus.pending;
     this.setState({ status });
-    this.autoLoadMoreList && this.autoLoadMoreList[id] && this.autoLoadMoreList[id].scrollToOffset({ animated: false, offset: 0 }); //自动滚动到顶部
+    this.enhanceList && this.enhanceList[id] && this.enhanceList[id].scrollToOffset({ animated: false, offset: 0 }); //自动滚动到顶部
     ServerApi.topNavInfo(id, (ret) => {
       if (this.state.flatListIsRefresh) this.state.flatListIsRefresh = false;
       if (ret.code == Const.REQUEST_SUCCESS) {
@@ -163,15 +162,15 @@ export default class HomeIndex extends BaseComponent {
         let status = deepCopy(this.state.status);
         let length = ret.data.length;
         if (length < PAGE_SIZE) {
-          status[id] = 'NOMOREDATA';
+          status[id] = EnhanceListStatus.noMoreData;
         } else if (length === PAGE_SIZE) {
-          status[id] = 'FINISH';
+          status[id] = EnhanceListStatus.finish;
         }
         this.setState({ recommendGoods, status });
       } else {
         this.props.showToast(ret.message);
         let status = deepCopy(this.state.status);
-        status[id] = 'LOADING';
+        status[id] = EnhanceListStatus.loadMore;
         this.setState({ status });
       }
     }, this.props.pageName);
@@ -181,7 +180,7 @@ export default class HomeIndex extends BaseComponent {
     let id = this.state.scrollTabs[this.selectedTabIndex].id;
 
     let status = deepCopy(this.state.status);
-    status[id] = 'LOADING';
+    status[id] = EnhanceListStatus.loading;
     this.setState({ status });
 
     ServerApi.topNavInfoByPage(id, this.pageIndex, (ret) => {
@@ -193,16 +192,16 @@ export default class HomeIndex extends BaseComponent {
         let status = deepCopy(this.state.status);
         let length = ret.data.length;
         if (length < PAGE_SIZE) {
-          status[id] = 'NOMOREDATA';
+          status[id] = EnhanceListStatus.noMoreData;
         } else if (length === PAGE_SIZE) {
-          status[id] = 'FINISH';
+          status[id] = EnhanceListStatus.finish;
           this.pageIndex++;
         }
         this.setState({ recommendGoods, status });
       } else {
         this.props.showToast(ret.message);
         let status = deepCopy(this.state.status);
-        status[id] = 'LOADING';
+        status[id] = EnhanceListStatus.loadMore;
         this.setState({ status });
       }
     }, this.props.pageName);
@@ -364,8 +363,8 @@ export default class HomeIndex extends BaseComponent {
               let data = [].concat(this.state.recommendGoods[item.id]);
               if (data.length % 2 !== 0) data.push({});
               return (
-                <AutoLoadMoreList
-                  getRef={ref => this.autoLoadMoreList[item.id] = ref}
+                <EnhanceList
+                  getRef={ref => this.enhanceList[item.id] = ref}
                   style={{ width: Const.SCREEN_WIDTH, height: LIST_HEIGHT }}
                   refreshing={this.state.flatListIsRefresh}
                   onRefresh={() => {
@@ -422,12 +421,6 @@ export default class HomeIndex extends BaseComponent {
 
   jumpToScanPage = () => {
     this.props.push('ScanPage');
-    return;
-    // NativeModules.RichEditorModule.show()
-    //   .then((html) => {
-    //     console.warn(html);
-    //   })
-    //   .catch((err) => console.error(err));
   }
 
   jumpToSearchPage = () => {

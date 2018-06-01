@@ -10,7 +10,7 @@ import { post } from '../../utils/NetUtil';
 
 import SeparatorLine from "../../widgets/SeparatorLine";
 
-import AutoLoadMoreList from '../../widgets/AutoLoadMoreList';
+import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 
 import ServerApi from '../../constants/ServerApi';
 
@@ -31,7 +31,7 @@ export default class DiscoverIndex extends BaseComponent {
     this.pageIndex = 0; //默认，第一页
     this.state = {
       isRefresh: false, //是否刷新 
-      status: 'PENDING', //AutoLoadMoreList下拉状态
+      status: EnhanceListStatus.pending, //enhanceList下拉状态
       data: [], //列表数据
     }
   }
@@ -57,36 +57,36 @@ export default class DiscoverIndex extends BaseComponent {
         let status = this.state.status;
         let length = data.length;
         if (length < PAGE_SIZE) {
-          status = 'NOMOREDATA';
+          status = EnhanceListStatus.noMoreData;
         } else if (length === PAGE_SIZE) {
-          status = 'FINISH';
+          status = EnhanceListStatus.finish;
         }
         this.setState({ data, status });
         this.pageIndex++;
       } else {
         this.props.showToast(ret.message);
-        this.setState({ status: 'LOADMORE' });
+        this.setState({ status: EnhanceListStatus.loadMore });
       }
     }, this.props.pageName);
   }
 
   loadMoreFindListData() {
-    this.setState({ status: 'LOADING' });
+    this.setState({ status: EnhanceListStatus.loading });
     ServerApi.findList(this.pageIndex, (ret) => {
       if (ret.code == Const.REQUEST_SUCCESS) {
         let status = this.state.status;
         let length = ret.data.length;
         if (length < PAGE_SIZE) {
-          status = 'NOMOREDATA';
+          status = EnhanceListStatus.noMoreData;
         } else if (length === PAGE_SIZE) {
-          status = 'FINISH';
+          status = EnhanceListStatus.finish;
           this.pageIndex++;
         }
         let data = deepCopy(this.state.data.concat(ret.data));
         this.setState({ data, status });
       } else {
         this.props.showToast(ret.message);
-        this.setState({ status: 'LOADMORE' });
+        this.setState({ status: EnhanceListStatus.loadMore });
       }
     }, this.props.pageName);
   }
@@ -100,7 +100,7 @@ export default class DiscoverIndex extends BaseComponent {
     return (
       <View style={styles.container}>
         <NavBar leftIcon={''} title={'发现'} />
-        <AutoLoadMoreList
+        <EnhanceList
           ref={ref => this.faltList = ref}
           refreshing={this.state.isRefresh}
           onRefresh={() => {
