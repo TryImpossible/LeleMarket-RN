@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Platform, WebViewProps } from 'react-native';
 
-import BaseComponent from '../BaseComponent';
+import BaseWidget from '../BaseWidget';
 
 import PropTypes from 'prop-types';
 
@@ -22,7 +22,7 @@ const patchPostMessageFunction = () => {
 
 const patchPostMessageJsCode = `(${String(patchPostMessageFunction)})();`;
 
-export default class EnhanceWebView extends BaseComponent {
+export default class EnhanceWebView extends BaseWidget {
 
     static propTypes = {
         ...WebViewProps,
