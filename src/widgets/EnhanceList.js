@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import ErrorComponent from './ErrorComponent';
 
 // AutoLoadList状态值
-export const AutoLoadMoreListStatus = {
+export const EnhanceListStatus = {
   network: 'NETWORK',
   timeout: 'TIMEOUT',
   server: 'SERVER',
@@ -23,11 +23,11 @@ export const AutoLoadMoreListStatus = {
   noMoreData: 'NOMOREDATA'
 }
 
-export default class AutoLoadMoreList extends BaseWidget {
+export default class EnhanceList extends BaseWidget {
 
   static propTypes = {
     getRef: PropTypes.func, //FlatList实例，由于 ref 不能作为Props, 采用 getRef 代替
-    status: PropTypes.oneOf(Object.values(AutoLoadMoreListStatus)), //状态
+    status: PropTypes.oneOf(Object.values(EnhanceListStatus)), //状态
     LoadingComponent: PropTypes.element, //加载中 -> 展示组件
     LoadingMoreComponent: PropTypes.element, //加载更多 -> 展示组件
     NoMoreDataComponent: PropTypes.element, //没有更多数据 -> 展示组件
