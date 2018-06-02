@@ -38,7 +38,7 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
     this.path = new Animated.Value(0); //网络提示栏动画
-    this.initNavigator(InitPage[1]);
+    this.initNavigator(InitPage[0]);
   }
 
   initNavigator(initPageName) {

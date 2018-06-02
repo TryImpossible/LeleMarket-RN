@@ -24,7 +24,7 @@ export default class ScrollableTabView extends BaseWidget {
     tabBarSpace: PropTypes.number, //每个tab的间距
     tabBarActiveTextColor: ColorPropType, //Tab Text选中的颜色 
     tabBarInactiveTextColor: ColorPropType, //Tab Text非选中的颜色 
-    tabBarTextStyle: ViewPropTypes.style, // Tab Text的样式
+    tabBarTextStyle: PropTypes.object, // Tab Text的样式
     tabBarUnderlineStyle: ViewPropTypes.style, // Tab 下划线的样式
     scrollableViewStyle: ViewPropTypes.style, //滾動視圖樣式
     locked: PropTypes.bool, //是否能滚动
@@ -85,15 +85,16 @@ export default class ScrollableTabView extends BaseWidget {
         enableScrollAnimation={enableScrollAnimation} />
     )
 
-    const childrenComponent = children && tabs.map((item, index) => {
+    const childrenComponent = children || tabs.map((item, index) => {
       return (
         <View key={`ScrollableView${index}`} style={{ width: Const.SCREEN_WIDTH, backgroundColor: this.getRandomColor(), justifyContent: 'center', alignItems: 'center' }}>
           <Text>{item}</Text>
         </View>
       )
     })
+
     return (
-      <View style={[styles.container, { ...style }]}>
+      <View style={{ ...style }}>
         { tabBarPosition === 'top' ? ScrollableTabBarComponent : null}
         <ScrollableView
           ref={ref => this.scrollableView = ref}
@@ -108,7 +109,7 @@ export default class ScrollableTabView extends BaseWidget {
           enableScrollAnimation={enableScrollAnimation} >
           {childrenComponent}
         </ScrollableView>
-        { tabBarPosition === 'top' ? ScrollableTabBarComponent : null}
+        { tabBarPosition === 'bottom' ? ScrollableTabBarComponent : null}
       </View>
     );
   }
