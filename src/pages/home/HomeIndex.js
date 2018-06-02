@@ -24,9 +24,9 @@ import { get, post } from '../../utils/NetUtil';
 
 import SeparatorLine from '../../widgets/SeparatorLine';
 
-import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
+import ScrollableTabView from '../../widgets/scrollableTabView';
 
-// import Banner from '../../widgets/Banner';
+import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 
 import SimpleBanner from '../../widgets/banner';
 
@@ -40,7 +40,7 @@ import ErrorComponent from '../../widgets/ErrorComponent';
 
 const SECTION_HEADER_TITLE = ['开启定制之旅', '定制推荐'];
 
-const LIST_HEIGHT = Const.PAGE_HEIGHT - getSize(26) - getSize(49)
+const LIST_HEIGHT = Const.PAGE_HEIGHT - getSize(26) - getSize(49);
 
 const PAGE_SIZE = 10;
 
@@ -54,10 +54,6 @@ export default class HomeIndex extends BaseComponent {
     super(props);
     this.initSubscriptions();
     this.memeryData = {}; //内存中的数据
-    this.scrollTabColorPath = new Animated.Value(0); //ScrollTab的文字颜色变化
-    this.scrollTabWidthPath = new Animated.Value(0); //ScrollTab的红色提示宽度变化
-    this.scrollTabTranslateXPath = new Animated.Value(0); //ScrollTab的红色提示位移变化
-    this.scrollTabWidth = {}; //ScrollTab的标题，宽度集合
 
     this.selectedTabIndex = 0; //上次选中的索引，默认0
     this.pageIndex = 0; //默认，初始每一页
@@ -115,13 +111,13 @@ export default class HomeIndex extends BaseComponent {
       if (ret.code == Const.REQUEST_SUCCESS) {
         let scrollTabs = deepCopy(this.state.scrollTabs), status = deepCopy(this.state.status);
         ret.data.topNav.map((item, index) => {
-          scrollTabs.push({ ...item, path: index === 0 ? new Animated.Value(1) : new Animated.Value(0) });
+          scrollTabs.push({ ...item });
           status[item.id] = EnhanceListStatus.pending;
         });
         this.setState({ scrollTabs, status });
-        // this.errorComponent.show();
       } else {
         this.props.showToast(ret.message);
+        this.errorComponent.show();
       }
     }, this.props.pageName);
   }
@@ -162,7 +158,7 @@ export default class HomeIndex extends BaseComponent {
         let recommendGoods = deepCopy(this.state.recommendGoods);
         recommendGoods[id] = ret.data.recommendGoods;
         let status = deepCopy(this.state.status);
-        let length = ret.data.length;
+        let length = ret.data.recommendGoods.length;
         if (length < PAGE_SIZE) {
           status[id] = EnhanceListStatus.noMoreData;
         } else if (length === PAGE_SIZE) {
@@ -230,193 +226,114 @@ export default class HomeIndex extends BaseComponent {
     }
   }
 
-  getInterpolate(index) {
-    let inputRange = [], outputRange = [];
-    this.state.scrollTabs && this.state.scrollTabs.map((item, i) => {
-      inputRange.push(i);
-      outputRange.push(i !== index ? '#333333' : '#fe3f56');
-    });
-    return { inputRange, outputRange };
-  }
-
-  countX(index) {
-    let x = getSize(12);
-    while (index > 0) {
-      let width = this.scrollTabWidth[index - 1];
-      x += (width + getSize(24));
-      index--;
-    }
-    return x;
-  }
-
-  renderHorizontalScrollTabs() {
-    return (
-      <ScrollView
-        ref={ref => this.tabNavFlatList = ref}
-        style={styles.scrollTabs}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}>
-        {
-          this.state.scrollTabs.map((item, index) => {
-            return (
-              <TouchableOpacity key={`HorizontalScrollTabNavs${index}`} activeOpacity={1} style={{ height: getSize(24), justifyContent: 'center', alignItems: 'center' }} onPress={() => this.tabMainFlatList && this.tabMainFlatList.scrollToOffset({ animated: true, offset: Const.SCREEN_WIDTH * index })} >
-                <Animated.Text onLayout={({ nativeEvent: { layout: { x, y, width, height } } }) => {
-                  this.scrollTabWidth[index] = getSize(width);
-                  // if (index === this.state.scrollTabs.length - 1) console.warn(this.scrollTabWidth);
-                  if (index === 0) {
-                    Animated.parallel([
-                      Animated.spring(this.scrollTabColorPath, {
-                        toValue: index,
-                        easing: Easing.linear,
-                        duration: 50
-                      }),
-                      Animated.spring(this.scrollTabWidthPath, {
-                        toValue: width,
-                        easing: Easing.linear,
-                        duration: 50
-                      }),
-                      Animated.spring(this.scrollTabTranslateXPath, {
-                        toValue: getSize(12),
-                        easing: Easing.linear,
-                        duration: 50
-                      })
-                    ]).start();
-                  }
-                }}
-                  style={{ fontSize: getSize(12), color: this.scrollTabColorPath.interpolate(this.getInterpolate(index)), marginHorizontal: getSize(12), marginBottom: getSize(6) }}>
-                  {item.name}
-                </Animated.Text>
-              </TouchableOpacity>
-            )
-          })
-        }
-        <Animated.View style={{
-          position: 'absolute', bottom: getSize(2), width: this.scrollTabWidthPath, height: getSize(2), backgroundColor: '#fe3f56',
-          transform: [{ translateX: this.scrollTabTranslateXPath }]
-        }} />
-      </ScrollView>
-    );
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <NavBar leftIcon={'icon_scan'} leftPress={this.jumpToScanPage} titleView={<NavBarTitleView search={this.jumpToSearchPage} />} rightIcon={'icon_msg'} rightPress={this.jumpToMsgPage} showBottomLine={false} />
-        {this.renderHorizontalScrollTabs()}
-        <FlatList
-          ref={ref => this.tabMainFlatList = ref}
-          style={{ width: Const.SCREEN_WIDTH, height: LIST_HEIGHT }}
-          data={this.state.scrollTabs}
-          keyExtractor={(item, index) => `HorizontalScrollTabMains${index}`}
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          pagingEnabled={true}
-          scrollEnabled={__ANDROID__ ? false : true}
-          bounces={false}
-          renderItem={({ item, index }) => {
-            if (index === 0 && item.id == 1 && item.name === '精选') {
-              let sections = [
-                { key: 0, data: [{ key: 0, data: this.state.handpick }] },
-                { key: 1, data: this.state.customization.map((item, index) => ({ ...item, key: 1 })) },
-              ];
-              return (
-                <SectionList
-                  style={{ width: Const.SCREEN_WIDTH, height: LIST_HEIGHT }}
-                  sections={sections}
-                  refreshing={this.state.sectionListIsRefresh}
-                  onRefresh={() => {
-                    this.state.sectionListIsRefresh = true;
-                    this.loadFocusedSelectData();
-                  }}
-                  stickySectionHeadersEnabled={false}
-                  ListHeaderComponent={() => {
-                    let images = this.state.banners.map((item, index) => item.imgUrl);
-                    return (
-                      <View>
-                        <SimpleBanner images={images} height={getSize(150)} duration={3000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.showToast(`您选中了第${index}张`)} />
-                        <GridActivity data={this.state.midNav} onPress={() => this.props.showToast('activity')} />
-                      </View>
-                    )
-                  }}
-                  renderSectionHeader={({ section }) => <SectionHeader section={section} />}
-                  renderItem={({ item, index }) => {
-                    if (item.key === 0) {
-                      //开启定制之旅
-                      let images = item.data.map((item) => item.imgUrl);
-                      return (
-                        <CardView
-                          style={{ backgroundColor: '#ffffff' }}
-                          images={images}
-                          width={getSize(315)}
-                          height={getSize(150)}
-                          borderRadius={getSize(10)}
-                          onClick={(index) => this.props.showToast(`CardView${index}`)} />
-                      )
-                    } else if (item.key == 1) {
-                      //定制推荐
-                      return <Customization item={item} index={index} customization={this.state.customization} />;
-                    }
-                    return null;
-                  }}
-                  keyExtractor={(item, index) => `sectionList${index}`} />
-              )
-            } else {
-              //解决奇数项，单元格布局失效的问题
-              let data = [].concat(this.state.recommendGoods[item.id]);
-              if (data.length % 2 !== 0) data.push({});
-              return (
-                <EnhanceList
-                  getRef={ref => this.enhanceList[item.id] = ref}
-                  style={{ width: Const.SCREEN_WIDTH, height: LIST_HEIGHT }}
-                  refreshing={this.state.flatListIsRefresh}
-                  onRefresh={() => {
-                    this.pageIndex = 0;
-                    this.state.flatListIsRefresh = true;
-                    this.loadOtherTabData(this.state.scrollTabs[this.selectedTabIndex].id);
-                  }}
-                  data={data}
-                  horizontal={false}
-                  numColumns={2}
-                  renderItem={({ item, index }) => <GoodsCell item={item} index={index} />}
-                  keyExtractor={(item, index) => `goods${index}`}
-                  status={this.state.status[item.id]}
-                  onEndReachedThreshold={0.5}
-                  onEndReached={() => {
-                    this.loadMoreOtherTabData(this.pageIndex);
-                  }} />
-              )
-            }
-          }}
-          getItemLayout={(data, index) => (
-            { length: LIST_HEIGHT, offset: LIST_HEIGHT * index, index }
-          )}
-          onScroll={({ nativeEvent })=>{
-            let offsetX = nativeEvent.contentOffset.x;
-            let index =  Math.round(offsetX / Const.SCREEN_WIDTH); 
-
-            if (index === this.selectedTabIndex) return;
-            this.scrollTabColorPath.setValue(index),
-            this.scrollTabWidthPath.setValue(this.scrollTabWidth[index]);
-            this.scrollTabTranslateXPath.setValue(this.countX(index));
-
+        <ScrollableTabView
+          tabs={this.state.scrollTabs.map((item, index) => item.name)}
+          tabBarStyle={{ borderBottomWidth: Const.LINE_WIDTH, borderBottomColor: Const.LINE_COLOR, height: getSize(26) }}
+          tabBarTextStyle={{ fontSize: getSize(12) }}
+          tabBarBackgroundColor={'#fff'}
+          tabBarActiveTextColor={'#fe3f56'}
+          tabBarInactiveTextColor={'#333333'}
+          tabBarUnderlineStyle={{ height: getSize(2) }}
+          onScrollEnd={index => {
             this.onTopNavSelected(this.state.scrollTabs[index], index);
+          }}>
+          {
+            this.state.scrollTabs.map((item, index) => {
+              if (index === 0 && item.id == 1 && item.name === '精选') {
+                let sections = [
+                  { key: 0, data: [{ key: 0, data: this.state.handpick }] },
+                  { key: 1, data: this.state.customization.map((item, index) => ({ ...item, key: 1 })) },
+                ];
+                return (
+                  <View key={`ScrollableTabView${index}`} style={{ width: Const.SCREEN_WIDTH, height: LIST_HEIGHT }}>
+                    <SectionList
+                      style={{ width: Const.SCREEN_WIDTH, height: LIST_HEIGHT }}
+                      sections={sections}
+                      refreshing={this.state.sectionListIsRefresh}
+                      onRefresh={() => {
+                        this.state.sectionListIsRefresh = true;
+                        this.loadFocusedSelectData();
+                      }}
+                      stickySectionHeadersEnabled={false}
+                      ListHeaderComponent={() => {
+                        let images = this.state.banners.map((item, index) => item.imgUrl);
+                        return (
+                          <View>
+                            <SimpleBanner images={images} height={getSize(150)} duration={5000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.showToast(`您选中了第${index}张`)} />
+                            <GridActivity data={this.state.midNav} onPress={() => this.props.showToast('activity')} />
+                          </View>
+                        )
+                      }}
+                      renderSectionHeader={({ section }) => <SectionHeader section={section} />}
+                      renderItem={({ item, index }) => {
+                        if (item.key === 0) {
+                          //开启定制之旅
+                          let images = item.data.map((item) => item.imgUrl);
+                          return (
+                            <CardView
+                              style={{ backgroundColor: '#ffffff' }}
+                              images={images}
+                              width={getSize(315)}
+                              height={getSize(150)}
+                              borderRadius={getSize(10)}
+                              onClick={(index) => this.props.showToast(`CardView${index}`)} />
+                          )
+                        } else if (item.key == 1) {
+                          //定制推荐
+                          return <Customization item={item} index={index} customization={this.state.customization} />;
+                        }
+                        return null;
+                      }}
+                      keyExtractor={(item, index) => `sectionList${index}`} />
+                  </View>
+                )
+              } else {
+                //解决奇数项，单元格布局失效的问题
+                let data = [].concat(this.state.recommendGoods[item.id]);
+                if (data.length % 2 !== 0) data.push({});
+                return (
+                  <View key={`ScrollableTabView${index}`} style={{ width: Const.SCREEN_WIDTH, height: LIST_HEIGHT }} >
+                    <EnhanceList
+                      getRef={ref => this.enhanceList[item.id] = ref}
+                      style={{ width: Const.SCREEN_WIDTH, height: LIST_HEIGHT }}
+                      refreshing={this.state.flatListIsRefresh}
+                      onRefresh={() => {
+                        this.pageIndex = 0;
+                        this.state.flatListIsRefresh = true;
+                        this.loadOtherTabData(this.state.scrollTabs[this.selectedTabIndex].id);
+                      }}
+                      data={data}
+                      horizontal={false}
+                      numColumns={2}
+                      renderItem={({ item, index }) => <GoodsCell item={item} index={index} />}
+                      keyExtractor={(item, index) => `goods${index}`}
+                      status={this.state.status[item.id]}
+                      onEndReachedThreshold={0.5}
+                      onEndReached={() => {
+                        this.loadMoreOtherTabData(this.pageIndex);
+                      }} />
+                    </View>
+                )
+              }
+            })
+          }
+        </ScrollableTabView>
 
-            let currentX = this.countX(index);
-            let nextX = this.countX(index+1);
-            let totalX = this.countX(this.state.scrollTabs.length - 1);
-            if (currentX >= 0 && nextX <= Const.SCREEN_WIDTH) {
-              this.tabNavFlatList && this.tabNavFlatList.scrollTo({ x: 0, y: 0, animated: true });  
-            } else if ((totalX - currentX) <= Const.SCREEN_WIDTH) {
-              this.tabNavFlatList && this.tabNavFlatList.scrollToEnd({ animated: true });  
-            } else {
-              this.tabNavFlatList && this.tabNavFlatList.scrollTo({ x: currentX - getSize(12), y: 0, animated: true });
-            } 
-          }}
-          onMomentumScrollEnd={({ nativeEvent })=>{
-            //android上不响应此方法
-          }} />
-        <LoadingView ref={ref => this.loadingView = ref} style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }} color={'#8cadca'} />
-        <ErrorComponent ref={ref => this.errorComponent = ref} style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }} retry={() => { this.loadScrollTabsData(); this.loadFocusedSelectData(); }} />
+        <LoadingView 
+          ref={ref => this.loadingView = ref}
+          style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }}
+          color={'#8cadca'} />
+        <ErrorComponent ref={ref => this.errorComponent = ref}
+          style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }}
+          retry={() => { 
+            this.errorComponent.dismiss();
+            this.loadScrollTabsData();
+            this.loadFocusedSelectData(); }
+          } />
       </View>
     )
   }
