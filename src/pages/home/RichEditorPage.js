@@ -24,7 +24,6 @@ export default class RichEditorPage extends BasePage {
 
   constructor(props) {
     super(props);
-    this.getHTML = this.getHTML.bind(this);
     this.setFocusHandlers = this.setFocusHandlers.bind(this);
   }
 
