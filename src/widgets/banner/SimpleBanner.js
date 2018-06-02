@@ -96,7 +96,7 @@ export default class SimpleBanner extends BaseWidget {
           {
             images.map((item, index) => {
               return (
-                <TouchableOpacity key={`${index}`} activeOpacity={1} onPress={() => this.canResponseChildEvent && onClick && onClick() } >
+                <TouchableOpacity key={`${index}`} activeOpacity={1} onPress={() => this.canResponseChildEvent && onClick && onClick(index) } >
                   <Image style={{ width: Const.SCREEN_WIDTH, height, }} source={{ uri: item }} />
                 </TouchableOpacity>
               )

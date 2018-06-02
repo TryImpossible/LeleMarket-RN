@@ -5,9 +5,10 @@ import SimpleBanner from './SimpleBanner';
 
 import Banner from './Banner';
 
+export default SimpleBanner;
+
 export {
   IndicaterMode,
   IndicaterAlign,
-  SimpleBanner,
   Banner
 };
