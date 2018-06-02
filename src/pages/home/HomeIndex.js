@@ -26,7 +26,9 @@ import SeparatorLine from '../../widgets/SeparatorLine';
 
 import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 
-import Banner from '../../widgets/Banner';
+// import Banner from '../../widgets/Banner';
+
+import SimpleBanner from '../../widgets/banner';
 
 import CardView from '../../widgets/CardView';
 
@@ -331,7 +333,7 @@ export default class HomeIndex extends BaseComponent {
                     let images = this.state.banners.map((item, index) => item.imgUrl);
                     return (
                       <View>
-                        <Banner images={images} height={getSize(150)} duration={3000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.showToast(`您选中了第${index}张`)} />
+                        <SimpleBanner images={images} height={getSize(150)} duration={3000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.showToast(`您选中了第${index}张`)} />
                         <GridActivity data={this.state.midNav} onPress={() => this.props.showToast('activity')} />
                       </View>
                     )
