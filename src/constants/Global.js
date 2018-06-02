@@ -67,14 +67,14 @@ global.Const = {
 
   SCREEN_WIDTH: parseInt(width), //屏幕宽度
 
-  SCREEN_HEIGHT: __IOS__ ? parseInt(height) : parseInt(height - StatusBar.currentHeight), //屏幕高度
+  SCREEN_HEIGHT: parseInt(height), //屏幕高度
 
-  STATUSBAR_HEIGHT: __IOS__ ? (__IPhoneX__ ? getSize(44) : getSize(20)) : 0, //状态栏高度
+  STATUSBAR_HEIGHT: __IOS__ ? (__IPhoneX__ ? getSize(44) : getSize(20)) : StatusBar.currentHeight, //状态栏高度
 
   NAVBAR_HEIGHT: getSize(44), //导航栏高度
 
   PAGE_WIDTH: parseInt(width), //页面宽度
 
-  PAGE_HEIGHT: parseInt(height) - (__IOS__ ? (__IPhoneX__ ? getSize(44) : getSize(20)) : 0) - getSize(44) - (__IPhoneX__ ? 34 : 0), //页面高度
-  
+  PAGE_HEIGHT: parseInt(height) - (__IOS__ ? (__IPhoneX__ ? getSize(44) : getSize(20)) : StatusBar.currentHeight) - getSize(44) - (__IPhoneX__ ? 34 : 0), //页面高度
+
 }
