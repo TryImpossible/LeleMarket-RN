@@ -332,8 +332,8 @@ export default class HomeIndex extends BaseComponent {
           retry={() => { 
             this.errorComponent.dismiss();
             this.loadScrollTabsData();
-            this.loadFocusedSelectData(); }
-          } />
+            this.loadFocusedSelectData();
+          }} />
       </View>
     )
   }

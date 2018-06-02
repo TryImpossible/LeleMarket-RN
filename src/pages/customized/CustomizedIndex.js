@@ -16,6 +16,10 @@ import CardView from '../../widgets/CardView';
 
 import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 
+import LoadingComponent from '../../widgets/LoadingComponent';
+
+import ErrorComponent from '../../widgets/ErrorComponent';
+
 const PAGE_SIZE = 10;
 
 export default class CustomizedIndex extends BaseComponent {
@@ -111,16 +115,27 @@ export default class CustomizedIndex extends BaseComponent {
    * 拉取菜单数据 
    */
   loadMenuData() {
+    this.loadingComponent.show();
     ServerApi.menu((ret) => {
+      this.loadingComponent.dismiss();
       if (ret.code == Const.REQUEST_SUCCESS) {
         this.selectedMenuIndex = 0; //默认菜单选中第0项
         this.pageIndex = 1; //此接口，已经返回 热门推荐 第一页数据，因此置为1
         this.memoryBanners = ret.data.banners; //内存中的Banner数据 
         this.memoryGoods[ret.data.menus[0].id] = { page: 0, data: ret.data.recommendGoods }; //内存中的商品数据 
         ret.data.menus = ret.data.menus.map((item, index) => ({ ...item, path: new Animated.Value(index === 0 ? 1 : 0) }));
-        this.setState({ ...ret.data });
+
+        let status = this.state.status;
+        let length = ret.data.recommendGoods.length;
+        if (length < PAGE_SIZE) {
+          status = EnhanceListStatus.noMoreData;
+        } else if (length === PAGE_SIZE) {
+          status = EnhanceListStatus.finish;
+        }
+        this.setState({ ...ret.data, status });
       } else {
         this.props.showToast(ret.message);
+        this.errorComponent.show();
       }
     }, this.props.pageName);
   }
@@ -174,6 +189,15 @@ export default class CustomizedIndex extends BaseComponent {
               this.loadMoreGoodsData(this.pageIndex);
             }} />
         </View>
+        <LoadingComponent 
+          ref={ref => this.loadingComponent = ref}
+          style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }} />
+        <ErrorComponent ref={ref => this.errorComponent = ref}
+          style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }}
+          retry={() => { 
+            this.errorComponent.dismiss();
+            this.loadMenuData();
+          }} />
       </View>
     )
   }

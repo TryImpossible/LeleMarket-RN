@@ -14,6 +14,7 @@ import ErrorComponent from './ErrorComponent';
 export const EnhanceListStatus = {
   network: 'NETWORK',
   timeout: 'TIMEOUT',
+  program: 'PROGRAM',
   server: 'SERVER',
   pending: 'PENDING',
   noData: 'NODATA',
@@ -82,7 +83,7 @@ export default class EnhanceList extends BaseWidget {
           if (status === 'FINISH' && !refreshing) onEndReached && onEndReached(); //第三次，測試優化
         }}
         ListEmptyComponent={()=>{
-          if (['NETWORK', 'TIMEOUT', 'SERVER'].indexOf(status) != -1) {
+          if (['NETWORK', 'TIMEOUT', 'PROGRAM', 'SERVER'].indexOf(status) != -1) {
             return <ErrorComponent mode={status} retry={() => this.props.onRefresh && this.props.onRefresh()} />
           } else if (status === 'NODATA') {
             return ListEmptyComponent();
