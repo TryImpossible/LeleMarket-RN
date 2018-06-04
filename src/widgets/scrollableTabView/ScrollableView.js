@@ -60,7 +60,6 @@ export default class ScrollableTabView extends BaseWidget {
         />
       )
     } else if (__ANDROID__) {
-      console.warn(children);
       return (
         <ViewPagerAndroid
           ref={ref => this.viewPager = ref}
