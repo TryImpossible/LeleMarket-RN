@@ -3,7 +3,7 @@ import { NetInfo } from "react-native";
 
 
 
-const delay = (timeout = 3000) => {
+const delay = (timeout = 10 * 1000) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       reject('请求超时');
@@ -28,7 +28,7 @@ export const get = (action, params = {}, callback, pageName) => {
   const init = {
     credentials: 'include', // 请求带上cookies，是每次请求保持会话一直 
     method: 'GET',
-    mode: ' cors',
+    mode: 'cors',
     cache: 'no-cache',
     headers: new Headers({
       // 'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
@@ -46,6 +46,7 @@ export const get = (action, params = {}, callback, pageName) => {
     })
     .then(responseData => callback && callback(responseData))
     .catch((error) => {
+      console.warn(error);
       callback({ code: -1, message: '错误，请检查!!!' });
     });
 }
@@ -81,6 +82,7 @@ export const post = (action, form = null, callback, pageName) => {
     })
     .then(responseData => callback && callback(responseData))
     .catch((error) => {
+      console.warn(error);
       callback && callback({ code: -1, message: '错误，请检查!!!' });
     });
 }
