@@ -27,7 +27,7 @@ export default class ScrollableTabView extends BaseWidget {
     tabBarTextStyle: PropTypes.object, // Tab Text的样式
     tabBarUnderlineStyle: ViewPropTypes.style, // Tab 下划线的样式
     scrollableViewStyle: ViewPropTypes.style, //滾動視圖樣式
-    locked: PropTypes.bool, //是否能滚动
+    locked: PropTypes.bool, //是否鎖定，不允許滾動
     onScroll: PropTypes.func, //滚动方法
     onScrollEnd: PropTypes.func, //滚动结束方法，即页面选中
     enableScrollAnimation: PropTypes.bool, //是否开启滚动动画

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Animated, Easing, ViewPagerAndroid, FlatList, ViewPropTypes } from 'react-native';
+import { Animated, Easing, ViewPagerAndroid, FlatList, ViewPropTypes, View, Text } from 'react-native';
 
 import BaseWidget from '../BaseWidget';
 
@@ -11,7 +11,7 @@ export default class ScrollableTabView extends BaseWidget {
   static propTypes = {
     style: ViewPropTypes.style, //樣式
     initialPage: PropTypes.number, //选中的页面
-    locked: PropTypes.bool, //是否能滚动
+    locked: PropTypes.bool, //是否鎖定，不允許滾動
     onScroll: PropTypes.func, //滚动方法
     onScrollEnd: PropTypes.func, //滚动结束方法，即页面选中
     enableScrollAnimation: PropTypes.bool, //是否开启滚动动画
@@ -19,7 +19,7 @@ export default class ScrollableTabView extends BaseWidget {
 
   static defaultProps = {
     initialPage: 0, //默认 0
-    locked: true, //默认true
+    locked: false, //默认false
     enableScrollAnimation: false //默认false，调用滚动时效果不太好
   }
 
@@ -29,7 +29,7 @@ export default class ScrollableTabView extends BaseWidget {
 
   render() {
     const { style, initialPage, locked, onScroll, onScrollEnd, children = [] } = this.props;
-    if (__IOS__) {
+    if (__IOS__ && children.length > 0) {
       return (
         <FlatList
           ref={ref => this.flatList = ref}
@@ -39,7 +39,7 @@ export default class ScrollableTabView extends BaseWidget {
           showsHorizontalScrollIndicator={false}
           bounces={false}
           pagingEnabled={true}
-          scrollEnabled={locked}
+          scrollEnabled={!locked}
           onScroll={({ nativeEvent }) => {
             const offsetX = nativeEvent.contentOffset.x; //位移距离
             const percent = offsetX / Const.SCREEN_WIDTH; //移动比例
@@ -59,19 +59,24 @@ export default class ScrollableTabView extends BaseWidget {
           renderItem={({ item, index }) => children[index]}
         />
       )
-    } else if (__ANDROID__) {
+    } else if (__ANDROID__ && children.length > 0) {
+      // return (
+      //   <View style={{ width: Const.SCREEN_WIDTH, height: Const.SCREEN_HEIGHT, backgroundColor: 'red' }}>
+      //     {children[0]}
+      //   </View>
+      // )
       return (
         <ViewPagerAndroid
           ref={ref => this.viewPager = ref}
           style={{ ...style, flexGrow: 1, width: Const.SCREEN_WIDTH }}
-          scrollEnabled={locked}
+          scrollEnabled={!locked}
           keyboardDismissMode="on-drag"
           onPageScroll={({ nativeEvent }) => {
-            const { offset, position } = nativeEvent; 
+            const { offset, position } = nativeEvent;
             onScroll && onScroll(position + offset);
           }}
           onPageSelected={({ nativeEvent }) => {
-            const { offset, position } = nativeEvent; 
+            const { offset, position } = nativeEvent;
             onScrollEnd && onScrollEnd(position);
           }} >
           {children}
