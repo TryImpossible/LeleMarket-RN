@@ -73,7 +73,7 @@ export default class MainPage extends BasePage {
         lazy: true,
         tabBarPosition: 'bottom',
         animationEnabled: true,
-        swipeEnabled: false,
+        swipeEnabled: true,
         backBehavior: 'Home',
         tabBarComponent: (event) => {
           const { navigationState, jumpToIndex } = event;
