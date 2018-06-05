@@ -215,6 +215,13 @@ export default class HomeIndex extends BaseComponent {
     if (this.selectedTabIndex === index) return; //相同的选中，不响应以下逻辑
     this.selectedTabIndex = index; //赋值选中的Index
 
+    //处理Banner是否播放
+    if (this.selectedTabIndex === 0) {
+      this.startPlayBanner();
+    } else {
+      this.stopPlayBanner();
+    }
+
     this.pageIndex = 0;
     if (this.memeryData[item.id]) {
       this.pageIndex = this.memeryData[item.id].page + 1;
@@ -270,7 +277,7 @@ export default class HomeIndex extends BaseComponent {
                         let images = this.state.banners.map((item, index) => item.imgUrl);
                         return (
                           <View>
-                            <SimpleBanner images={images} height={getSize(150)} duration={5000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.showToast(`您选中了第${index}张`)} />
+                            <SimpleBanner ref={ ref => this.simpleBanner = ref } images={images} height={getSize(150)} duration={5000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.showToast(`您选中了第${index}张`)} />
                             <GridActivity data={this.state.midNav} onPress={() => this.props.showToast('activity')} />
                           </View>
                         )
@@ -355,6 +362,20 @@ export default class HomeIndex extends BaseComponent {
   jumpToMsgPage = () => {
     if (__IOS__) return;
     this.props.push('RichEditorPage');
+  }
+
+  /**
+   * 开始播放Banner
+   */
+  startPlayBanner() {
+    this.selectedTabIndex == 0 && this.simpleBanner && this.simpleBanner.autoPlay();
+  }
+
+  /**
+   * 停止播放Banner
+   */
+  stopPlayBanner() {
+    this.simpleBanner && this.simpleBanner.stopPlay();
   }
 }
 

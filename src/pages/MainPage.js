@@ -58,7 +58,7 @@ export default class MainPage extends BasePage {
     return TabNavigator(
       {
         Home: { 
-          screen: ({screenProps, navigation}) => <HomeIndex TabNavigation={navigation} { ...actions } /> ,
+          screen: ({screenProps, navigation}) => <HomeIndex ref={ ref => this.homeIndex = ref } TabNavigation={navigation} { ...actions } /> ,
           navigationOptions: ( navigation ) => {  //屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)
             
           } 
@@ -77,6 +77,11 @@ export default class MainPage extends BasePage {
         backBehavior: 'Home',
         tabBarComponent: (event) => {
           const { navigationState, jumpToIndex } = event;
+          if (navigationState.index == 0) {
+            this.homeIndex && this.homeIndex.startPlayBanner();
+          } else {
+            this.homeIndex && this.homeIndex.stopPlayBanner();
+          }
           return <TabBar tabs={TABS} selectedIndex={navigationState.index} onTabSelected={ index => jumpToIndex(index) } />;
         }
       }
