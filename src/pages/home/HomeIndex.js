@@ -20,8 +20,6 @@ import NavBar from '../../widgets/NavBar';
 
 import SvgUri from '../../dependencies/react-native-svg-uri';
 
-import { get, post } from '../../utils/NetUtil';
-
 import SeparatorLine from '../../widgets/SeparatorLine';
 
 import ScrollableTabView from '../../widgets/scrollableTabView';
@@ -31,6 +29,8 @@ import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 import SimpleBanner from '../../widgets/banner';
 
 import CardView from '../../widgets/CardView';
+
+import EnhanceImage from '../../widgets/EnhanceImage';
 
 import ServerApi from '../../constants/ServerApi';
 
@@ -385,7 +385,7 @@ const GridActivity = (props) => {
       {
         data.map((item, index) => (
           <TouchableOpacity key={`gridActivity${index}`} style={styles.gridActivityItem} activeOpacity={Const.ACTIVE_OPACITY} onPress={onPress}>
-            <Image style={{ width: getSize(36), height: getSize(36), marginBottom: getSize(5) }} source={{ uri: item.imgUrl }} />
+            <EnhanceImage style={{ width: getSize(36), height: getSize(36), marginBottom: getSize(5) }} source={{ uri: item.imgUrl }} />
             <Text style={{ color: '#333333', fontSize: getSize(10) }}>{item.name}</Text>
           </TouchableOpacity>
         ))
@@ -420,7 +420,7 @@ const Customization = (props) => {
   return (
     <View style={{ backgroundColor: '#ffffff', marginBottom: index === customization.length - 1 ? 0 : getSize(10) }}>
       <TouchableOpacity activeOpacity={Const.ACTIVE_OPACITY} >
-        <Image style={{ width: Const.SCREEN_WIDTH, height: getSize(150) }} source={{ uri: item.imgUrl }} />
+        <EnhanceImage style={{ width: Const.SCREEN_WIDTH, height: getSize(150) }} source={{ uri: item.imgUrl }} />
       </TouchableOpacity>
       <View style={{ flexDirection: 'row' }}>
         {
@@ -430,7 +430,7 @@ const Customization = (props) => {
             } else {
               return (
                 <View key={`aaa${index}`} style={{ flex: 1, alignItems: 'center' }}>
-                  <Image style={{ width: getSize(130), height: getSize(120), marginBottom: getSize(8) }} source={{ uri: child.imgUrl }} resizeMode={'contain'} />
+                  <EnhanceImage style={{ width: getSize(130), height: getSize(120), marginBottom: getSize(8) }} source={{ uri: child.imgUrl }} resizeMode={'contain'} />
                   <Text numberOfLines={1} style={{ color: '#808080', fontSize: getSize(13), marginBottom: getSize(5) }}>{child.param1}</Text>
                   <View style={styles.shadowButton}>
                     <Text style={{ color: '#a9a9a9', fontSize: getSize(12) }}>{`去定制`}</Text>
@@ -461,7 +461,7 @@ const GoodsCell = (props) => {
   }
   return (
     <TouchableOpacity activeOpacity={Const.ACTIVE_OPACITY} style={[styles.goodsCell, { ...margins }]}>
-      <Image style={{ width: getSize(182), height: getSize(200) }} source={{ uri: item.icoUrl }} resizeMode={'contain'} />
+      <EnhanceImage style={{ width: getSize(182), height: getSize(200) }} source={{ uri: item.icoUrl }} resizeMode={'contain'} />
       <View style={styles.goodsCellDIYType}>
         <Text style={{ color: '#FFFFFF', fontSize: getSize(12) }}>{DIY_TYPE[item.companyId]}</Text>
       </View>

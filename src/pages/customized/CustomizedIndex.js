@@ -14,6 +14,8 @@ import SeparatorLine from '../../widgets/SeparatorLine';
 
 import CardView from '../../widgets/CardView';
 
+import EnhanceImage from '../../widgets/EnhanceImage';
+
 import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 
 import LoadingComponent from '../../widgets/LoadingComponent';
@@ -281,7 +283,7 @@ const GoodsCell = (props) => {
   } else {
     return (
       <TouchableOpacity activeOpacity={1} style={[styles.goodsCell, margins]}>
-        <Image style={{ width: getSize(130), height: getSize(120) }} source={{ uri: item.icoUrl }} resizeMode={'contain'} />
+        <EnhanceImage style={{ width: getSize(130), height: getSize(120) }} source={{ uri: item.icoUrl }} resizeMode={'contain'} />
         <View style={styles.goodsCellDIYType}>
           <Text style={{ color: '#FFFFFF', fontSize: getSize(12) }}>{DIY_TYPE[item.companyId]}</Text>
         </View>

@@ -12,6 +12,8 @@ import SeparatorLine from "../../widgets/SeparatorLine";
 
 import EnhanceList, { EnhanceListStatus } from '../../widgets/EnhanceList';
 
+import EnhanceImage from '../../widgets/EnhanceImage'
+
 import ServerApi from '../../constants/ServerApi';
 
 //列表头部图片
@@ -127,10 +129,10 @@ export default class DiscoverIndex extends BaseComponent {
 const ListHeader = () => {
   return (
     <View style={styles.listHeader}>
-      <Image style={{ width: getSize(185), height: getSize(160) }} source={{ uri: LIST_HEADER_IMGS[0] }} />
+      <EnhanceImage style={{ width: getSize(185), height: getSize(160) }} source={{ uri: LIST_HEADER_IMGS[0] }} />
       <View style={{ flex: 1 }}>
-        <Image style={{ width: getSize(190), height: getSize(80) }} source={{ uri: LIST_HEADER_IMGS[1] }} />
-        <Image style={{ width: getSize(190), height: getSize(80) }} source={{ uri: LIST_HEADER_IMGS[2] }} />
+        <EnhanceImage style={{ width: getSize(190), height: getSize(80) }} source={{ uri: LIST_HEADER_IMGS[1] }} />
+        <EnhanceImage style={{ width: getSize(190), height: getSize(80) }} source={{ uri: LIST_HEADER_IMGS[2] }} />
       </View>
     </View>
   )
@@ -139,11 +141,11 @@ const ListHeader = () => {
 const DiscoverCell = (props) => {
   const { item } = props;
   if (item.type == 3) {
-    return <Image style={{  backgroundColor: '#fff', width: Const.SCREEN_WIDTH, height: getSize(120) }} source={{ uri: item.img }} resizeMode="stretch" />
+    return <EnhanceImage style={{  backgroundColor: '#fff', width: Const.SCREEN_WIDTH, height: getSize(120) }} source={{ uri: item.img }} resizeMode="stretch" />
   } else {
     return (
       <View style={styles.discoverCell}>
-        <Image style={{ width: getSize(90), height: getSize(90), marginRight: getSize(15) }} source={{ uri: item.img }} resizeMode="stretch" />
+        <EnhanceImage style={{ width: getSize(90), height: getSize(90), marginRight: getSize(15) }} source={{ uri: item.img }} resizeMode="stretch" />
         <View style={{ flex: 1, alignSelf: 'flex-start', alignItems: 'center' }}>
           <Text style={{ fontSize: getSize(15), color: '#000000', textAlign: 'center' }} numberOfLines={2}>{item.title}</Text>
           <Text style={{ fontSize: getSize(13), color: '#969696', marginVertical: getSize(8) }}>
