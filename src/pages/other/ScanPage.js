@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, TouchableOpacity, View, Text, Animated, Easing, ScrollView, WebView } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, Animated, Easing, ScrollView, WebView, PixelRatio } from "react-native";
 
 import BasePage from '../BasePage';
 
@@ -14,12 +14,24 @@ import EnhanceStatusBar from '../../widgets/EnhanceStatusBar';
 
 import NavBar from '../../widgets/NavBar';
 
+/**
+ * 扫描区域位置
+ */
+const SacningLayout = () => {
+  const pageX = getSize(58);
+  const pageY = Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT + getSize(134);
+  const width = Const.SCREEN_WIDTH - getSize(58) * 2;
+  const height = Const.SCREEN_HEIGHT - pageY - getSize(134) - getSize(80);
+  return { pageX, pageY, width, height };
+}
+
 export default class ScanPage extends BasePage {
 
   constructor(props) {
     super(props);
-    this.path = new Animated.Value(getSize(170) + Const.STATUSBAR_HEIGHT);
+    this.path = new Animated.Value(getSize(134));
     this.state = {}
+    console.log(SacningLayout());
   }
 
   render() {
@@ -66,8 +78,8 @@ export default class ScanPage extends BasePage {
     return /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/.test(url);
   }
 
-  renderResult() {    
-    const props = !this.state.result ? {} : (this.isNetAddress(this.state.result) ? {source: { uri: this.state.result }} : { source: { html: this.transformHtml(this.state.result), baseUrl: '' }})
+  renderResult() {
+    const props = !this.state.result ? {} : (this.isNetAddress(this.state.result) ? { source: { uri: this.state.result } } : { source: { html: this.transformHtml(this.state.result), baseUrl: '' } })
     return (
       <View key={`ScanResult`} style={{ width: Const.SCREEN_WIDTH, height: Const.SCREEN_HEIGHT, justifyContent: 'flex-start', alignItems: 'center' }}>
         <NavBar />
@@ -78,7 +90,8 @@ export default class ScanPage extends BasePage {
           javaScriptEnabled={true}
           saveFormDataDisabled={true}
           dataDetectorTypes='all'
-          { ...props }
+          startInLoadingState={true}
+          {...props}
         />
       </View>
     )
@@ -106,52 +119,69 @@ export default class ScanPage extends BasePage {
         onTextRecognized={() => {
           return 12312
         }}
-        permissionDialogTitle={'Permission to use camera'}
-        permissionDialogMessage={'We need your permission to use your camera phone'}>
-
+        permissionDialogTitle={'相机权限'}
+        permissionDialogMessage={'DIY 想使用你的相机'}>
         <EnhanceStatusBar backgroundColor={'rgba(0,0,0,0.3)'} />
-        <View style={{ flex: 1, width: Const.SCREEN_WIDTH, height: getSize(567) - Const.STATUSBAR_HEIGHT }}>
-          <View style={{ position: 'absolute', top: 0, left: 0, width: Const.SCREEN_WIDTH, height: getSize(170), backgroundColor: 'rgba(0,0,0,0.3)' }} />
-          <View style={{ position: 'absolute', bottom: 0, left: 0, width: Const.SCREEN_WIDTH, height: getSize(130), backgroundColor: 'rgba(0,0,0,0.3)' }} />
-          <View style={{ position: 'absolute', top: getSize(170), left: 0, width: getSize(62.5), height: getSize(267) - Const.STATUSBAR_HEIGHT, backgroundColor: 'rgba(0,0,0,0.3)' }} />
-          <View style={{ position: 'absolute', top: getSize(170), right: 0, width: getSize(62.5), height: getSize(267) - Const.STATUSBAR_HEIGHT, backgroundColor: 'rgba(0,0,0,0.3)' }} />
-        </View>
-        <View style={{ backgroundColor: 'rgba(0,0,0,1)', width: Const.SCREEN_WIDTH, height: getSize(100), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableOpacity
-            onPress={this.takePicture.bind(this)}
-            style={{}}>
-            <Text style={{ fontSize: 14, color: '#f93a54' }}> 扫码 </Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity style={{ position: 'absolute', top: Const.STATUSBAR_HEIGHT, width: Const.SCREEN_WIDTH, height: Const.NAVBAR_HEIGHT, paddingHorizontal: getSize(10), minWidth: getSize(44), flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}
+        <TouchableOpacity style={{ backgroundColor: 'rgba(0,0,0,0.3)', width: Const.SCREEN_WIDTH, height: Const.NAVBAR_HEIGHT, paddingHorizontal: getSize(10), height: Const.NAVBAR_HEIGHT, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}
           activeOpacity={1} onPress={() => this.pop()}>
           <SvgUri width={getSize(24)} height={getSize(24)} source={'icon_nav_bar_back'} fill={'#ffffff'} />
         </TouchableOpacity>
-
-        <Animated.View style={{ position: 'absolute', top: this.path, left: getSize(62.5), width: getSize(250), height: getSize(3), backgroundColor: '#f93a54' }} />
+        <View style={{ width: Const.SCREEN_WIDTH, height: Const.PAGE_HEIGHT - getSize(80) }}>
+          <View style={{ position: 'absolute', top: 0, left: 0, width: Const.SCREEN_WIDTH, height: getSize(134), backgroundColor: 'rgba(0,0,0,0.3)' }} />
+          <View style={{ position: 'absolute', bottom: 0, left: 0, width: Const.SCREEN_WIDTH, height: getSize(134), backgroundColor: 'rgba(0,0,0,0.3)' }} />
+          <View style={{ position: 'absolute', top: getSize(134), left: 0, width: getSize(58), height: Const.PAGE_HEIGHT - getSize(80) - getSize(134) * 2, backgroundColor: 'rgba(0,0,0,0.3)' }} />
+          <View style={{ position: 'absolute', top: getSize(134), right: 0, width: getSize(58), height: Const.PAGE_HEIGHT - getSize(80) - getSize(134) * 2, backgroundColor: 'rgba(0,0,0,0.3)' }} />
+          <Animated.View style={{ position: 'absolute', top: this.path, left: getSize(58), right: getSize(58), height: getSize(3), backgroundColor: '#f93a54' }} />
+        </View>
+        <View style={{ backgroundColor: 'rgba(0,0,0,1)', width: Const.SCREEN_WIDTH, height: getSize(80), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity
+            onPress={this.takePicture.bind(this)}
+            style={{}}>
+            <Text style={{ fontSize: 16, color: '#f93a54' }}> 扫码 </Text>
+          </TouchableOpacity>
+        </View>
       </RNCamera>
     )
   }
 
   paly() {
     Animated.timing(this.path, {
-      toValue: getSize(420) + Const.STATUSBAR_HEIGHT - getSize(3),
+      toValue: Const.PAGE_HEIGHT - getSize(80) - getSize(134),
       easing: Easing.linear,
-      duration: 2500
+      duration: 2000
     }).start(() => {
       Animated.timing(this.path, {
-        toValue: getSize(170) + Const.STATUSBAR_HEIGHT,
+        toValue: getSize(134),
         easing: Easing.linear,
-        duration: 2500
+        duration: 2000
       }).start(() => this.paly());
     });
   }
 
-  _onBarCodeRead = obj => {
-    const { data, bounds } = obj;
-    let size = bounds.size;
-    let origin = bounds.origin;
-    if (origin.x >= getSize(62.5) && origin.y >= (getSize(170) + Const.STATUSBAR_HEIGHT) && size.width <= getSize(250) && size.height <= getSize(250)) {
+
+
+  _onBarCodeRead = event => {
+
+    const { data, bounds } = event;
+    let x = 0, y = 0; //位置
+
+    if (__IOS__) {
+      const { origin } = bounds;
+      x = Number(origin.x);
+      y = Number(origin.y);
+    } else if (__ANDROID__) {
+      if (!bounds[0].x || !bounds[0].y || !bounds[1].x || !bounds[1].y || !bounds[2].x || !bounds[2].y || !bounds[3].x || !bounds[3].y) return null;
+      const pixelRatio = PixelRatio.get();
+      const leftBottom = { x: bounds[0].x / pixelRatio, y: bounds[0].y / pixelRatio };
+      const leftTop = { x: bounds[1].x / pixelRatio, y: bounds[1].y / pixelRatio };
+      const rightTop = { x: bounds[2].x / pixelRatio, y: bounds[2].y / pixelRatio };
+      const rightBottom = { x: bounds[3].x / pixelRatio, y: bounds[3].y /pixelRatio };
+      x = Math.min(leftTop.x, leftBottom.x);
+      y = Math.min(leftTop.y, rightTop.y);
+    }
+    const { pageX, pageY, width, height } = SacningLayout();
+    let minX = pageX, minY = pageY, maxX = pageX + width, maxY = pageY + height;
+    if ((x > minX && y > minY) && (x < maxX && y < maxY)) {
       this.setState({
         result: data
       }, () => {
@@ -177,7 +207,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    backgroundColor: '#000000'
   },
 });
 
