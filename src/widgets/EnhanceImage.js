@@ -63,7 +63,7 @@ export default class EnhanceImage extends BaseWidget {
     showPlaceholder: true, //默認顯示 
     placeholderUri: require('../resource/DIY.png'), //默认，DIY.png
 
-    showLoading: true,
+    showLoading: false,
 
     loading: {
       size: 'small',
@@ -127,15 +127,21 @@ export default class EnhanceImage extends BaseWidget {
     if (!this.state.isFinishLoad) {
       if (failComponent) {
         return (
-          <View style={[styles.absolute, { width, height, borderRadius }, styles.center ]}>
+          <TouchableOpacity
+            style={[styles.absolute, { width, height, borderRadius }, styles.center ]}
+            activeOpacity={1}
+            onPress={this._onPress}>
             {failComponent}
-          </View>
+          </TouchableOpacity>
         );
       } else {
         return (
-          <View style={[styles.absolute, { width, height, borderRadius }, styles.center ]}>
+          <TouchableOpacity 
+            style={[styles.absolute, { width, height, borderRadius }, styles.center ]}
+            activeOpacity={1}
+            onPress={this._onPress} >
             <Text style={{ backgroundColor: 'transparent', fontSize: fail.tipSize, color: fail.tipColor }}>{fail.tip}</Text>
-          </View>
+          </TouchableOpacity>
         )
       }
     } else {
@@ -164,10 +170,10 @@ export default class EnhanceImage extends BaseWidget {
           }}
           onLoadEnd={() => {
             if (this.state.allowTimeout) {
-              this.setState({ isFinishLoad: true, showLoading: false });
+              this.setState({ isFinishLoad: true, showLoading: false, showPlaceholder: false });
               this.timer && clearTimeout(this.timer);
             } else {
-              this.setState({ showLoading: false });
+              this.setState({ showLoading: false, showPlaceholder: false });
             }
             onLoadEnd && onLoadEnd();
           }}
@@ -179,13 +185,14 @@ export default class EnhanceImage extends BaseWidget {
   }
 
   render() {
+    const { width = 0, height = 0, borderRadius = 0 } = this.props.style || {};
     return (
-      <TouchableOpacity activeOpacity={1} style={styles.container} onPress={this._onPress} >
+      <View style={[styles.container, { width, height, borderRadius }]}>
         {this.renderPlaceHolderImage()}
         {this.renderFinalImage()}
         {this.renderLoadingView()}
         {this.renderFailView()}
-      </TouchableOpacity>
+      </View>
     )
   }
 
@@ -209,7 +216,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   absolute: {
     position: 'absolute',
