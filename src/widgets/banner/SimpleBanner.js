@@ -121,6 +121,14 @@ export default class SimpleBanner extends BaseWidget {
       </View>
     )
   }
+
+  autoPlay() {
+    this.banner && this.banner.autoPlay();
+  }
+
+  stopPlay() {
+    this.banner && this.banner.stopPlay();
+  }
 }
 
 const styles = StyleSheet.create({
