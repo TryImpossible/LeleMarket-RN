@@ -225,11 +225,17 @@ export default class HomeIndex extends BaseComponent {
       this.loadOtherTabData(item.id);
     }
   }
-
+  
   render() {
     return (
       <View style={styles.container}>
-        <NavBar leftIcon={'icon_scan'} leftPress={this.jumpToScanPage} titleView={<NavBarTitleView search={this.jumpToSearchPage} />} rightIcon={'icon_msg'} rightPress={this.jumpToMsgPage} showBottomLine={false} />
+        <NavBar 
+          leftIcon={'icon_scan'}
+          leftPress={this.jumpToScanPage}
+          titleView={<NavBarTitleView search={this.jumpToSearchPage} />}
+          rightIcon={'icon_msg'}
+          rightPress={this.jumpToMsgPage}
+          showBottomLine={false} />
         <ScrollableTabView
           tabs={this.state.scrollTabs.map((item, index) => item.name)}
           tabBarStyle={{ borderBottomWidth: Const.LINE_WIDTH, borderBottomColor: Const.LINE_COLOR, height: getSize(26) }}
@@ -238,6 +244,7 @@ export default class HomeIndex extends BaseComponent {
           tabBarActiveTextColor={'#fe3f56'}
           tabBarInactiveTextColor={'#333333'}
           tabBarUnderlineStyle={{ height: getSize(2) }}
+          scrollableViewStyle={{ height: LIST_HEIGHT, flexGrow: 0 }} //这里有点坑，ViewPageAndroid flexGrow: 1
           onScrollEnd={index => {
             this.onTopNavSelected(this.state.scrollTabs[index], index);
           }}>
@@ -322,14 +329,13 @@ export default class HomeIndex extends BaseComponent {
             })
           }
         </ScrollableTabView>
-
-        <LoadingView 
+        <LoadingView
           ref={ref => this.loadingView = ref}
-          style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }}
+          style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT }}
           color={'#8cadca'} />
         <ErrorComponent ref={ref => this.errorComponent = ref}
           style={{ top: Const.STATUSBAR_HEIGHT + Const.NAVBAR_HEIGHT, }}
-          retry={() => { 
+          retry={() => {
             this.errorComponent.dismiss();
             this.loadScrollTabsData();
             this.loadFocusedSelectData();
@@ -351,6 +357,8 @@ export default class HomeIndex extends BaseComponent {
     this.props.push('RichEditorPage');
   }
 }
+
+const tabs = ['劉備', '诸葛亮', '关羽', '张飞', '马超', '黄忠', '赵云', '許褚', '夏侯惇', '於禁', '黃蓋', '甘寧', '周瑜'];
 
 /**
  * 搜索框
