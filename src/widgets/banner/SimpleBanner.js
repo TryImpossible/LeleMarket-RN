@@ -10,6 +10,8 @@ import BannerView from './BannerView';
 
 import Indicater, { IndicaterMode, IndicaterAlign } from './Indicater';
 
+import EnhanceImage from '../EnhanceImage';
+
 //测试数据
 const BANNER = [
   "https://api.51app.cn/resource/diymall/uu20/special/752ced27.png",
@@ -97,7 +99,7 @@ export default class SimpleBanner extends BaseWidget {
             images.map((item, index) => {
               return (
                 <TouchableOpacity key={`${index}`} activeOpacity={1} onPress={() => this.canResponseChildEvent && onClick && onClick(index) } >
-                  <Image style={{ width: Const.SCREEN_WIDTH, height, }} source={{ uri: item }} />
+                  <EnhanceImage style={{ width: Const.SCREEN_WIDTH, height, }} source={{ uri: item }} />
                 </TouchableOpacity>
               )
             })
