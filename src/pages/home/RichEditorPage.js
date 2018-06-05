@@ -23,8 +23,7 @@ import { AudioRecorder, AudioUtils } from 'react-native-audio';
 export default class RichEditorPage extends BasePage {
 
   constructor(props) {
-    super(props);
-    this.setFocusHandlers = this.setFocusHandlers.bind(this);
+    super(props)
   }
 
   startAudioRecord() {
