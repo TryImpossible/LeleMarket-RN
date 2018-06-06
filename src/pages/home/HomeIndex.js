@@ -379,8 +379,6 @@ export default class HomeIndex extends BaseComponent {
   }
 }
 
-const tabs = ['劉備', '诸葛亮', '关羽', '张飞', '马超', '黄忠', '赵云', '許褚', '夏侯惇', '於禁', '黃蓋', '甘寧', '周瑜'];
-
 /**
  * 搜索框
  * @param {} props 
