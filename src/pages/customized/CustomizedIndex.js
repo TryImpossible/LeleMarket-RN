@@ -153,7 +153,12 @@ export default class CustomizedIndex extends BaseComponent {
 
     return (
       <View style={styles.container}>
-        <NavBar leftIcon={'icon_scan'} titleView={<NavBarTitleView search={this.jumpToSearch} />} rightIcon={'icon_msg'} />
+        <NavBar 
+          leftIcon={'icon_scan'}
+          leftPress={this.jumpToScanPage}
+          titleView={<NavBarTitleView search={this.jumpToSearchPage} />}
+          rightIcon={'icon_msg'}
+          rightPress={this.jumpToMsgPage} />
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <FlatList
             ref={ref => this.menuFaltList}
@@ -205,10 +210,24 @@ export default class CustomizedIndex extends BaseComponent {
   }
 
   /**
-   * 跳转至搜索页面
+   * 扫码
    */
-  jumpToSearch = () => {
+  jumpToScanPage = () => {
+    this.props.push('ScanPage');
+  }
 
+  /**
+   * 搜索
+   */
+  jumpToSearchPage = () => {
+    this.props.push('SearchPage');
+  }
+
+  /**
+   * 消息
+   */
+  jumpToMsgPage = () => {
+    this.props.push('MessagePage');
   }
 
   /**

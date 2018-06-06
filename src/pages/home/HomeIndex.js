@@ -351,17 +351,25 @@ export default class HomeIndex extends BaseComponent {
     )
   }
 
+  /**
+   * 扫码
+   */
   jumpToScanPage = () => {
     this.props.push('ScanPage');
   }
 
+  /**
+   * 搜索
+   */
   jumpToSearchPage = () => {
     this.props.push('SearchPage');
   }
 
+  /**
+   * 消息
+   */
   jumpToMsgPage = () => {
-    if (__IOS__) return;
-    this.props.push('RichEditorPage');
+    this.props.push('MessagePage');
   }
 
   /**
