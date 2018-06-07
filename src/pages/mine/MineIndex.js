@@ -58,12 +58,12 @@ export default class MineIndex extends BaseComponent {
   }
 
   initSubscriptions() {
-    const {TabNavigation} = this.props;
-    if (__ANDROID__){
-      this.willFocusSubscription = TabNavigation.addListener( 'willFocus', payload => {
+    const { TabNavigation } = this.props;
+    if (__ANDROID__) {
+      this.willFocusSubscription = TabNavigation.addListener('willFocus', payload => {
         StatusBar.setBackgroundColor('#FB4950');
       });
-    } 
+    }
   }
 
   componentWillUnmount() {
@@ -79,13 +79,13 @@ export default class MineIndex extends BaseComponent {
           style={{ flex: 1 }}
           contentContainerStyle={{ backgroundColor: Const.MAIN_COLOR }}
           sections={SECTION_LIST_DATA}
-          ListHeaderComponent={() => <ListHeaderView onLogin={this.onLogin} />}
+          ListHeaderComponent={() => <ListHeaderView onLogin={this.jumpToLoginPage} />}
           ListFooterComponent={() => <ListFooterView />}
           renderItem={({ item, index }) => {
             if (item.key === 'section0') {
-              return <MineButtonsCell item={item} index={index} onPress={(i) => this.props.showToast(item.data[i].text)} />;
+              return <MineButtonsCell item={item} index={index} onPress={(index) => this.onButtonItemPress(index) } />;
             } else {
-              return <MineArrowItemCell item={item} index={index} onPress={() => this.props.showToast(item.text)} />
+              return <MineArrowItemCell item={item} index={index} onPress={() => this.onArrowItemPress(item.key, index) } />
             }
           }}
           ItemSeparatorComponent={() => <SeparatorLine left={getSize(10)} width={Const.SCREEN_WIDTH - getSize(10)} />}
@@ -98,18 +98,79 @@ export default class MineIndex extends BaseComponent {
             this.opacityPath.setValue(opacityratio);
           }} />
         <NavBar opacity={this.opacityPath} />
-        <TouchableOpacity style={styles.navBarSvg} opacity={Const.ACTIVE_OPACITY} onPress={this.jumpToMsg}>
+        <TouchableOpacity style={styles.navBarSvg} opacity={Const.ACTIVE_OPACITY} onPress={this.jumpToMsgPage}>
           <SvgUri width={24} height={24} source={'icon_msg'} fill={'#FFFFFF'} />
         </TouchableOpacity>
       </View>
     )
   }
 
-  jumpToMsg = () => {
-    this.props.showToast('消息');
+  /**
+   * 订单状态Button点击
+   * @param {*} index 
+   */
+  onButtonItemPress(index) {
+    this.props.showToast('登录');
   }
 
-  onLogin = () => {
+  /**
+   * 箭头行点击
+   * @param {*} key 
+   * @param {*} index 
+   */
+  onArrowItemPress(key, index) {
+    if (key === 'section1') {
+      switch (index) {
+        case 0:
+          this.props.showToast('登录');
+          break;
+        case 1:
+          this.props.showToast('个人作品');
+          break;
+        case 2:
+          this.props.showToast('我的好友');
+          break;
+        case 3:
+          this.props.showToast('登录');
+          break;
+        case 4:
+          this.props.push( 'DIYWebViewPage', { 
+              navTitle: '客服中心',
+              source: { uri: `${Const.HOST}xielei/leleDiy/Customer-service.html` }
+          });
+          break;
+        default:
+          break;
+      }
+
+      // https://api.51app.cn/diyMall/v3.0.0/others/aboutUs-lele.html 关于我们
+      // https://api.51app.cn/diyMall/v3.0.0/others/businessCooperation.html 商务合作
+      // https://api.51app.cn/diyMall/v3.0.0/others/copyRight-lele.html 版权
+    } else if (key === 'section2') {
+      switch (index) {
+        case 0:
+          this.props.push('ScanPage');
+          break;
+        case 1:
+          this.props.showToast('更多');
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  /**
+   * 消息
+   */
+  jumpToMsgPage = () => {
+    this.props.push('MessagePage');
+  }
+
+  /**
+   * 登录
+   */
+  jumpToLoginPage = () => {
     this.props.showToast('登录');
   }
 }
@@ -120,7 +181,7 @@ export default class MineIndex extends BaseComponent {
  */
 const NavBar = (props) => {
   const { opacity } = props;
-  let navBarViewOpacity = opacity.interpolate({ inputRange: [0, 0.99, 1], outputRange: [0, 0, 1] }); 
+  let navBarViewOpacity = opacity.interpolate({ inputRange: [0, 0.99, 1], outputRange: [0, 0, 1] });
   return (
     <Animated.View style={[styles.navBar, { opacity }]}>
       <EnhanceStatusBar backgroundColor={'#FB4950'} />
