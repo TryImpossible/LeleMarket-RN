@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, View, Text, TouchableOpacity, Animated, Easing } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Animated, Easing, ViewPropTypes } from 'react-native';
 
 import BaseWidget from './BaseWidget';
 
@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 export class TabBar extends BaseWidget {
 
   static propTypes = {
-    style: PropTypes.object, //TabBar样式
+    style: ViewPropTypes.style, //TabBar样式
     tabs: PropTypes.arrayOf(
       PropTypes.shape({
         iconUri: PropTypes.string.isRequired,
@@ -80,9 +80,13 @@ export class TabBar extends BaseWidget {
         {
           tabs.map((element, index) => {
             return (
-              <TabBarItem key={`TabBarItem${index}`} icon={{ uri: element.iconUri, normalColor: element.normalIconColor, activeColor: element.activeIconColor }}
-                name={{ text: element.nameText, normalColor: element.normalNameColor, activeColor: element.activeNameColor }} active={this.state.selectedIndex === index}
-                path={this.paths[index]} onPress={() => this.updateSelected(index, onTabSelected) } />
+              <TabBarItem 
+                key={`TabBarItem${index}`}
+                icon={{ uri: element.iconUri, normalColor: element.normalIconColor, activeColor: element.activeIconColor }}
+                name={{ text: element.nameText, normalColor: element.normalNameColor, activeColor: element.activeNameColor }}
+                active={this.state.selectedIndex === index}
+                path={this.paths[index]}
+                onPress={() => this.updateSelected(index, onTabSelected) } />
             )
           })
         }
@@ -103,7 +107,7 @@ export class TabBar extends BaseWidget {
 class TabBarItem extends BaseWidget {
 
   static propTypes = {
-    style: PropTypes.object, //TabBarItem 样式
+    style: ViewPropTypes.style, //TabBarItem 样式
     onPress: PropTypes.func.isRequired, //TabBarItem 点击
     icon: PropTypes.shape({
       uri: PropTypes.string.isRequired,
