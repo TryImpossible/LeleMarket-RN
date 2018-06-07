@@ -59,10 +59,10 @@ const CellHeight = getSize(68); //高度
 const MsgCell = props => {
   const { item, index } = props;
   return (
-    <View style={{ width: Const.SCREEN_WIDTH, height: CellHeight, backgroundColor: '#fff', paddingHorizontal: getSize(15), paddingVertical: getSize(8), flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+    <View style={styles.msgCell}>
       <SvgUri width={getSize(40)} height={getSize(40)} source={item.icon} />
       <View style={{ flex: 1, marginLeft: getSize(8) }}>
-        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <View style={styles.msgCellTitleView}>
           <Text style={{ color: '#333333' }}>{item.title}</Text>
           <Text style={{ color: '#999999' }}>{item.date}</Text>
         </View>
@@ -76,6 +76,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  msgCell: {
+    width: Const.SCREEN_WIDTH,
+    height: CellHeight,
+    backgroundColor: '#fff',
+    paddingHorizontal: getSize(15),
+    paddingVertical: getSize(8),
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  msgCellTitleView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center'
   }
 });
