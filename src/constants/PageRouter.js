@@ -7,6 +7,7 @@ import ScanPage from '../pages/other/ScanPage.js';
 import SearchPage from '../pages/other/SearchPage.js';
 import SvgPage from '../pages/other/SvgPage.js';
 import APage from '../pages/shoppingCar/APage.js';
+import LoginPage from '../pages/user/LoginPage.js';
 const PAGES = [
 	{ name: 'MainPage', page: MainPage },
 	{ name: 'UEWidgetPage', page: UEWidgetPage },
@@ -16,6 +17,7 @@ const PAGES = [
 	{ name: 'ScanPage', page: ScanPage },
 	{ name: 'SearchPage', page: SearchPage },
 	{ name: 'SvgPage', page: SvgPage },
-	{ name: 'APage', page: APage }
+	{ name: 'APage', page: APage },
+	{ name: 'LoginPage', page: LoginPage }
 ];
  export default PAGES;
