@@ -66,7 +66,8 @@ export default class SearchPage extends BasePage {
         <SvgUri width={getSize(20)} height={getSize(20)} source={'icon_search'} />
         <TextInput
           ref={ref => this.textInput = ref}
-          style={{ marginHorizontal: getSize(5), flex: 1, fontSize: getSize(14), color: '#333333' }}
+          underlineColorAndroid={'transparent'}
+          style={{ padding: 0, marginHorizontal: getSize(5), flex: 1, fontSize: getSize(14), color: '#333333' }}
           autoFocus={true}
           placeholder={'请输入商品名称'}
           placeholderTextColor='#bebec4'
@@ -83,7 +84,7 @@ export default class SearchPage extends BasePage {
     );
     return (
       <View style={styles.container}>
-        <NavBar showLeftView={false} titleView={NavBarTitleView} rightText={'取消'} rightPress={() => this.goBack()} />;
+        <NavBar showLeftView={false} titleView={NavBarTitleView} rightText={'取消'} rightPress={() => this.goBack()} />
         <FlatList
           data={this.state.data}
           ListHeaderComponent={() => {
