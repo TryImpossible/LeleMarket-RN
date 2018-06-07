@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Component } from 'react';
 import {
   StatusBar,
   StyleSheet,
@@ -21,8 +21,6 @@ import PAGES from '../constants/PageRouter';
 
 import Toast from '../widgets/Toast';
 
-import UEWidgetPage from "../pages/UEWidgetPage";
-
 import SvgPage from '../pages/other/SvgPage';
 
 import EnhanceNetInfo from '../widgets/EnhanceNetInfo';
@@ -31,9 +29,9 @@ const RootStackNavigator = null;
 
 const ForcePage = [];
 
-const InitPage = ['MainPage', 'UEWidgetPage', 'SvgPage'];
+const InitPage = ['MainPage', 'UEWidgetPage', 'LoginPage'];
 
-class App extends PureComponent {
+class App extends (PureComponent || Component) {
 
   constructor(props) {
     super(props);

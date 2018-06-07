@@ -60,14 +60,19 @@ export default class MineIndex extends BaseComponent {
   initSubscriptions() {
     const { TabNavigation } = this.props;
     if (__ANDROID__) {
-      this.willFocusSubscription = TabNavigation.addListener('willFocus', payload => {
-        StatusBar.setBackgroundColor('#FB4950');
-      });
+      this.subscriptions = [
+        TabNavigation.addListener('willFocus', payload => {
+          StatusBar.setBackgroundColor('#FB4950');
+        }),
+        TabNavigation.addListener('willBlur', payload => {
+          StatusBar.setBackgroundColor('#FFFFFF');
+        })
+      ]
     }
   }
 
   componentWillUnmount() {
-    this.willFocusSubscription && this.willFocusSubscription.remove();
+    this.subscriptions && this.subscriptions.forEach(sub => sub.remove());
   }
 
   render() {
@@ -83,9 +88,9 @@ export default class MineIndex extends BaseComponent {
           ListFooterComponent={() => <ListFooterView />}
           renderItem={({ item, index }) => {
             if (item.key === 'section0') {
-              return <MineButtonsCell item={item} index={index} onPress={(index) => this.onButtonItemPress(index) } />;
+              return <MineButtonsCell item={item} index={index} onPress={(index) => this.onButtonItemPress(index)} />;
             } else {
-              return <MineArrowItemCell item={item} index={index} onPress={() => this.onArrowItemPress(item.key, index) } />
+              return <MineArrowItemCell item={item} index={index} onPress={() => this.onArrowItemPress(item.key, index)} />
             }
           }}
           ItemSeparatorComponent={() => <SeparatorLine left={getSize(10)} width={Const.SCREEN_WIDTH - getSize(10)} />}
@@ -110,7 +115,7 @@ export default class MineIndex extends BaseComponent {
    * @param {*} index 
    */
   onButtonItemPress(index) {
-    this.props.showToast('登录');
+    this.props.push('LoginPage');
   }
 
   /**
@@ -122,7 +127,7 @@ export default class MineIndex extends BaseComponent {
     if (key === 'section1') {
       switch (index) {
         case 0:
-          this.props.showToast('登录');
+          this.props.push('LoginPage');
           break;
         case 1:
           this.props.showToast('个人作品');
@@ -131,12 +136,12 @@ export default class MineIndex extends BaseComponent {
           this.props.showToast('我的好友');
           break;
         case 3:
-          this.props.showToast('登录');
+          this.props.push('LoginPage');
           break;
         case 4:
-          this.props.push( 'DIYWebViewPage', { 
-              navTitle: '客服中心',
-              source: { uri: `${Const.HOST}xielei/leleDiy/Customer-service.html` }
+          this.props.push('DIYWebViewPage', {
+            navTitle: '客服中心',
+            source: { uri: `${Const.HOST}xielei/leleDiy/Customer-service.html` }
           });
           break;
         default:
@@ -171,7 +176,7 @@ export default class MineIndex extends BaseComponent {
    * 登录
    */
   jumpToLoginPage = () => {
-    this.props.showToast('登录');
+    this.props.push('LoginPage');
   }
 }
 

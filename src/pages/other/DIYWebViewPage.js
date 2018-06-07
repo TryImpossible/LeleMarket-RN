@@ -33,7 +33,7 @@ export default class DIYWebViewPage extends BasePage {
         <NavBar title={navTitle} />
         <WebView
           ref={ref => this.webView = ref}
-          style={{ width: Const.SCREEN_WIDTH, height: Const.SCREEN_HEIGHT - Const.STATUSBAR_HEIGHT - Const.NAVBAR_HEIGHT }}
+          style={{ backgroundColor: '#fff', width: Const.SCREEN_WIDTH, height: Const.SCREEN_HEIGHT - Const.STATUSBAR_HEIGHT - Const.NAVBAR_HEIGHT }}
           allowsInlineMediaPlayback={false} //ios, 指定HTML5视频是在网页当前位置播放还是使用原生的全屏播放器播放, 默认值false
           dataDetectorTypes={'none'} //探测网页中某些特殊数据类型，自动生成可点击的链接 enum('phoneNumber', 'link', 'address', 'calendarEvent', 'none', 'all')
           bounces={true}
