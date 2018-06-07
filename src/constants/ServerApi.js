@@ -13,6 +13,18 @@ export default class ServerApi {
   }
 
   /**
+   * 搜索
+   * @param {*} key 
+   * @param {*} callback 
+   * @param {*} pageName 
+   */
+  static getKeyword(key, callback, pageName) {
+    let from = new FormData();
+    form.append('name', key);
+    post('searchGoods/getKeyword.do', form, callback, pageName);
+  }
+
+  /**
    * 首页模块，一级页面：顶部横向滚动条数据 
    * @param {*} type 
    * @param {*} callback 
@@ -39,7 +51,7 @@ export default class ServerApi {
    * @param {*} pageName 
    */
   static topNavInfo(id, callback, pageName) {
-    let form = new FormData;
+    let form = new FormData();
     form.append('id', id);
     post('index/topNavInfo.do', form, callback, pageName);
   }
@@ -52,7 +64,7 @@ export default class ServerApi {
    * @param {*} pageName 
    */
   static topNavInfoByPage(id, page, callback, pageName) {
-    let form = new FormData;
+    let form = new FormData();
     form.append('id', id);
     form.append('page', page);
     post('index/topNavInfoByPage.do', form, callback, pageName);
