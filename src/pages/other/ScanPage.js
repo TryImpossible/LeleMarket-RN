@@ -30,8 +30,9 @@ export default class ScanPage extends BasePage {
   constructor(props) {
     super(props);
     this.path = new Animated.Value(getSize(134));
-    this.state = {}
-    console.log(SacningLayout());
+    this.state = {
+      result: ''
+    }
   }
 
   render() {
@@ -154,7 +155,7 @@ export default class ScanPage extends BasePage {
         toValue: getSize(134),
         easing: Easing.linear,
         duration: 2000
-      }).start(() => this.paly());
+      }).start(() => !this.state.result && this.paly());
     });
   }
 
@@ -170,7 +171,8 @@ export default class ScanPage extends BasePage {
       x = Number(origin.x);
       y = Number(origin.y);
     } else if (__ANDROID__) {
-      if (!bounds[0].x || !bounds[0].y || !bounds[1].x || !bounds[1].y || !bounds[2].x || !bounds[2].y || !bounds[3].x || !bounds[3].y) return null;
+      console.warn(bounds);
+      if (!bounds || !bounds[0] || !bounds[0].x || !bounds[0].y || !bounds[1] || !bounds[1].x || !bounds[1].y || !bounds[2] || !bounds[2].x || !bounds[2].y || !bounds[3] || !bounds[3].x || !bounds[3].y) return null;
       const pixelRatio = PixelRatio.get();
       const leftBottom = { x: bounds[0].x / pixelRatio, y: bounds[0].y / pixelRatio };
       const leftTop = { x: bounds[1].x / pixelRatio, y: bounds[1].y / pixelRatio };
