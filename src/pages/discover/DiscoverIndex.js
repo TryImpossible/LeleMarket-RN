@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StatusBar, StyleSheet, View, Text, FlatList, Image } from 'react-native';
+import { StatusBar, StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 
 import BaseComponent from '../../containers/BaseComponent';
 
@@ -111,8 +111,24 @@ export default class DiscoverIndex extends BaseComponent {
             this.loadFindListData()
           }}
           data={this.state.data}
-          ListHeaderComponent={() => <ListHeader />}
-          renderItem={({ item, index }) => <DiscoverCell item={item} />}
+          ListHeaderComponent={() => { 
+            const taobaoSpeciaUrl = `${Const.HOST}v3.0.0/subjects/taobaoSpecialList.html`; //淘一淘
+            return <ListHeader onPress={(index) => {
+              switch (index) {
+                case 0:
+                  this.props.push('DIYWebViewPage', { navTitle: '', source: { uri: taobaoSpeciaUrl }})
+                  break;
+              
+                default:
+                  break;
+              }
+            }} />;
+          }}
+          renderItem={({ item, index }) => {
+            const diyringUrl = `http://iring.diyring.cc/friend/252e5ed28264e505?token=C80368AB-0663-4E81-B593-1C3374EA7197&appId=1105250240`;
+            const detailUrl = `${Const.HOST}v3.0.0/subjects/discovery-detail.html?id=${item.id}`;
+            return <DiscoverCell item={item} onPress={() => this.props.push('DIYWebViewPage', { navTitle: '', source: { uri: item.type === 3 ? diyringUrl : detailUrl }})} />
+          }}
           ItemSeparatorComponent={({ highlighted, leadingItem }) => <SeparatorLine />}
           keyExtractor={(item, index) => `Discover${index}`}
           getItemLayout={(data, index) => ({ length: getSize(120), offset: getSize(120) * index, index })}
@@ -126,25 +142,36 @@ export default class DiscoverIndex extends BaseComponent {
   }
 }
 
-const ListHeader = () => {
+const ListHeader = (props) => {
+  const { onPress } = props;
   return (
     <View style={styles.listHeader}>
-      <EnhanceImage style={{ width: getSize(185), height: getSize(160) }} source={{ uri: LIST_HEADER_IMGS[0] }} />
+      <TouchableOpacity activeOpacity={Const.ACTIVE_OPACITY} onPress={() => onPress && onPress(0)}>
+        <EnhanceImage style={{ width: getSize(185), height: getSize(160) }} source={{ uri: LIST_HEADER_IMGS[0] }} />
+      </TouchableOpacity>
       <View style={{ flex: 1 }}>
-        <EnhanceImage style={{ width: getSize(190), height: getSize(80) }} source={{ uri: LIST_HEADER_IMGS[1] }} />
-        <EnhanceImage style={{ width: getSize(190), height: getSize(80) }} source={{ uri: LIST_HEADER_IMGS[2] }} />
+        <TouchableOpacity activeOpacity={Const.ACTIVE_OPACITY} onPress={() => onPress && onPress(1)}>
+          <EnhanceImage style={{ width: getSize(190), height: getSize(80) }} source={{ uri: LIST_HEADER_IMGS[1] }} />
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={Const.ACTIVE_OPACITY} onPress={() => onPress && onPress(2)}>
+          <EnhanceImage style={{ width: getSize(190), height: getSize(80) }} source={{ uri: LIST_HEADER_IMGS[2] }} />
+        </TouchableOpacity>
       </View>
     </View>
   )
 }
 
 const DiscoverCell = (props) => {
-  const { item } = props;
+  const { item, onPress } = props;
   if (item.type == 3) {
-    return <EnhanceImage style={{  backgroundColor: '#fff', width: Const.SCREEN_WIDTH, height: getSize(120) }} source={{ uri: item.img }} resizeMode="stretch" />
+    return (
+      <TouchableOpacity activeOpacity={Const.ACTIVE_OPACITY} onPress={onPress}>
+        <EnhanceImage style={{  backgroundColor: '#fff', width: Const.SCREEN_WIDTH, height: getSize(120) }} source={{ uri: item.img }} resizeMode="stretch" />
+      </TouchableOpacity>
+    )
   } else {
     return (
-      <View style={styles.discoverCell}>
+      <TouchableOpacity style={styles.discoverCell} activeOpacity={Const.ACTIVE_OPACITY} onPress={onPress}>
         <EnhanceImage style={{ width: getSize(90), height: getSize(90), marginRight: getSize(15) }} source={{ uri: item.img }} resizeMode="stretch" />
         <View style={{ flex: 1, alignSelf: 'flex-start', alignItems: 'center' }}>
           <Text style={{ fontSize: getSize(15), color: '#000000', textAlign: 'center' }} numberOfLines={2}>{item.title}</Text>
@@ -156,7 +183,7 @@ const DiscoverCell = (props) => {
             <Text style={{ fontSize: getSize(12), color: '#969696' }}>{item.author}</Text>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
