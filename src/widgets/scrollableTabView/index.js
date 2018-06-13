@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, Text, Animated, Easing, StyleSheet, ViewPropTypes, ColorPropType } from 'react-native';
+import { View, Text, Animated, Easing, StyleSheet, ViewPropTypes, ColorPropType, InteractionManager } from 'react-native';
 
 import BaseWidget from '../BaseWidget';
 
@@ -75,7 +75,9 @@ export default class ScrollableTabView extends BaseWidget {
         initialTab={initialIndex}
         onTabChange={(index) => {
           this.scrollableView && this.scrollableView.scrollToIndex(index);
-          onTabChange && onTabChange(index);
+          InteractionManager.runAfterInteractions(() => {
+            onTabChange && onTabChange(index);
+          });
         }}
         tabBarBackgroundColor={tabBarBackgroundColor}
         tabBarActiveTextColor={tabBarActiveTextColor}
@@ -103,7 +105,9 @@ export default class ScrollableTabView extends BaseWidget {
           locked={locked}
           onScroll={(percent) => {
             this.scrollableTabBar && this.scrollableTabBar.changeTabTo(percent);
-            onScroll && onScroll(percent);
+            InteractionManager.runAfterInteractions(() => {
+              onScroll && onScroll(percent);
+            });
           }}
           onScrollEnd={onScrollEnd}
           enableScrollAnimation={enableScrollAnimation} >

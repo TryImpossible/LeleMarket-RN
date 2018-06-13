@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, Text, Animated, Easing, StyleSheet, ScrollView, TouchableOpacity, ViewPropTypes, ColorPropType } from 'react-native';
+import { View, Text, Animated, Easing, StyleSheet, ScrollView, TouchableOpacity, ViewPropTypes, ColorPropType, InteractionManager } from 'react-native';
 
 import BaseWidget from '../BaseWidget';
 
@@ -73,7 +73,9 @@ export default class ScrollableTabBar extends BaseWidget {
                 activeOpacity={Const.ACTIVE_OPACITY}
                 onPress={() => {
                   this.changeTabTo(index);
-                  this.props.onTabChange && this.props.onTabChange(index);
+                  InteractionManager.runAfterInteractions(() => {
+                    this.props.onTabChange && this.props.onTabChange(index);
+                  })
                 }} >
                 <Animated.Text
                   onLayout={({ nativeEvent: { layout: { x, y, width, height } } }) => {
