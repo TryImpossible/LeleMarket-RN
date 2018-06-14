@@ -17,6 +17,10 @@ import NavBar from '../../widgets/NavBar';
 
 import SvgUri from '../../dependencies/react-native-svg-uri';
 
+import WithCloseHOC from '../../widgets/HOC/WithCloseHOC';
+
+const WidthCloseTextInput = WithCloseHOC(TextInput);
+
 export default class LoginPage extends BasePage {
 
   constructor(props) {
@@ -45,13 +49,13 @@ export default class LoginPage extends BasePage {
           <SvgUri width={25} height={30} source={'icon_mobile'} />
           <View style={{ marginLeft: getSize(10), flex: 1, height: getSize(35), flexDirection: 'row', alignItems: 'center', borderBottomColor: Const.LINE_COLOR, borderBottomWidth: Const.LINE_WIDTH }}>
             <Text style={{ fontSize: getSize(15), color: '#bab4b4' }}> +86 </Text>
-            <TextInput underlineColorAndroid={'transparent'} style={{ padding: 0, marginLeft: getSize(10), flex: 1, color: '#8a7f7f' }} placeholder={'输入手机号'} value={this.state.mobile} />
+            <WidthCloseTextInput underlineColorAndroid={'transparent'} style={{ padding: 0, marginHorizontal: getSize(10), flex: 1, color: '#8a7f7f' }} placeholder={'输入手机号'} value={this.state.mobile} />
           </View>
         </View>
         <View style={{ width: getSize(315), height: getSize(44), flexDirection: 'row', alignItems: 'center' }}>
           <SvgUri width={25} height={30} source={'icon_email'} />
           <View style={{ marginLeft: getSize(10), flex: 1, height: getSize(35), flexDirection: 'row', alignItems: 'center', borderBottomColor: Const.LINE_COLOR, borderBottomWidth: Const.LINE_WIDTH }}>
-            <TextInput underlineColorAndroid={'transparent'} style={{ flex: 1, padding: 0, color: '#8a7f7f' }} placeholder={'短信验证码'} value={this.state.smscode} />
+            <WidthCloseTextInput underlineColorAndroid={'transparent'} style={{ flex: 1, padding: 0, marginRight: getSize(10), color: '#8a7f7f' }} placeholder={'短信验证码'} value={this.state.smscode} />
             <Animated.View style={{ opacity: this.path1 }}>
               <TouchableOpacity style={{ marginLeft: getSize(10), backgroundColor: '#fe3f56', borderRadius: getSize(3), padding: getSize(6), justifyContent: 'center', alignItems: 'center' }} activeOpacity={Const.ACTIVE_OPACITY} onPress={() => { }}>
                 <Text style={{ color: '#fff', fontSize: getSize(13) }}>发送验证码</Text>

@@ -22,15 +22,16 @@ import SvgUri from '../../dependencies/react-native-svg-uri';
 
 import SeparatorLine from '../../widgets/SeparatorLine';
 
-import PropTypes from 'prop-types';
-
 import hotSearch from './hotSearch.json';
+
+import WithCloseHOC from '../../widgets/HOC/WithCloseHOC';
+
+const WidthCloseTextInput = WithCloseHOC(TextInput);
 
 export default class SearchPage extends BasePage {
 
   constructor(props) {
     super(props);
-    this.path = new Animated.Value(0); //输入框动画
     this.state = {
       key: '',
       data: [
@@ -57,14 +58,14 @@ export default class SearchPage extends BasePage {
   // }
 
   onCreate() {
-
+    console.log(this.textInput);
   }
 
   render() {
     const NavBarTitleView = (
       <View style={styles.NavBarTitleView}>
         <SvgUri width={getSize(20)} height={getSize(20)} source={'icon_search'} />
-        <TextInput
+        <WidthCloseTextInput
           ref={ref => this.textInput = ref}
           underlineColorAndroid={'transparent'}
           style={{ padding: 0, marginHorizontal: getSize(5), flex: 1, fontSize: getSize(14), color: '#333333' }}
@@ -73,15 +74,9 @@ export default class SearchPage extends BasePage {
           placeholderTextColor='#bebec4'
           value={this.state.key}
           onChangeText={this.inputChange} />
-        <Animated.View
-          onStartShouldSetResponder={() => true}
-          onResponderGrant={this.close}
-          style={[styles.NavBarColseView, { transform: [{ rotateZ: '45deg' }], opacity: this.path }]} >
-          <View style={{ position: 'absolute', width: getSize(2), height: getSize(10), borderRadius: getSize(1), backgroundColor: '#fff' }} />
-          <View style={{ position: 'absolute', width: getSize(10), height: getSize(2), borderRadius: getSize(1), backgroundColor: '#fff' }} />
-        </Animated.View>
       </View>
     );
+
     return (
       <View style={styles.container}>
         <NavBar showLeftView={false} titleView={NavBarTitleView} rightText={'取消'} rightPress={() => this.goBack()} />
@@ -91,7 +86,7 @@ export default class SearchPage extends BasePage {
             return <HotSearchCell data={this.state.data} item={hotSearch.data} select={(i) => this.showToast('')} del={() => this.showToast('')} />;
           }}
           renderItem={({ item, index }) => {
-            console.log(item, index);
+            // console.log(item, index);
             return <LatelySearchCell item={item} index={index} onPress={() => this.props.showToast(item.text)} />
           }}
           ItemSeparatorComponent={() => <SeparatorLine left={getSize(10)} width={Const.SCREEN_WIDTH - getSize(10)} />}
@@ -106,32 +101,6 @@ export default class SearchPage extends BasePage {
    */
   inputChange = (text) => {
     this.setState({ key: text });
-    if (text && text.trim().length > 0 && Math.round(this.path._value) === 0) {
-      Animated.timing(this.path, {
-        toValue: 1,
-        easing: Easing.ease,
-        duration: 50
-      }).start();
-    } else if (!text && Math.round(this.path._value) === 1) {
-      Animated.timing(this.path, {
-        toValue: 0,
-        easing: Easing.ease,
-        duration: 50
-      }).start();
-    }
-  }
-
-  /**
-   * 关闭
-   */
-  close = () => {
-    this.setState({ key: '' });
-    this.textInput && this.textInput.clear();
-    Animated.timing(this.path, {
-      toValue: 0,
-      easing: Easing.ease,
-      duration: 50
-    }).start();
   }
 }
 
