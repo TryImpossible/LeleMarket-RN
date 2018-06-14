@@ -3,9 +3,9 @@ import React from 'react';
 
 import { NetInfo } from "react-native";
 
-import BaseComponent from "../containers/BaseComponent";
+import BaseComponent from "../../containers/BaseComponent";
 
-export default WrappedComponent => class EnhanceNetInfo extends BaseComponent {
+export default WrappedComponent => class NetInfoListenerHOC extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
