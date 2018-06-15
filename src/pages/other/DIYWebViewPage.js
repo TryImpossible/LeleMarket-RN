@@ -10,9 +10,15 @@ import BasePage from '../BasePage';
 
 import NavBar from '../../widgets/NavBar';
 
-import SvgUri from '../../dependencies/react-native-svg-uri';
-
-import SeparatorLine from '../../widgets/SeparatorLine';
+const patchPostMessageFunction = () => {
+  const originalPostMessage = window.postMessage;
+  const patchedPostMessage = (message, targetOrigin, transfer) => {
+    originalPostMessage(message, targetOrigin, transfer);
+  };
+  patchedPostMessage.toString = () => String(Object.hasOwnProperty).replace('hasOwnProperty', 'postMessage');
+  window.postMessage = patchedPostMessage;
+};
+const patchPostMessageJsCode = `(${String(patchPostMessageFunction)})();`;
 
 export default class DIYWebViewPage extends BasePage {
 
@@ -21,19 +27,20 @@ export default class DIYWebViewPage extends BasePage {
     this.state = {
     }
   }
-  
+
   onCreate() {
 
   }
 
   render() {
-    const { navTitle = 'DIYWebView', ...otherProps } = this.getProps();
+    const { navTitle = 'DIYWebView', injectedJavaScript, ...otherProps } = this.getProps();
     return (
       <View style={styles.container}>
         <NavBar title={navTitle} />
         <WebView
           ref={ref => this.webView = ref}
           style={{ backgroundColor: '#fff', width: Const.SCREEN_WIDTH, height: Const.SCREEN_HEIGHT - Const.STATUSBAR_HEIGHT - Const.NAVBAR_HEIGHT }}
+          injectedJavaScript={`${patchPostMessageJsCode}\n${injectedJavaScript && injectedJavaScript}`}
           allowsInlineMediaPlayback={false} //ios, 指定HTML5视频是在网页当前位置播放还是使用原生的全屏播放器播放, 默认值false
           dataDetectorTypes={'none'} //探测网页中某些特殊数据类型，自动生成可点击的链接 enum('phoneNumber', 'link', 'address', 'calendarEvent', 'none', 'all')
           bounces={true}
@@ -47,11 +54,12 @@ export default class DIYWebViewPage extends BasePage {
           removeClippedSubviews={false}
           source={{ uri: 'https://github.com/TryImpossible' }} //默认地址
           onMessage={(e) => {
-            let ret = JSON.parse(e.nativeEvent.data);
-            console.warn(ret);
+            console.warn(e.nativeEvent.data);
+            // let ret = JSON.parse(e.nativeEvent.data);
+            // console.warn(ret);
           }}
           {...otherProps}
-         />
+        />
       </View>
     )
   }
@@ -63,5 +71,5 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  
+
 });
