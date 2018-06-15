@@ -24,74 +24,175 @@ export const EnhanceListStatus = {
   noMoreData: 'NOMOREDATA'
 }
 
+//列表Mode
+export const EnhanceListMode = {
+  sectionList: 'SectionList',
+  flatList: 'FlatList'
+}
+
 export default class EnhanceList extends BaseWidget {
 
   static propTypes = {
+    component: PropTypes.oneOf(Object.values(EnhanceListMode)), //列表Mode
     getRef: PropTypes.func, //FlatList实例，由于 ref 不能作为Props, 采用 getRef 代替
     status: PropTypes.oneOf(Object.values(EnhanceListStatus)), //状态
     LoadingComponent: PropTypes.element, //加载中 -> 展示组件
     LoadingMoreComponent: PropTypes.element, //加载更多 -> 展示组件
     NoMoreDataComponent: PropTypes.element, //没有更多数据 -> 展示组件
+    columnWidth: PropTypes.number, //每列的宽度
   }
 
   static defaultProps = {
-    status: 'PENDING'
+    component: EnhanceListMode.flatList,
+    status: EnhanceListStatus.pending
   }
 
   constructor(props) {
     super(props);
+    // this.state = {
+    //   data: this._handleData(props.data)
+    // }
   }
 
-  render() {
-    let { getRef, status, refreshing = false, LoadingComponent, LoadingMoreComponent, NoMoreDataComponent,
-      ListHeaderComponent, ListEmptyComponent, ListFooterComponent, onEndReached, ...otherProps } = this.props;
-    return (
-      <FlatList
-        ref={ref => getRef && getRef(ref)}
-        {...otherProps}
-        refreshing={refreshing}
-        ListHeaderComponent={() => {
-          if (['NETWORK', 'TIMEOUT', 'SERVER', 'NODATA'].indexOf(status) !== -1) {
-            return null;
-          } else {
-            return ListHeaderComponent ? ListHeaderComponent() : null;
-          }
-        }}
-        ListFooterComponent={() => {
-          if (status === 'PENDING') { //等待加载
-            return <EmptyView />;
-          } else if (status === 'LOADING') { //加载中
-            return LoadingComponent || <LoadingView />;
-          } else if (status === 'LOADMORE') { //加载失败后，手动进行加载
-            return LoadingMoreComponent || <LoadingMoreView onPress={onEndReached} />;
-          } else if (status === 'FINISH') { //加载完成
-            return <EmptyView />;
-          } else if (status === 'NOMOREDATA') { //没有更多数据
-            return NoMoreDataComponent || <NoMoreDataView />;
-          } else if (status === 'NODATA') { //没有数据  
-            return null; //這裏使用 List 的 ListEmptyComponent 屬性
-          }
-        }}
-        onEndReached={({ distanceFromEnd }) => {
-          // distanceFromEnd > 0, 尽量保证是下拉加载 
-          // !refreshing, 保证上拉刷新已经完成
-          // 'PENDING' 'FINISH' 保证下拉加载不会超频
-          // console.log(status, distanceFromEnd, refreshing);
+  // /**
+  //  * 主要是为栏式布局处理数据 
+  //  * 当 data % numColumns != 0, 最后一行栏式布局不会平均分布
+  //  * @param {*} data 
+  //  */
+  // _handleData(data) {
+  //   const { numColumns } = this.props;
+  //   const length = data.length;
+  //   const lastColumnsNum = length % numColumns;
+  //   if (lastColumnsNum !== 0) {
+  //     for (let i = 0; i < numColumns - lastColumnsNum; i++) {
+  //       data.push('EMPTYCOLUMN');
+  //     }
+  //   } 
+  //   return data;
+  // }
 
-          // if ((status === 'PENDING' || status === 'FINISH') && distanceFromEnd > 0 && !refreshing) onEndReached && onEndReached(); //第一次
-          // if ((status === 'PENDING' || status === 'FINISH') && !refreshing) onEndReached && onEndReached(); //第二次，測試優化
-          if (status === 'FINISH' && !refreshing) onEndReached && onEndReached(); //第三次，測試優化
-        }}
-        ListEmptyComponent={()=>{
-          if (['NETWORK', 'TIMEOUT', 'PROGRAM', 'SERVER'].indexOf(status) != -1) {
-            return <ErrorComponent mode={status} retry={() => this.props.onRefresh && this.props.onRefresh()} />
-          } else if (status === 'NODATA') {
-            return ListEmptyComponent();
-          } else {
-            return null;
-          }
-        }} />
-    )
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     data: this._handleData(nextProps.data)
+  //   });
+  // }
+
+  render() {
+    const {  component, getRef, status, refreshing = false, LoadingComponent, LoadingMoreComponent, NoMoreDataComponent,
+      ListHeaderComponent, ListEmptyComponent, ListFooterComponent, onEndReached, ...otherProps } = this.props;
+
+    const props = {
+      ref: ref => getRef && getRef(ref),
+      ...otherProps,
+      automaticallyAdjustContentInsets: false,
+      refreshing: refreshing,
+      ListHeaderComponent: () => {
+        if (['NETWORK', 'TIMEOUT', 'SERVER', 'NODATA'].indexOf(status) !== -1) {
+          return null;
+        } else {
+          return ListHeaderComponent ? ListHeaderComponent() : null;
+        }
+      },
+      ListFooterComponent: () => {
+        if (status === 'PENDING') { //等待加载
+          return <EmptyView />;
+        } else if (status === 'LOADING') { //加载中
+          return LoadingComponent || <LoadingView />;
+        } else if (status === 'LOADMORE') { //加载失败后，手动进行加载
+          return LoadingMoreComponent || <LoadingMoreView onPress={onEndReached} />;
+        } else if (status === 'FINISH') { //加载完成
+          return <EmptyView />;
+        } else if (status === 'NOMOREDATA') { //没有更多数据
+          return NoMoreDataComponent || <NoMoreDataView />;
+        } else if (status === 'NODATA') { //没有数据  
+          return null; //這裏使用 List 的 ListEmptyComponent 屬性
+        }
+      },
+      onEndReached: ({ distanceFromEnd }) => {
+        // distanceFromEnd > 0, 尽量保证是下拉加载 
+        // !refreshing, 保证上拉刷新已经完成
+        // 'PENDING' 'FINISH' 保证下拉加载不会超频
+        // console.log(status, distanceFromEnd, refreshing);
+
+        // if ((status === 'PENDING' || status === 'FINISH') && distanceFromEnd > 0 && !refreshing) onEndReached && onEndReached(); //第一次
+        // if ((status === 'PENDING' || status === 'FINISH') && !refreshing) onEndReached && onEndReached(); //第二次，測試優化
+        if (status === 'FINISH' && !refreshing) onEndReached && onEndReached(); //第三次，測試優化
+      },
+      ListEmptyComponent: ()=>{
+        if (['NETWORK', 'TIMEOUT', 'PROGRAM', 'SERVER'].indexOf(status) != -1) {
+          return <ErrorComponent mode={status} retry={() => this.props.onRefresh && this.props.onRefresh()} />
+        } else if (status === 'NODATA') {
+          return ListEmptyComponent();
+        } else {
+          return null;
+        }
+      }
+    }
+      
+    switch (component) {
+      case EnhanceListMode.flatList:
+        return (
+          <FlatList {...props} />
+        )
+        break;
+      case EnhanceListMode.sectionList:
+        return (
+          <SectionList {...props} />
+        )
+        break;
+
+      default:
+        return null;
+        break;
+    }
+
+    // return (
+    //   <FlatList
+    //     ref={ref => getRef && getRef(ref)}
+    //     {...otherProps}
+    //     refreshing={refreshing}
+    //     ListHeaderComponent={() => {
+    //       if (['NETWORK', 'TIMEOUT', 'SERVER', 'NODATA'].indexOf(status) !== -1) {
+    //         return null;
+    //       } else {
+    //         return ListHeaderComponent ? ListHeaderComponent() : null;
+    //       }
+    //     }}
+    //     ListFooterComponent={() => {
+    //       if (status === 'PENDING') { //等待加载
+    //         return <EmptyView />;
+    //       } else if (status === 'LOADING') { //加载中
+    //         return LoadingComponent || <LoadingView />;
+    //       } else if (status === 'LOADMORE') { //加载失败后，手动进行加载
+    //         return LoadingMoreComponent || <LoadingMoreView onPress={onEndReached} />;
+    //       } else if (status === 'FINISH') { //加载完成
+    //         return <EmptyView />;
+    //       } else if (status === 'NOMOREDATA') { //没有更多数据
+    //         return NoMoreDataComponent || <NoMoreDataView />;
+    //       } else if (status === 'NODATA') { //没有数据  
+    //         return null; //這裏使用 List 的 ListEmptyComponent 屬性
+    //       }
+    //     }}
+    //     onEndReached={({ distanceFromEnd }) => {
+    //       // distanceFromEnd > 0, 尽量保证是下拉加载 
+    //       // !refreshing, 保证上拉刷新已经完成
+    //       // 'PENDING' 'FINISH' 保证下拉加载不会超频
+    //       // console.log(status, distanceFromEnd, refreshing);
+
+    //       // if ((status === 'PENDING' || status === 'FINISH') && distanceFromEnd > 0 && !refreshing) onEndReached && onEndReached(); //第一次
+    //       // if ((status === 'PENDING' || status === 'FINISH') && !refreshing) onEndReached && onEndReached(); //第二次，測試優化
+    //       if (status === 'FINISH' && !refreshing) onEndReached && onEndReached(); //第三次，測試優化
+    //     }}
+    //     ListEmptyComponent={()=>{
+    //       if (['NETWORK', 'TIMEOUT', 'PROGRAM', 'SERVER'].indexOf(status) != -1) {
+    //         return <ErrorComponent mode={status} retry={() => this.props.onRefresh && this.props.onRefresh()} />
+    //       } else if (status === 'NODATA') {
+    //         return ListEmptyComponent();
+    //       } else {
+    //         return null;
+    //       }
+    //     }} />
+    // )
   }
 }
 
