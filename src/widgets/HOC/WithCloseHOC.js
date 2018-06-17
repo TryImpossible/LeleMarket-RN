@@ -10,13 +10,13 @@ export default WrappedComponent => class WithCloseHOC extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      value: props.value,
     }
     this.path = new Animated.Value(0);
   }
 
   proc(wrappedComponentInstance) {
-    wrappedComponentInstance.method()
+    wrappedComponentInstance.method();
   }
 
   /**
@@ -25,6 +25,10 @@ export default WrappedComponent => class WithCloseHOC extends BaseComponent {
    */
   getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ value: nextProps.value });
   }
 
   render() {
@@ -68,6 +72,14 @@ export default WrappedComponent => class WithCloseHOC extends BaseComponent {
   }
 
   /**
+   * 获取焦点
+   */
+  _onFocus = () => {
+    this.showCloseIcon();
+    this.props.onFocus && this.props.onFocus();
+  }
+
+  /**
    * 關閉
    */
   _onClose = () => {
@@ -77,6 +89,7 @@ export default WrappedComponent => class WithCloseHOC extends BaseComponent {
       easing: Easing.ease,
       duration: 50
     }).start();
+    this.props.onClose && this.props.onClose();
   }
 
   /**
@@ -110,9 +123,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   closeIcon: {
-    width: getSize(18),
-    height: getSize(18),
-    borderRadius: getSize(9),
+    width: getSize(16),
+    height: getSize(16),
+    borderRadius: getSize(8),
     backgroundColor: '#c2c3c3',
     justifyContent: 'center',
     alignItems: 'center',
