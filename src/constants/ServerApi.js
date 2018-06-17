@@ -13,18 +13,6 @@ export default class ServerApi {
   }
 
   /**
-   * 搜索
-   * @param {*} key 
-   * @param {*} callback 
-   * @param {*} pageName 
-   */
-  static getKeyword(key, callback, pageName) {
-    let from = new FormData();
-    form.append('name', key);
-    post('searchGoods/getKeyword.do', form, callback, pageName);
-  }
-
-  /**
    * 首页模块，一级页面：顶部横向滚动条数据 
    * @param {*} type 
    * @param {*} callback 
@@ -101,5 +89,34 @@ export default class ServerApi {
   static goods(id, page, callback, pageName) {
     let params = { id: id, page: page };
     get('homeNav2/menu/goods.do', params, callback, pageName);
+  }
+
+  /**
+   * 搜索模块，关键字搜索
+   * @param {*} key 
+   * @param {*} callback 
+   * @param {*} pageName 
+   */
+  static getKeyword(key, callback, pageName) {
+    let form = new FormData();
+    form.append('name', key);
+    post('searchGoods/getKeyword.do', form, callback, pageName);
+  }
+
+  /**
+   * 搜索商品
+   * @param {*} userId 
+   * @param {*} page 
+   * @param {*} key 
+   * @param {*} callback 
+   * @param {*} pageName 
+   */
+  static getGoodsInfo(userId = '8697726', page, key, callback, pageName) {
+    let form = new FormData();
+    form.append('userId', userId);
+    form.append('page', page);
+    form.append('name', key);
+    console.log(form);
+    post('searchGoods/getGoodsInfo.do', form, callback, pageName);
   }
 }
