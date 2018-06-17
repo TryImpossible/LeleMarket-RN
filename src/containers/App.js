@@ -11,8 +11,7 @@ import {
   Text,
   View,
   Animated,
-  Easing,
-  TouchableOpacity
+  Easing
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
@@ -21,9 +20,7 @@ import PAGES from '../constants/PageRouter';
 
 import Toast from '../widgets/Toast';
 
-import SvgPage from '../pages/other/SvgPage';
-
-import EnhanceNetInfo from '../widgets/EnhanceNetInfo';
+import NetInfoListenerHOC from '../widgets/HOC/NetInfoListenerHOC';
 
 const RootStackNavigator = null;
 
@@ -183,4 +180,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default EnhanceNetInfo(App);
+export default NetInfoListenerHOC(App);
