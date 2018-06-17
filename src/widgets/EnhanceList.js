@@ -37,14 +37,18 @@ export default class EnhanceList extends BaseWidget {
     getRef: PropTypes.func, //FlatList实例，由于 ref 不能作为Props, 采用 getRef 代替
     status: PropTypes.oneOf(Object.values(EnhanceListStatus)), //状态
     LoadingComponent: PropTypes.element, //加载中 -> 展示组件
+    loadingMoreText: PropTypes.string, //加载更多 -> 文字
     LoadingMoreComponent: PropTypes.element, //加载更多 -> 展示组件
+    noMoreDataText: PropTypes.string, //加载更多 -> 文字
     NoMoreDataComponent: PropTypes.element, //没有更多数据 -> 展示组件
     columnWidth: PropTypes.number, //每列的宽度
   }
 
   static defaultProps = {
     component: EnhanceListMode.flatList,
-    status: EnhanceListStatus.pending
+    status: EnhanceListStatus.pending,
+    loadingMoreText: '点击加载更多',
+    noMoreDataText: '到底啦',
   }
 
   constructor(props) {
@@ -78,8 +82,8 @@ export default class EnhanceList extends BaseWidget {
   // }
 
   render() {
-    const {  component, getRef, status, refreshing = false, LoadingComponent, LoadingMoreComponent, NoMoreDataComponent,
-      ListHeaderComponent, ListEmptyComponent, ListFooterComponent, onEndReached, ...otherProps } = this.props;
+    const {  component, getRef, status, refreshing = false, LoadingComponent, loadingMoreText, LoadingMoreComponent, noMoreDataText,
+      NoMoreDataComponent, ListHeaderComponent, ListEmptyComponent, ListFooterComponent, onEndReached, ...otherProps } = this.props;
 
     const props = {
       ref: ref => getRef && getRef(ref),
@@ -99,11 +103,11 @@ export default class EnhanceList extends BaseWidget {
         } else if (status === 'LOADING') { //加载中
           return LoadingComponent || <LoadingView />;
         } else if (status === 'LOADMORE') { //加载失败后，手动进行加载
-          return LoadingMoreComponent || <LoadingMoreView onPress={onEndReached} />;
+          return LoadingMoreComponent || <LoadingMoreView text={loadingMoreText} onPress={onEndReached} />;
         } else if (status === 'FINISH') { //加载完成
           return <EmptyView />;
         } else if (status === 'NOMOREDATA') { //没有更多数据
-          return NoMoreDataComponent || <NoMoreDataView />;
+          return NoMoreDataComponent || <NoMoreDataView text={noMoreDataText} />;
         } else if (status === 'NODATA') { //没有数据  
           return null; //這裏使用 List 的 ListEmptyComponent 屬性
         }
@@ -209,10 +213,10 @@ const LoadingView = (props) => {
 }
 
 const LoadingMoreView = (props) => {
-  let { onPress } = props;
+  let { text, onPress } = props;
   return (
     <TouchableOpacity activeOpacity={Const.ACTIVE_OPACITY} onPress={onPress} style={styles.listFooterView}>
-      <Text style={styles.listFooterText}>{`点击加载更多`}</Text>
+      <Text style={styles.listFooterText}>{text}</Text>
     </TouchableOpacity>
   )
 }
@@ -252,10 +256,11 @@ const LinearGradientLineReverse = (props) => {
 }
 
 const NoMoreDataView = (props) => {
+  const { text } = props;
   return (
     <View style={styles.listFooterView}>
       <LinearGradientLinePositive />
-      <Text style={[styles.listFooterText, { color: '#a7a5a5', marginHorizontal: getSize(3) }]}>{`到底啦`}</Text>
+      <Text style={[styles.listFooterText, { color: '#a7a5a5', marginHorizontal: getSize(3) }]}>{text}</Text>
       <LinearGradientLineReverse />
     </View>
   )
