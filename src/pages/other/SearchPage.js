@@ -12,7 +12,8 @@ import {
   propTypes,
   processColor, //字符Color转换为数字 
   Animated,
-  Easing
+  Easing,
+  InteractionManager
 } from 'react-native';
 
 import BasePage from '../BasePage';
@@ -164,13 +165,17 @@ export default class SearchPage extends BasePage {
                 if (this.state.key && this.state.key.length > 0) {
                   this._hideBackIcon();
                   this.textInput.showCloseIcon();
-                  this.inputSearch(this.state.key);
+                  InteractionManager.runAfterInteractions(() => {
+                    this.inputSearch(this.state.key);
+                  });
                 }
               }}
               onChangeText={(text) => {
                 //输入变化时，隐藏 返回 按钮
                 this._hideBackIcon();
-                this._inputChange(text);
+                InteractionManager.runAfterInteractions(() => {
+                  this._inputChange(text);
+                })
               }}
               onClose={() => {
                 //关闭时，展示默认的分组列表
@@ -180,7 +185,10 @@ export default class SearchPage extends BasePage {
               returnKeyLabel={'search'}
               blurOnSubmit={true}
               onSubmitEditing={() => {
-                this.searchGoodsInfo(this.state.key);
+                this._showBackIcon();
+                InteractionManager.runAfterInteractions(() => {
+                  this.searchGoodsInfo(this.state.key);
+                });
               }} />
           </View>
           <TouchableOpacity style={{ paddingHorizontal: getSize(10), minWidth: getSize(44) }}
