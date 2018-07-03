@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, View, Text, TouchableOpacity, Animated, Easing } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ViewPropTypes } from 'react-native';
 
 import BaseWidget from './BaseWidget';
 
@@ -24,6 +24,8 @@ import { withNavigation } from 'react-navigation';
 class NavBar extends BaseWidget {
 
   static propTypes = {
+    style: ViewPropTypes.style, //样式
+
     showLeftView: PropTypes.bool, //是否展示左边视图
     leftView: PropTypes.element, //左边视图，优先渲染
     leftText: PropTypes.string, //左边文字
@@ -46,6 +48,7 @@ class NavBar extends BaseWidget {
   }
 
   static defaultProps = {
+    style: {},
     showBottomLine: true,
     backgroundColor: '#FFFFFF',
     leftIcon: 'icon_nav_bar_back',
@@ -160,10 +163,10 @@ class NavBar extends BaseWidget {
   }
 
   render() {
-    const { backgroundColor, showBottomLine } = this.props;
+    const { style, backgroundColor, showBottomLine } = this.props;
     const bottomLine = showBottomLine ? { borderBottomWidth: 1, borderBottomColor: Const.LINE_COLOR } : {}; //底部线条样式
     return (
-      <View style={[styles.container, { backgroundColor }, bottomLine]}>
+      <View style={[styles.container, { ...style, backgroundColor }, bottomLine]}>
         {this.renderStatusBar()}
         {this.renderNavgationBar()}
       </View>

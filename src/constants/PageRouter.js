@@ -1,5 +1,6 @@
 import MainPage from '../pages/MainPage.js';
 import UEWidgetPage from '../pages/UEWidgetPage.js';
+import GoodsDetailPage from '../pages/home/GoodsDetailPage.js';
 import RichEditorPage from '../pages/home/RichEditorPage.js';
 import DIYWebViewPage from '../pages/other/DIYWebViewPage.js';
 import MessagePage from '../pages/other/MessagePage.js';
@@ -11,6 +12,7 @@ import LoginPage from '../pages/user/LoginPage.js';
 const PAGES = [
 	{ name: 'MainPage', page: MainPage },
 	{ name: 'UEWidgetPage', page: UEWidgetPage },
+	{ name: 'GoodsDetailPage', page: GoodsDetailPage },
 	{ name: 'RichEditorPage', page: RichEditorPage },
 	{ name: 'DIYWebViewPage', page: DIYWebViewPage },
 	{ name: 'MessagePage', page: MessagePage },

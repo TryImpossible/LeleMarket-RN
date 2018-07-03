@@ -105,7 +105,7 @@ export default class HomeIndex extends BaseComponent {
    * 获取Tabs数据
    */
   loadScrollTabsData() {
-    this.loadingView.show();
+    this.loadingView && this.loadingView.show();
     ServerApi.sortHome('topNav', (ret) => {
       this.loadingView.dismiss();
       if (ret.code == Const.REQUEST_SUCCESS) {
@@ -117,7 +117,7 @@ export default class HomeIndex extends BaseComponent {
         this.setState({ scrollTabs, status });
       } else {
         this.props.showToast(ret.message);
-        this.errorComponent.show();
+        this.errorComponent && this.errorComponent.show();
       }
     }, this.props.pageName);
   }
@@ -274,10 +274,11 @@ export default class HomeIndex extends BaseComponent {
                       }}
                       stickySectionHeadersEnabled={false}
                       ListHeaderComponent={() => {
+                        console.log(this.state.banners);
                         let images = this.state.banners.map((item, index) => item.imgUrl);
                         return (
                           <View>
-                            <SimpleBanner ref={ ref => this.simpleBanner = ref } images={images} height={getSize(150)} duration={5000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.showToast(`您选中了第${index}张`)} />
+                            <SimpleBanner ref={ ref => this.simpleBanner = ref } images={images} height={getSize(150)} duration={5000} autoPlay={true} autoLoop={true} onClick={(index) => this.props.push('GoodsDetailPage', { id: this.state.banners[index].id })} />
                             <GridActivity data={this.state.midNav} onPress={() => this.props.showToast('activity')} />
                           </View>
                         )

@@ -1,4 +1,4 @@
-import Global from './src/constants/Global';
+import './src/constants/Global';
 import Root from './src/Root';
 
 

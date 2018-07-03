@@ -81,6 +81,10 @@ export default class EnhanceList extends BaseWidget {
   //   });
   // }
 
+  proc(wrappedComponentInstance) {
+    wrappedComponentInstance.method();
+  }
+
   render() {
     const {  component, getRef, status, refreshing = false, LoadingComponent, loadingMoreText, LoadingMoreComponent, noMoreDataText,
       NoMoreDataComponent, ListHeaderComponent, ListEmptyComponent, ListFooterComponent, onEndReached, ...otherProps } = this.props;

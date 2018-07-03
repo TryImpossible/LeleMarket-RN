@@ -22,7 +22,7 @@
   if (TARGET_IPHONE_SIMULATOR){
     [[RCTBundleURLProvider sharedSettings] setDefaults];
   }else{
-    [[RCTBundleURLProvider sharedSettings] setJsLocation: @"192.168.0.5"];
+    [[RCTBundleURLProvider sharedSettings] setJsLocation: @"192.168.0.100"];
   }
 #else
   // TODO

@@ -160,10 +160,10 @@ dependencies {
     }
     compile project(':react-native-audio')
     compile project(':react-native-view-shot')
-    compile project(':react-native-video')
+//    compile project(':react-native-video')
     compile project(':react-native-svg')
     compile project(':react-native-spinkit')
-    compile project(':react-native-image-crop-picker')
+//    compile project(':react-native-image-crop-picker')
     compile project(':react-native-fetch-blob')
     compile project(':react-native-fast-image')
     compile project(':react-native-device-info')

@@ -116,7 +116,8 @@ export default class ServerApi {
     form.append('userId', userId);
     form.append('page', page);
     form.append('name', key);
-    console.log(form);
     post('searchGoods/getGoodsInfo.do', form, callback, pageName);
   }
+
+    
 }

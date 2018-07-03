@@ -32,6 +32,15 @@ import Indicater from '../widgets/banner/Indicater';
 
 import EnhanceWebView from '../widgets/webview';
 
+// import WithCloseHOC from '../widgets/hoc/WithCloseHOC';
+
+// const TextInputWidthColse = WithCloseHOC(TextInput);
+
+import SortableView from '../widgets/SortableView';
+import SortableGrid from '../widgets/SortableGrid';
+import ImageManage from 'react-native-image-crop-picker';
+
+
 //测试数据
 const BANNER = [
   "https://api.51app.cn/resource/diymall/uu20/special/752ced27.png",
@@ -45,17 +54,25 @@ export default class UEWidgetPage extends BasePage {
     super(props);
     this.state = {
       uri: 'https://t.app.goodiber.com/iber/wxapp-qrcode?iberId=f2d9fb8ca1d411e7a6e06c92bf28e3c5&1526285527848&' + new Date().getTime(), //圖片遠程地址
+      tabs: [1, 2, 3]
     }
     // console.warn('StatusBar.currentHeight', StatusBar.currentHeight);
   }
 
   render() {
-    const pageSource = { uri: 'http://192.168.0.13:8081/richEditor/editor.html' };
-    // const pageSource = { uri: 'https://www.baidu.com/' };
+    // const pageSource = { uri: 'http://192.168.0.13:8081/richEditor/editor.html' };
+    const pageSource = { uri: 'https://www.baidu.com/' };
     return (
       <View style={{ width: Const.SCREEN_WIDTH, height: Const.SCREEN_HEIGHT, backgroundColor: Const.MAIN_COLOR, justifyContent: 'center', alignItems: 'center', marginTop: Const.STATUSBAR_HEIGHT, height: Const.SCREEN_HEIGHT - Const.STATUSBAR_HEIGHT }}>
-
-        <EnhanceWebView
+        {/* <TextInputWidthColse
+          ref={ref => this.textInput = ref}
+          style={{ width: Const.SCREEN_WIDTH, height: getSize(44) }}
+          placeholder={'請輸入'}
+          value={this.state.text}
+          onChangeText={(text) => {
+            this.setState({ text });
+          }} /> */}
+        {/* <EnhanceWebView
           ref={ref => this.webView = ref}
           style={{ flex: 1, width: Const.SCREEN_WIDTH  }}
           source={pageSource}
@@ -75,7 +92,7 @@ export default class UEWidgetPage extends BasePage {
           }}
           onLoad={() => {
 
-          }} />
+          }} /> */}
 
         {/* <View style={{ marginVertical: getSize(30), shadowColor: 'green', shadowOpacity: 0.3, shadowOffset: { width: 3, height: 3 }, elevation: 3 }}>
           <Text style={{ textAlign: 'center' }} onPress={() => this.showToast('真听话，奖励下!')}>点我阿</Text>
@@ -168,10 +185,79 @@ export default class UEWidgetPage extends BasePage {
 
         {/* <Indicater /> */}
 
+        <SortableGrid>
+          {
+            SortableImages.map((item, index) => {
+              return (
+                <SortableGrid.Item key={`SortableView${index}`}>
+                  <Image style={{ width: getSize(100), height: getSize(100) }} source={{ uri: item }} />
+                </SortableGrid.Item>
+              )
+            })
+          }
+        </SortableGrid>
+
+        {/* <Text onPress={this._openPicker} >選擇視頻</Text> */}
       </View >
     )
   }
+
+  pickerDefaultParams = {
+    mediaType: 'video',// video | photo
+    includeBase64: false,
+    compressImageMaxWidth: 750,
+    compressImageMaxHeight: 1334,
+    compressImageQuality: 0.7,
+    multiple: false,
+    maxFiles: 1,
+    loadingLabelText: '正在準備图片...'
+  };
+
+  _openPicker = () => {
+    let pickerParams = {
+      ...this.pickerDefaultParams,
+    }
+    if (pickerParams.mediaType == 'video') {
+      pickerParams.loadingLabelText = '正在準備視頻...';
+    }
+    ImageManage.openPicker(pickerParams).then(response => {
+      if (pickerParams.multiple) {
+        for (let obj of response) {
+          if (obj.filename == null) {
+            obj.filename = (new Date()).getTime() + pickerParams.mediaType == 'video' ? '.mp4' : '.jpg';
+          }
+          console.warn('obj=', obj);
+          // resolve({
+          //   filePath: obj.path,
+          //   fileName: obj.filename,
+          //   fileSize: obj.size,
+          //   fileDuration: obj.duration
+          // });
+        }
+      } else {
+        let obj = response;
+        console.warn('obj=', obj);
+        // resolve({
+        //   filePath: obj.path,
+        //   fileName: obj.filename,
+        //   fileSize: obj.size,
+        //   fileDuration: obj.duration
+        // });
+      }
+    }).catch((error) => {
+      console.warn(error);
+    });
+  }
 }
+
+const SortableImages = [
+  'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=250029045,856017592&fm=27&gp=0.jpg',
+  'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3200334446,1487314372&fm=27&gp=0.jpg',
+  'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2364244149,3298797080&fm=27&gp=0.jpg',
+  'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=782046930,1105099424&fm=27&gp=0.jpg',
+  'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3730771372,3127282750&fm=27&gp=0.jpg',
+  'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1308070342,332603640&fm=27&gp=0.jpg'
+]
 
 const tabs = ['劉備', '诸葛亮', '关羽', '张飞', '马超', '黄忠', '赵云', '許褚', '夏侯惇', '於禁', '黃蓋', '甘寧', '周瑜'];
 

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>HTML Rich Editor</title>
+  <script>
+    var size = document.documentElement.clientWidth / 375 * 100;
+    //PC端訪問時，默認viewport為100
+    if (!/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      size = 100;
+    }
+    document.documentElement.style.fontSize = size + 'px';
+
+    //解决iOS safari 禁用缩放无效问题
+    window.onload = function () {
+      document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+      });
+      document.addEventListener('dblclick', function (e) {
+        e.preventDefault();
+      });
+      document.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      });
+      var lastTouchEnd = 0;
+      document.addEventListener('touchend', function (event) {
+        var now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+    };
+
+  </script>
+  <script type="text/javascript" src="./squire-raw.js"></script>
+  <style>
+    html,
+    body,
+    p,
+    div {
+      margin: 0;
+      padding: 0;
+      font-family: PMingLiU;
+      font-size: 16px;
+      color: rgb(127, 127, 127);
+    }
+
+    img {
+      width: 100%;
+      border-radius: 0.03rem;
+    }
+
+    #editor {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      min-height: 300px;
+      background: transparent;
+      cursor: text;
+      outline: none;
+      resize: none;
+      overflow-y: scroll;
+      height: 100%;
+    }
+  </style>
+  <script>
+    function del(params) {
+
+    } 
+  </script>
+</head>
+
+<body>
+    <textarea id="aaa" placeholder="請輸入"></textarea>
+
+  <div id="editor">
+    <video src="http://www.w3school.com.cn/i/movie.ogg" controls="controls" >Your browser does not support the video element.</video>
+  </div>
+</body>
+
+<script type="text/javascript" charset="utf-8">
+  var node = document.getElementById('editor');
+  var editor = new Squire(node, { blockTag: 'div', blockAttributes: { 'class': 'paragraph' } });
+
+  var content = `<div class="abstract">
+摘要：演讲：景鲲编辑：田令、江磊【新智元导读】4月19日，清华大学《人工智能前沿与产业趋势》系列课程第三讲开课，本讲主题是“自然语言处理技术的发展和行业应用”。自然语言处理（NLP）被认为是人工智能研究中最
+</div>
+<img style="display: block;" src="https://timg01.bdimg.com/timg?pa&amp;imgType=0&amp;sec=1439619614&amp;di=ac5604f12dc05d43ef6352437bf7bda9&amp;quality=100&amp;size=b980_10000&amp;src=http%3A%2F%2Fpic.rmb.bdstatic.com%2F868b22f65c5659436fa6f83391d42334.jpeg"><p style="margin: 10px 0;"><span class="bjh-p">演讲：景鲲</span></p><p style="margin: 10px 0;"><span class="bjh-p">编辑：田令、江磊</span></p><p style="margin: 10px 0;"><span class="bjh-p"><span class="bjh-strong">【新智元导读】</span>4月19日，清华大学《人工智能前沿与产业趋势》系列课程第三讲开课，本讲主题是“自然语言处理技术的发展和行业应用”。自然语言处理（NLP）被认为是人工智能研究中最为困难，也是最重要的问题之一，不仅基础研究难，技术落地和应用场景也很复杂。本课由百度度秘事业部总经理景鲲主讲。新智元作为独家合作媒体，带来干货整理。</span></p><img style="display: block;" src="https://timg01.bdimg.com/timg?pa&amp;imgType=0&amp;sec=1439619614&amp;di=e8a76c3c010679ec0b0a5d3a5e322e35&amp;quality=100&amp;size=b980_10000&amp;src=http%3A%2F%2Fpic.rmb.bdstatic.com%2F6d894939df5ff8649d3ab69c4033d16d.jpeg"><p style="margin: 10px 0;"><span class="bjh-p"><span class="bjh-strong">主讲老师</span></span></p><img style="display: block;" src="https://timg01.bdimg.com/timg?pa&amp;imgType=0&amp;sec=1439619614&amp;di=38f537665f656e5b8cc4b6ca4768b9bc&amp;quality=100&amp;size=b980_10000&amp;src=http%3A%2F%2Fpic.rmb.bdstatic.com%2F1d2c0e26fc0d4621b6b1342294d4db2d.jpeg"><p style="margin: 10px 0;"><span class="bjh-p"><span class="bjh-strong">雷鸣</span></span></p><p style="margin: 10px 0;"><span class="bjh-p">天使投资人</span></p><p style="margin: 10px 0;"><span class="bjh-p">百度创始七剑客之一</span></p><p style="margin: 10px 0;"><span class="bjh-p">酷我音乐创始人</span></p><p style="margin: 10px 0;"><span class="bjh-p">清华大学海峡研究院大数据 AI 中心 专家委员</span></p><p style="margin: 10px 0;"><span class="bjh-p"><span class="bjh-strong">特邀讲者</span></span></p>`;
+  // 測試代碼
+  document.getElementById('aaa').innerHTML = 'srccrs';
+  document.getElementById("aaa").focus();
+  setTimeout(function () {
+    // setHTML(content);
+    // startEdit();
+  }, 300);
+
+  //初始化html
+  function setHTML(html) {
+    editor.setHTML(html);
+  }
+
+  //插入html
+  function insertHTML(html) {
+    editor.insertHTML(html);
+  }
+
+  //獲取html
+  function getHTML() {
+    var html = editor.getHTML();
+    window.postMessage(html); //發送消息至RN端
+  }
+
+  //插入圖片
+  function insertImage(src) {
+    // editor.insertImage(src);
+    var image = `<br/><p id="123" style="position: relative;">
+      <img src="https://timg01.bdimg.com/timg?pa&amp;imgType=0&amp;sec=1439619614&amp;di=ac5604f12dc05d43ef6352437bf7bda9&amp;quality=100&amp;size=b980_10000&amp;src=http%3A%2F%2Fpic.rmb.bdstatic.com%2F868b22f65c5659436fa6f83391d42334.jpeg" />
+      <span style="position: absolute; top: 0; right: 0;" onclick="document.getElementById('123').remove()" >删除</span>
+    </p>`;  
+    editor.insertHTML(image);
+    document.getElementById('123').scrollIntoView();
+  }
+
+  function insertVideo(params) {
+    var video = `<video src="http://www.w3school.com.cn/i/movie.ogg" controls="controls"></video>`;
+    editor.insertHTML(video);
+  }
+
+  //觸發焦點
+  function startEdit() {
+    editor.moveCursorToEnd();
+    editor.focus();
+    var i = 0;
+    setTimeout(function () {
+      i++;
+      height = 0;
+      arr = node.children;
+      height = 0;
+      length = arr.length;
+      for (i = length - 1; i >= 0; i--) {
+        height += arr[i].offsetHeight;
+        if (height >= 200) {
+          arr[i].scrollIntoView();
+          break;
+        }
+      }
+    }, 100)
+
+    setTimeout(() => {
+      this.insertImage();
+    }, 1000);
+
+    setTimeout(() => {
+      this.insertHTML(`<br/><video src="http://www.w3school.com.cn/i/movie.ogg" controls="controls" >Your browser does not support the video element.</video>`);
+      this.insertHTML(`<br/><audio src="http://www.w3school.com.cn/i/horse.ogg" controls="controls">Your browser does not support the audio element.</audio>`);
+    }, 2000);
+
+    // setTimeout(() => {
+    //   window.scrollTo(0, window.innerHeight);
+    //   editor.moveCursorToEnd();
+    //   editor.focus();
+    // }, 100)
+  }
+
+  //失去焦點
+  function blur() {
+    editor.blur();
+  }
+
+  function moveCursorToStart() {
+    editor.moveCursorToStart();
+  }
+
+  function moveCursorToEnd() {
+    editor.moveCursorToEnd();
+  }
+  // //接收RN端發送的消息
+  // window.document.addEventListener('message', function (e) {
+  //   var message = e.data;
+  //   focus();
+  // })
+</script>
+
+</html>

@@ -54,7 +54,7 @@ export default class DIYWebViewPage extends BasePage {
           removeClippedSubviews={false}
           source={{ uri: 'https://github.com/TryImpossible' }} //默认地址
           onMessage={(e) => {
-            console.warn(e.nativeEvent.data);
+            // console.warn(e.nativeEvent.data);
             // let ret = JSON.parse(e.nativeEvent.data);
             // console.warn(ret);
           }}

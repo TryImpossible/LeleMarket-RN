@@ -11,10 +11,10 @@ import org.reactnative.camera.RNCameraPackage;
 import com.rnim.rn.audio.ReactNativeAudioPackage;
 
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
-import com.brentvatne.react.ReactVideoPackage;
+//import com.brentvatne.react.ReactVideoPackage;
 import com.horcrux.svg.SvgPackage;
 import com.react.rnspinkit.RNSpinkitPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
+//import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -47,10 +47,10 @@ public class MainApplication extends Application implements ReactApplication {
           new RNCameraPackage(),
           new ReactNativeAudioPackage(),
           new RNViewShotPackage(),
-          new ReactVideoPackage(),
+//          new ReactVideoPackage(),
           new SvgPackage(),
           new RNSpinkitPackage(),
-          new PickerPackage(),
+//          new PickerPackage(),
           new RNFetchBlobPackage(),
           new FastImageViewPackage(),
           new RNDeviceInfo(),

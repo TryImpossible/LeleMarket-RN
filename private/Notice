@@ -1,0 +1,10 @@
+* 清理XCode缓存 
+  1. rm -rf ~/Library/Developer/Xcode/DerivedData/*
+  2. rm -rf ios/build
+  3. in xcode Cmd + Shift + K
+
+
+* 清理ReactNative缓存 
+  1. rm -rf node_modules then yarn
+  2. watchman watch-del-all
+  3. react-native start --reset-cache

@@ -26,7 +26,7 @@ const RootStackNavigator = null;
 
 const ForcePage = [];
 
-const InitPage = ['MainPage', 'UEWidgetPage', 'LoginPage'];
+const InitPage = ['MainPage', 'UEWidgetPage', 'GoodsDetailPage'];
 
 class App extends (PureComponent || Component) {
 
