@@ -1,4 +1,4 @@
-package com.diy;
+package com.bynn.diy;
 
 import com.facebook.react.ReactActivity;
 
