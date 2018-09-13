@@ -13,7 +13,6 @@
     "fetch": true
   },
   "rules": {
-    "no-console": "off",
     "no-undef": "off",
     "no-useless-constructor": "off",
     "import/no-extraneous-dependencies": [
@@ -24,6 +23,7 @@
         "peerDependencies": false
       }
     ],
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
+    "no-return-assign": "off"
   }
 }
