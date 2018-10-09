@@ -54,3 +54,11 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+
+# DIY
+__tests__
+resources
+design
+private
+package-lock.json 
+yarn.lock
