@@ -5,28 +5,34 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "lint": "eslint --ext .js ./src --fix",
-    "precommit": "pretty-quick --staged",
-    "prettier": "prettier --write src/**/*.js",
+    "lint": "node_modules/.bin/eslint --ext .js ./src index.js --fix",
+    "precommit": "lint-staged",
+    "prettier": "node_modules/.bin/prettier --write src/**/*.js",
     "iPhoneX": "react-native run-ios --simulator 'iPhone X'"
   },
   "lint-staged": {
-    "*.{js,json,md}": [
-      "prettier --write",
-      "git add"
+    "ignore": [
+      "package.json"
     ],
-    "*.js": [
-      "yarn lint --fix",
-      "git add"
-    ]
+    "linters": {
+      "*.{js,jsx}": [
+        "yarn lint",
+        "git add --force"
+      ],
+      "*.{js,json,md,graphql}": [
+        "prettier --write",
+        "git add --force"
+      ]
+    }
   },
   "prettier": {
     "singleQuote": true
   },
   "dependencies": {
+    "prop-types": "^15.6.2",
     "react": "16.4.1",
     "react-native": "0.56.0",
-    "react-navigation": "^2.13.0"
+    "react-navigation": "^2.17.0"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
