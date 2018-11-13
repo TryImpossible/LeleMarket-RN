@@ -57,8 +57,11 @@ buck-out/
 
 # DIY
 __tests__
-resources
-design
-private
 package-lock.json 
 yarn.lock
+svg
+cli
+dist
+resources
+ui
+private

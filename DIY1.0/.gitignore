@@ -59,3 +59,4 @@ buck-out/
 __tests__
 package-lock.json 
 yarn.lock
+.DS_Store
