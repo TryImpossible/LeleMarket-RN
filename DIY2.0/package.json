@@ -25,9 +25,6 @@
       ]
     }
   },
-  "prettier": {
-    "singleQuote": true
-  },
   "dependencies": {
     "immutable": "^3.8.2",
     "prop-types": "^15.6.2",
