@@ -26,13 +26,13 @@
     }
   },
   "dependencies": {
-    "immutable": "^3.8.2",
+    "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.6.2",
-    "react": "16.6.0-alpha.8af6728",
+    "react": "16.6.1",
     "react-motion": "^0.5.2",
-    "react-native": "0.57.3",
-    "react-navigation": "^2.18.0",
-    "react-redux": "^5.0.7",
+    "react-native": "^0.57.5",
+    "react-navigation": "2.18.1",
+    "react-redux": "^5.1.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",

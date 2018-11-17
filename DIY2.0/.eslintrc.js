@@ -51,6 +51,7 @@ module.exports = {
       }
     ],
     quotes: ['error', 'single'],
-    semi: ['error', 'always']
+    semi: ['error', 'always'],
+    strict: 'off'
   }
 };

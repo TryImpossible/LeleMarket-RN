@@ -57,8 +57,6 @@ buck-out/
 
 # DIY
 __tests__
-package-lock.json 
-yarn.lock
 svg
 cli
 dist
