@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DIY</string>
+    <string name="block_canary_display_activity_label">DIY Blocks</string>
 </resources>
