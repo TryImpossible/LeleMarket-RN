@@ -57,9 +57,10 @@ buck-out/
 
 # DIY
 __tests__
-svg
-cli
+SVG
+local-cli
 dist
 resources
-ui
+UI
 private
+.vscode/launch.json
