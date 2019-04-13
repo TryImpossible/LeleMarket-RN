@@ -1074,11 +1074,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = ATK47JS422;
+						DevelopmentTeam = 92FB4NADG7;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = ATK47JS422;
+						DevelopmentTeam = 92FB4NADG7;
 						ProvisioningStyle = Automatic;
 					};
 					4C59FDDE208997BF00B1F16E = {
@@ -1802,7 +1802,7 @@
 			baseConfigurationReference = BB6421BAE3EA4D0AB72901FE /* Pods-DIYTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = ATK47JS422;
+				DEVELOPMENT_TEAM = 92FB4NADG7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1851,7 +1851,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = ATK47JS422;
+				DEVELOPMENT_TEAM = 92FB4NADG7;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
@@ -1895,11 +1895,12 @@
 			baseConfigurationReference = 8AB036166E1F612270F8AB02 /* Pods-DIY.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = ATK47JS422;
+				DEVELOPMENT_TEAM = 92FB4NADG7;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
@@ -1931,10 +1932,11 @@
 			baseConfigurationReference = 5A0A8EF306FC0209C98F3828 /* Pods-DIY.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ATK47JS422;
+				DEVELOPMENT_TEAM = 92FB4NADG7;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
@@ -2125,6 +2127,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bynn.enhancewebview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SYSTEM_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../node_modules/react-native/React\"/**";
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 11.2;
 			};
@@ -2158,6 +2161,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bynn.enhancewebview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SYSTEM_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../node_modules/react-native/React\"/**";
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 11.2;
 			};
