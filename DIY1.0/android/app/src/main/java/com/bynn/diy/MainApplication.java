@@ -6,12 +6,12 @@ import android.support.multidex.MultiDex;
 
 import com.bynn.diy.bridge.EnhanceWebViewPackage;
 import com.facebook.react.ReactApplication;
-import org.reactnative.camera.RNCameraPackage;
+//import org.reactnative.camera.RNCameraPackage;
 
 import com.rnim.rn.audio.ReactNativeAudioPackage;
 
-import fr.greweb.reactnativeviewshot.RNViewShotPackage;
-//import com.brentvatne.react.ReactVideoPackage;
+//import fr.greweb.reactnativeviewshot.RNViewShotPackage;
+import com.brentvatne.react.ReactVideoPackage;
 import com.horcrux.svg.SvgPackage;
 import com.react.rnspinkit.RNSpinkitPackage;
 //import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -44,10 +44,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new RNCameraPackage(),
+//          new RNCameraPackage(),
           new ReactNativeAudioPackage(),
-          new RNViewShotPackage(),
-//          new ReactVideoPackage(),
+//          new RNViewShotPackage(),
+          new ReactVideoPackage(),
           new SvgPackage(),
           new RNSpinkitPackage(),
 //          new PickerPackage(),
