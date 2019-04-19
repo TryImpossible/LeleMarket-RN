@@ -7,15 +7,14 @@ import { SafeAreaView } from '../index';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: '100%',
-    height: '100%'
+    flex: 1
   }
 });
 
 class BaseScreen extends PureComponent {
   static propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
+    style: PropTypes.object
   };
 
   static defaultProps = {};

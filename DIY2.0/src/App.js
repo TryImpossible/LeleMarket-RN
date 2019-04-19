@@ -1,44 +1,31 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React from 'react';
+import RootStackNavigator from './navigators';
+import { __ANDROID__ } from './utils';
 
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu'
-});
-
-export default () => (
-  <View style={styles.container}>
-    <Text style={styles.welcome}>Welcome to React Native!</Text>
-    <Text style={styles.instructions}>To get started, edit App.js</Text>
-    <Text style={styles.instructions}>{instructions}</Text>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
+export default class App extends React.PureComponent {
+  componentDidMount() {
+    // console.warn(RootStackNavigator.router);
+    // // 动态加载
+    // import('../src/utils/DateUtil').then(module => {
+    //   console.log('module', module);
+    //   const constants = module.default;
+    //   console.log('formate', constants.formate());
+    // });
   }
-});
+
+  render() {
+    return (
+      <RootStackNavigator
+        ref={ref => {
+          this.navigator = ref;
+        }}
+        uriPrefix={__ANDROID__ ? 'diy://diy/' : 'diy://'} // 配置Web访问App的URL Schema
+        // onNavigationStateChange={(prevState, currentState, action) => {
+        //   console.log(prevState);
+        //   console.log(currentState);
+        //   console.log(action);
+        // }}
+      />
+    );
+  }
+}

@@ -12,8 +12,9 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.github.moduth.blockcanary.BlockCanary;
-import com.squareup.haha.perflib.Main;
+import com.horcrux.svg.SvgPackage;
 import com.squareup.leakcanary.LeakCanary;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new RNGestureHandlerPackage(),
+          new SvgPackage(),
           new SystemPackage()
       );
     }

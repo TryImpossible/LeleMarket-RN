@@ -52,6 +52,18 @@ module.exports = {
     ],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    strict: 'off'
+    strict: 'off',
+    // https://eslint.org/docs/rules/no-underscore-dangle
+    'no-underscore-dangle': [
+      'error',
+      {
+        allow: ['__IOS__', '__ANDROID__', '__IPHONEX__'],
+        allowAfterThis: true,
+        allowAfterSuper: true,
+        enforceInMethodNames: false
+      }
+    ],
+    // https://eslint.org/docs/rules/no-unused-expressions
+    'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }]
   }
 };
