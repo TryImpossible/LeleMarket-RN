@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="100%" height="100%" version="1.1"
+xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="green" x1="0%" y1="50%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:red;
+        stop-opacity:0.3"/>
+      <stop offset="50%" style="stop-color:green;
+        stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:blue;
+        stop-opacity:0.9"/>
+    </linearGradient>
+  </defs>
+  <rect x="20" y="20" width="300" height="200" fill="url(#green)" />
+</svg>
+
+<!--
+  1. <linearGradient> 标签的 id 属性可为渐变定义一个唯一的名称
+  2. fill:url(#orange_red) 属性 链接元素渐变
+  3. 当 y1 和 y2 相等，而 x1 和 x2 不同时，可创建水平渐变
+  4. 当 x1 和 x2 相等，而 y1 和 y2 不同时，可创建垂直渐变
+  5. 当 x1 和 x2 不同，且 y1 和 y2 不同时，可创建角形渐变
+  6. 渐变的颜色范围可由两种或多种颜色组成。每种颜色通过一个 <stop> 标签来规定。offset 属性用来定义渐变的开始和结束位置
+-->

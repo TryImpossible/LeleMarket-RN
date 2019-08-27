@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="100%" height="100%" version="1.1"
+xmlns="http://www.w3.org/2000/svg">
+
+<polyline points="20,20 50,20 50,55" fill="transparent" stroke="red" stroke-widht="2" />
+
+</svg>
+
+<!--
+  1. points 点的坐标
+  2. stroke: 边框颜色 
+  3. stroke-width: 边框宽度
+  4. stroke-opacity: 边框颜色透明度
+  5. fill: 填充色
+  6. fill-opacity: 填充色透明度
+  7. opacity: 透明度
+-->
