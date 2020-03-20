@@ -13,9 +13,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
-    "outDir": "./dist/",
+    "rootDir": "src",
+    "outDir": "./dist/ts",
     "noImplicitAny": true,
-    "module": "commonjs"
+    "module": "commonjs",
+    "alwaysStrict": true,
+    "skipLibCheck": true
   },
-  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
+  "include": ["src"],
+  "exclude": ["node_modules", "*.config.js", ".vscode-test"]
 }
