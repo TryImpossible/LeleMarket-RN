@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { createAppContainer } from 'react-navigation';
+import { createNavigator, SwitchRouter, SceneView } from '@react-navigation/core';
+import { createBrowserApp, Link } from '@react-navigation/web';
 import { createStackNavigator } from 'react-navigation-stack';
+window.__DEV__ = true;
 
 class HomeScreen extends React.Component {
   render() {
@@ -19,4 +21,4 @@ const AppNavigator = createStackNavigator({
   },
 });
 
-export default createAppContainer(AppNavigator);
+export default createBrowserApp(createNavigator(AppNavigator));

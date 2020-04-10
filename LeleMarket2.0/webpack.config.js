@@ -16,7 +16,7 @@ module.exports = (env) => {
   return {
     mode: 'development', // "production" | "development" | "none"
     // bundle入口
-    entry: [path.resolve(__dirname, 'index.js')],
+    entry: [path.resolve(__dirname, 'index.web.js')],
     // bundle输出
     output: {
       path: path.resolve(__dirname, 'dist/web'),
@@ -34,24 +34,21 @@ module.exports = (env) => {
         {
           test: /\.js$/,
           include: [
-            path.join(__dirname, 'index.js'),
+            path.join(__dirname, 'index.web.js'),
+            path.join(__dirname, 'src'),
+            path.resolve(__dirname, 'node_modules/@react-navigation'),
             path.resolve(__dirname, 'node_modules/react-native-gesture-handler'),
+            path.resolve(__dirname, 'node_modules/react-navigation-stack'),
+            path.resolve(__dirname, 'node_modules/react-native-safe-area-context'),
             path.resolve(__dirname, 'node_modules/react-native-screens'),
           ],
           use: {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              // Babel configuration (or use .babelrc)
-              // This aliases 'react-native' to 'react-native-web' and includes only
-              // the modules needed by the app.
-              // plugins: [
-              //   // This aliases 'react-native' to 'react-native-web' to fool modules that only know
-              //   // about the former into some kind of compatibility.
-              //   'react-native-web',
-              // ],
-              // The 'react-native' preset is recommended to match React Native's packager
-              presets: ['module:metro-react-native-babel-preset'],
+              presets: [],
+              // Re-write paths to import only the modules needed by the app
+              plugins: ['react-native-web'],
             },
           },
         },
@@ -69,11 +66,15 @@ module.exports = (env) => {
     resolve: {
       // 解析模块请求的选项
       alias: {
-        'react-native': 'react-native-web', // import时,react-native自动替换为react-native-web
+        'react-native$': 'react-native-web', // 使RN代码中import自react-native的组件指向了react-native-web
+        'react-native-gesture-handler': path.resolve(
+          __dirname,
+          'node_modules/react-native-gesture-handler',
+        ),
         // ReactNativeART: 'react-art',
       },
-      modules: ['node_modules', path.resolve(__dirname, 'src')],
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      modules: ['web_modules', 'node_modules'],
+      extensions: ['.web.js', '.js', '.web.jsx', '.jsx', '.web.ts', '.ts', '.web.tsx', '.tsx'],
     },
     // 通过在浏览器调试工具(browser devtools)中添加元信息(meta info)增强调试
     // 牺牲了构建速度的 `source-map' 是最详细的。
@@ -103,7 +104,7 @@ module.exports = (env) => {
       // html模板插件
       new HtmlWebpackPlugin({
         title: name,
-        template: path.resolve(__dirname, 'index.html'), // Load a custom template
+        template: path.resolve(__dirname, 'web/public/index.html'), // Load a custom template
         inject: 'body', // Inject all scripts into the body
       }),
     ],
