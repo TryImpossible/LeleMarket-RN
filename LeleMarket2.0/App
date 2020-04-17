@@ -1,0 +1,53 @@
+import React from 'react';
+import { View, Text, Button } from 'react-native';
+import { createNavigator, StackRouter, SceneView } from 'react-navigation';
+import { createBrowserApp } from '@react-navigation/web';
+import { createStackNavigator } from 'react-navigation-stack';
+window.__DEV__ = true;
+
+function HomeScreen(props) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+      <Button title="navigate to Mine" onPress={() => props.navigation.navigate('MineScreen')} />
+    </View>
+  );
+}
+HomeScreen.path = '';
+HomeScreen.navigationOptions = {
+  title: 'Home',
+  linkName: 'Home Page',
+};
+
+class MineScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Mine Screen</Text>
+        <Button title="navigate to Home" onPress={() => this.props.navigation.navigate('Home')} />
+      </View>
+    );
+  }
+}
+
+class AppContainer extends React.Component {
+  render() {
+    const { descriptors, navigation } = this.props;
+    const activeKey = navigation.state.routes[navigation.state.index].key;
+    const descriptor = descriptors[activeKey];
+    return <SceneView component={descriptor.getComponent()} navigation={descriptor.navigation} />;
+  }
+}
+
+const AppNavigator = createNavigator(
+  AppContainer,
+  StackRouter({
+    Home: HomeScreen,
+    MineScreen,
+  }),
+  {},
+);
+
+const App = createBrowserApp(AppNavigator);
+
+export default App;

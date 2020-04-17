@@ -1,22 +1,74 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { createAppContainer } from 'react-navigation';
+import { View, Text, Button, Platform, Dimensions } from 'react-native';
+import { createAppContainer, NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createBrowserApp } from '@react-navigation/web';
 
-class HomeScreen extends React.Component {
+window.__DEV__ = true;
+const isWeb = Platform.OS === 'web';
+
+global.HermesInternal;
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
+
+class HomeScreen extends React.Component<Props> {
+  static navigationOptions = {
+    title: 'Home',
+  };
   render() {
+    console.info('SERVER_URL', SERVER_URL);
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View
+        style={{
+          flex: 1,
+          // height: Dimensions.get('window').height - 64,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         <Text>Home Screen</Text>
+        <Button
+          title="前进"
+          onPress={() => {
+            this.props.navigation.navigate('Details');
+          }}
+        />
       </View>
     );
   }
 }
 
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
-  },
-});
+class DetailsScreen extends React.Component<Props> {
+  static navigationOptions = {
+    title: 'Details',
+  };
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+        <Button title="后退" onPress={() => this.props.navigation.goBack()} />
+      </View>
+    );
+  }
+}
 
-export default createAppContainer(AppNavigator);
+const AppNavigator = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+    },
+    Details: DetailsScreen,
+  },
+  {
+    initialRouteName: 'Home',
+    defaultNavigationOptions: {
+      gesturesEnabled: true,
+    },
+  },
+);
+
+const App = isWeb ? createBrowserApp(AppNavigator) : createAppContainer(AppNavigator);
+
+export default App;
