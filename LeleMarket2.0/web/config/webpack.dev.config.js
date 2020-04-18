@@ -12,6 +12,10 @@ module.exports = smart(base, {
   devtool: 'eval-source-map',
   plugins: [
     // 注入全局变量
-    new Dotenv({ path: path.resolve(appDirectory, '.env.development'), expand: true }),
+    new Dotenv({
+      path: path.resolve(appDirectory, '.env.development'),
+      expand: true,
+      defaults: path.resolve(appDirectory, '.env'),
+    }),
   ],
 });

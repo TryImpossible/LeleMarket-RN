@@ -57,8 +57,12 @@ const AppNavigator = createStackNavigator(
   {
     Home: {
       screen: HomeScreen,
+      path: '',
     },
-    Details: DetailsScreen,
+    Details: {
+      screen: DetailsScreen,
+      path: 'details',
+    },
   },
   {
     initialRouteName: 'Home',
@@ -68,6 +72,7 @@ const AppNavigator = createStackNavigator(
   },
 );
 
-const App = isWeb ? createBrowserApp(AppNavigator) : createAppContainer(AppNavigator);
+// history, String types: "hash", "memory", "browser", defaults to: "browser"
+const App = isWeb ? createBrowserApp(AppNavigator, { history: 'hash' }) : createAppContainer(AppNavigator);
 
 export default App;

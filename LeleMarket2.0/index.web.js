@@ -14,4 +14,4 @@ AppRegistry.runApplication(appName, {
   rootTag: document.getElementById('app'),
 });
 
-console.warn('NODE_ENV：', process.env.a, process.env.b);
+console.warn('ENV：', process.env.ENV, typeof process.env.ENV);

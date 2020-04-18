@@ -9,7 +9,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const cssLoaderConfiguration = {
@@ -231,8 +230,6 @@ module.exports = {
         to: path.resolve(appDirectory, 'dist/web/static'),
       },
     ]),
-    // 注入全局变量
-    new Dotenv({ path: './.env' }),
     // 压缩css
     new OptimizeCssAssetsWebpackPlugin(),
     // 告诉webpack哪些库不参与打包，同时使用时的名称也得变~

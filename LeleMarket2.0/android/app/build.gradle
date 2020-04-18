@@ -1,5 +1,16 @@
 apply plugin: "com.android.application"
 
+project.ext.envConfigFiles = [
+        debug      : ".env",
+        release    : ".env",
+        devdebug   : ".env.development",
+        devrelease : ".env.development",
+        stagdebug  : ".env.staging",
+        stagrelease: ".env.staging",
+        proddebug  : ".env.production",
+        prodrelease: ".env.production",
+]
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 import com.android.build.OutputFile
 
 /**
@@ -78,7 +89,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+        enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -132,8 +143,10 @@ android {
         applicationId "com.lelemarket"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode project.env.get("APP_VERSION_CODE").toString().toInteger()
+        versionName project.env.get("App_VERSION_NAME").toString()
+
+        resValue "string", "build_config_package", "com.lelemarket"
     }
     splits {
         abi {
@@ -161,6 +174,37 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+    flavorDimensions 'default'
+    productFlavors {
+        dev {
+            dimension "default"
+//            applicationId "com.lelemarket.dev"
+//            versionNameSuffix "-dev"
+            manifestPlaceholders = [
+                    app_icon: "@mipmap/ic_launcher",
+                    app_name: 'DevLeleMarket',
+            ]
+        }
+        stag {
+            dimension "default"
+//            applicationId "com.lelemarket.stag"
+//            versionNameSuffix "-stag"
+            manifestPlaceholders = [
+                    app_icon: "@mipmap/ic_launcher",
+                    app_name: 'StagLeleMarket',
+            ]
+        }
+        prod {
+            dimension "default"
+//            applicationId "com.lelemarket.prod"
+//            versionNameSuffix "-prod"
+            manifestPlaceholders = [
+                    app_icon: "@mipmap/ic_launcher",
+                    app_name: 'ProdLeleMarket',
+            ]
         }
     }
 
@@ -195,15 +239,15 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
-      exclude group:'com.facebook.fbjni'
+        exclude group: 'com.facebook.fbjni'
     }
 
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.facebook.flipper'
+        exclude group: 'com.facebook.flipper'
     }
 
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.facebook.flipper'
+        exclude group: 'com.facebook.flipper'
     }
 
     if (enableHermes) {

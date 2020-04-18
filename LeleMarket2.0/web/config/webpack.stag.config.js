@@ -73,7 +73,7 @@ module.exports = smart(base, {
     new OptimizeCssAssetsWebpackPlugin(),
     // 注入全局变量
     new Dotenv({
-      path: path.resolve(appDirectory, '.env.production'),
+      path: path.resolve(appDirectory, '.env.staging'),
       expand: true,
       defaults: path.resolve(appDirectory, '.env'),
     }),
