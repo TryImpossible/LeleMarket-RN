@@ -45,7 +45,14 @@ class DetailsScreen extends React.Component<Props> {
   };
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View
+        style={{
+          flex: 1,
+          height: Dimensions.get('window').height - 64,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         <Text>Details Screen</Text>
         <Button title="后退" onPress={() => this.props.navigation.goBack()} />
       </View>

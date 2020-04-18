@@ -59,7 +59,8 @@ buck-out/
 __tests__
 SVG
 local-cli
-dist
+LeleMarket2.0/dist/*
+!LeleMarket2.0/dist/screenshot/
 resources
 UI
 private
