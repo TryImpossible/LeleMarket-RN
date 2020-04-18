@@ -18,12 +18,11 @@ class HomeScreen extends React.Component<Props> {
     title: 'Home',
   };
   render() {
-    console.info('SERVER_URL', SERVER_URL);
     return (
       <View
         style={{
           flex: 1,
-          // height: Dimensions.get('window').height - 64,
+          height: Dimensions.get('window').height - 64,
           alignItems: 'center',
           justifyContent: 'center',
         }}

@@ -55,7 +55,7 @@ buck-out/
 # Bundle artifact
 *.jsbundle
 
-# DIY
+# LeleMarket
 __tests__
 SVG
 local-cli
@@ -64,3 +64,4 @@ resources
 UI
 private
 .vscode/launch.json
+
