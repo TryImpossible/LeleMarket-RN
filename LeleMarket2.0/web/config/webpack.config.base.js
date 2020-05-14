@@ -38,27 +38,29 @@ const lessLoaderConfiguration = {
 
 const tsLoaderConfiguration = {
   test: /\.ts(x?)$/,
-  include: [
-    path.join(appDirectory, 'index.web.js'),
-    path.join(appDirectory, 'src'),
-    path.resolve(appDirectory, 'node_modules/react-native-gesture-handler'),
-    path.resolve(appDirectory, 'node_modules/react-native-screens'),
-    path.resolve(appDirectory, 'node_modules/react-navigation-stack'),
-    path.resolve(appDirectory, 'node_modules/@react-navigation'),
-  ],
+  include: [path.join(appDirectory, 'src')],
   // exclude: /node_modules/,
-  use: {
-    loader: 'babel-loader',
-    options: {
-      cacheDirectory: true,
-      // Babel configuration (or use .babelrc)
-      // The 'react-native' preset is recommended to match React Native's packager
-      presets: ['module:metro-react-native-babel-preset'],
-      // This aliases 'react-native' to 'react-native-web' and includes only
-      // Re-write paths to import only the modules needed by the app
-      plugins: ['react-native-web'],
+  use: [
+    {
+      loader: 'ts-loader',
+      options: {
+        transpileOnly: true,
+      },
     },
-  },
+    // 'thread-loader',
+    // {
+    //   loader: 'babel-loader',
+    //   options: {
+    //     cacheDirectory: true,
+    //     // Babel configuration (or use .babelrc)
+    //     // The 'react-native' preset is recommended to match React Native's packager
+    //     presets: ['module:metro-react-native-babel-preset'],
+    //     // This aliases 'react-native' to 'react-native-web' and includes only
+    //     // Re-write paths to import only the modules needed by the app
+    //     plugins: ['react-native-web'],
+    //   },
+    // },
+  ],
 };
 
 // This is needed for webpack to compile JavaScript.
@@ -76,22 +78,25 @@ const babelLoaderConfiguration = {
     path.resolve(appDirectory, 'node_modules/react-navigation-stack'),
     path.resolve(appDirectory, 'node_modules/@react-navigation'),
   ],
-  use: {
-    loader: 'babel-loader',
-    options: {
-      cacheDirectory: true,
-      // Babel configuration (or use .babelrc)
-      // The 'react-native' preset is recommended to match React Native's packager
-      presets: ['module:metro-react-native-babel-preset'],
-      // This aliases 'react-native' to 'react-native-web' and includes only
-      // Re-write paths to import only the modules needed by the app
-      plugins: ['react-native-web'],
+  use: [
+    'thread-loader',
+    {
+      loader: 'babel-loader',
+      options: {
+        cacheDirectory: true,
+        // Babel configuration (or use .babelrc)
+        // The 'react-native' preset is recommended to match React Native's packager
+        presets: ['module:metro-react-native-babel-preset'],
+        // This aliases 'react-native' to 'react-native-web' and includes only
+        // Re-write paths to import only the modules needed by the app
+        plugins: ['react-native-web'],
+      },
     },
-  },
+  ],
 };
 
 // This is needed for webpack to import static images in JavaScript files.
-const imageLoaderConfiguration = {
+const urlLoaderConfiguration = {
   test: /\.(gif|jpe?g|png|svg)$/,
   use: {
     // 使用url-loader
@@ -114,18 +119,10 @@ const imageLoaderConfiguration = {
   },
 };
 
-const htmlLoaderConfiguration = {
-  //匹配.html结尾的文件
-  test: /\.html$/,
-  // 处理html文件的img图片（负责引入img，从而能被url-loader进行处理）
-  loader: 'html-loader',
-};
-
 //处理其它资源
 const fileLoaderConfiguration = {
-  //excude排除法 后期手动添加
-  // exclude: /\.(css|js|html|less|png|jpg|jpeg|gif|svg|json)$/,
-  include: /.(ico)$/,
+  //exclude排除法 后期手动添加
+  exclude: /\.(css|js|jsx|ts|tsx|html|less|png|jpg|jpeg|gif|svg|json)$/,
   //使用file-loader
   loader: 'file-loader',
   options: {
@@ -135,17 +132,22 @@ const fileLoaderConfiguration = {
   },
 };
 
-const threadLoaderConfiguration = {
-  loader: 'thread-loader',
+const htmlLoaderConfiguration = {
+  // 匹配.html结尾的文件
+  test: /\.html$/,
+  // 去除模板文件
+  exclude: [path.resolve(appDirectory, 'web/public/index.html')],
+  // 处理html文件的img图片（负责引入img，从而能被url-loader进行处理）
+  loader: 'html-loader',
   options: {
-    workers: 2, //设置进程数量
+    minimize: true,
   },
 };
 
 const devServerConfiguration = {
   host: '0.0.0.0', // ip
   port: 3000, // 端口
-  contentBase: path.resolve(appDirectory, 'dist'), // 本地服务器所加载的页面所在的目录
+  contentBase: path.resolve(appDirectory, 'public'), // 本地服务器所加载的页面所在的目录
   historyApiFallback: true, //不跳转
   inline: true, // 实时刷新
   hot: true, // 热加载
@@ -153,7 +155,7 @@ const devServerConfiguration = {
   compress: true, // 是否启用压缩
   useLocalIp: true, // 使用本地ip
   open: false, // 是否自动打开
-  publicPath: '', // 与output中publicPath保持一致
+  publicPath: '', // 表示的是打包生成的静态文件所在的位置（若是devServer里面的publicPath没有设置，则会认为是output里面设置的publicPath的值）
 };
 
 /**
@@ -168,7 +170,7 @@ module.exports = {
   entry: [path.resolve(appDirectory, 'index.web.js')],
   // bundle输出
   output: {
-    publicPath: '',
+    publicPath: '', // 表示的是打包生成的index.html文件里面引用资源的前缀
     path: path.resolve(appDirectory, 'dist/web/static'),
     filename: '[name].bundle.js',
   },
@@ -179,10 +181,9 @@ module.exports = {
       lessLoaderConfiguration,
       tsLoaderConfiguration,
       babelLoaderConfiguration,
-      imageLoaderConfiguration,
-      htmlLoaderConfiguration,
+      urlLoaderConfiguration,
       fileLoaderConfiguration,
-      threadLoaderConfiguration,
+      htmlLoaderConfiguration,
     ],
   },
   // 解析模块请求的选项
@@ -215,13 +216,18 @@ module.exports = {
       template: path.resolve(appDirectory, 'web/public/index.html'), // Load a custom template
       inject: 'body', // Inject all scripts into the body
       minify: {
-        html5: true,
+        removeComments: true,
         collapseWhitespace: true,
-        preserveLineBreaks: false,
-        minifyCSS: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
         minifyJS: true,
-        removeComments: false,
+        minifyCSS: true,
+        minifyURLs: true,
       },
+      showErrors: true,
     }),
     // 目录拷贝
     new CopyWebpackPlugin([

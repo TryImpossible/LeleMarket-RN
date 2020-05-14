@@ -2,7 +2,7 @@
 
 const path = require('path');
 const { smart } = require('webpack-merge');
-const base = require('./webpack.base.config.js');
+const base = require('./webpack.config.base.js');
 const Dotenv = require('dotenv-webpack'); // 注入全局变量插件
 
 const appDirectory = path.resolve(__dirname, '../../');

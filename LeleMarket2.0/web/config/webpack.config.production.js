@@ -4,7 +4,7 @@ const path = require('path');
 const appDirectory = path.resolve(__dirname, '../../');
 
 const { smart } = require('webpack-merge');
-const base = require('./webpack.base.config.js');
+const base = require('./webpack.config.base.js');
 const UglifyjsPlugin = require('uglifyjs-webpack-plugin'); // 压缩js插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 抽离css插件
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin'); // 压缩css插件
@@ -73,7 +73,7 @@ module.exports = smart(base, {
     new OptimizeCssAssetsWebpackPlugin(),
     // 注入全局变量
     new Dotenv({
-      path: path.resolve(appDirectory, '.env.staging'),
+      path: path.resolve(appDirectory, '.env.production'),
       expand: true,
       defaults: path.resolve(appDirectory, '.env'),
     }),
