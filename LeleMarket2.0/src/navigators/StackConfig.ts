@@ -8,7 +8,7 @@ import {
 } from 'react-navigation-stack/src/types';
 import StackViewStyleInterpolator from 'react-navigation-stack/src/views/StackView/StackViewStyleInterpolator';
 
-import { NAVBAR_HEIGHT, STATUSBAR_HEIGHT, PRIMARY_COLOR } from '../utilities/Constants';
+import { NAVBAR_HEIGHT, STATUSBAR_HEIGHT, PRIMARY_COLOR } from 'utilities/Constants';
 
 const transitionConfig = () => ({
   transitionSpec: {

@@ -195,6 +195,11 @@ module.exports = {
     // This will only alias the exact import "react-native"
     alias: {
       'react-native$': 'react-native-web', // 使RN代码中import自react-native的组件指向了react-native-web
+      src: path.resolve(appDirectory, 'src/'),
+      components: path.resolve(appDirectory, 'src/components/'),
+      navigators: path.resolve(appDirectory, 'src/navigators'),
+      pages: path.resolve(appDirectory, 'src/pages'),
+      utilities: path.resolve(appDirectory, './src/utilities/'),
     },
     // modules: ['web_modules', 'node_modules'],
     extensions: ['.web.ts', '.ts', '.web.tsx', '.tsx', '.web.js', '.js', '.web.jsx', '.jsx'],

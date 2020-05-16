@@ -9,13 +9,6 @@
     "sourceMap": true,
     "outDir": "./dist/ts",
     "rootDir": "src",
-    "paths": {
-      "@src/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@navigators": ["src/navigators"],
-      "@pages": ["src/pages"],
-      "@utilities/*": ["src/utilities/*"]
-    },
     "removeComments": true,
     "noEmit": true,
     "isolatedModules": true,
@@ -27,6 +20,13 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "components/*": ["src/components/*"],
+      "navigators": ["src/navigators"],
+      "pages": ["src/pages"],
+      "utilities/*": ["src/utilities/*"]
+    },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,

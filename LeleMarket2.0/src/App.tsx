@@ -2,7 +2,7 @@ import './utilities/Global';
 
 import React from 'react';
 import { StatusBar, View } from 'react-native';
-import { AppNavigator, NavigationService } from './navigators';
+import { AppNavigator, NavigationService } from 'navigators';
 import { NavigationState, NavigationAction } from 'react-navigation';
 
 const App = () => {
