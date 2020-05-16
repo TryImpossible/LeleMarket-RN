@@ -45,21 +45,23 @@ const tsLoaderConfiguration = {
       loader: 'ts-loader',
       options: {
         transpileOnly: true,
+        // 指定特定的ts编译配置，为了区分脚本的ts配置
+        configFile: path.join(appDirectory, './tsconfig.json'),
       },
     },
-    // 'thread-loader',
-    // {
-    //   loader: 'babel-loader',
-    //   options: {
-    //     cacheDirectory: true,
-    //     // Babel configuration (or use .babelrc)
-    //     // The 'react-native' preset is recommended to match React Native's packager
-    //     presets: ['module:metro-react-native-babel-preset'],
-    //     // This aliases 'react-native' to 'react-native-web' and includes only
-    //     // Re-write paths to import only the modules needed by the app
-    //     plugins: ['react-native-web'],
-    //   },
-    // },
+    'thread-loader',
+    {
+      loader: 'babel-loader',
+      options: {
+        cacheDirectory: true,
+        // Babel configuration (or use .babelrc)
+        // The 'react-native' preset is recommended to match React Native's packager
+        presets: ['module:metro-react-native-babel-preset'],
+        // This aliases 'react-native' to 'react-native-web' and includes only
+        // Re-write paths to import only the modules needed by the app
+        plugins: ['react-native-web'],
+      },
+    },
   ],
 };
 
@@ -77,6 +79,8 @@ const babelLoaderConfiguration = {
     path.resolve(appDirectory, 'node_modules/react-native-screens'),
     path.resolve(appDirectory, 'node_modules/react-navigation-stack'),
     path.resolve(appDirectory, 'node_modules/@react-navigation'),
+    path.resolve(appDirectory, 'node_modules/react-navigation-tabs'),
+    path.resolve(appDirectory, 'node_modules/react-native-reanimated'),
   ],
   use: [
     'thread-loader',
@@ -191,7 +195,6 @@ module.exports = {
     // This will only alias the exact import "react-native"
     alias: {
       'react-native$': 'react-native-web', // 使RN代码中import自react-native的组件指向了react-native-web
-      // ReactNativeART: 'react-art',
     },
     // modules: ['web_modules', 'node_modules'],
     extensions: ['.web.ts', '.ts', '.web.tsx', '.tsx', '.web.js', '.js', '.web.jsx', '.jsx'],

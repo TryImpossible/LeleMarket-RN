@@ -1,85 +1,36 @@
+import './utilities/Global';
+
 import React from 'react';
-import { View, Text, Button, Platform, Dimensions } from 'react-native';
-import { createAppContainer, NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createBrowserApp } from '@react-navigation/web';
+import { StatusBar, View } from 'react-native';
+import { AppNavigator, NavigationService } from './navigators';
+import { NavigationState, NavigationAction } from 'react-navigation';
 
-window.__DEV__ = true;
-const isWeb = Platform.OS === 'web';
-
-global.HermesInternal;
-
-interface Props {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
-}
-
-class HomeScreen extends React.Component<Props> {
-  static navigationOptions = {
-    title: 'Home',
-  };
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          height: Dimensions.get('window').height - 64,
-          alignItems: 'center',
-          justifyContent: 'center',
+const App = () => {
+  return (
+    <View style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent animated />
+      <AppNavigator
+        ref={(nav: any) => {
+          // NOTE: ref至少会回调两次，组件装载和组件卸载的时候
+          if (!nav) return;
+          NavigationService.setTopLevelNavigator(nav);
         }}
-      >
-        <Text>Home Screen</Text>
-        <Button
-          title="前进"
-          onPress={() => {
-            this.props.navigation.navigate('Details');
-          }}
-        />
-      </View>
-    );
-  }
-}
-
-class DetailsScreen extends React.Component<Props> {
-  static navigationOptions = {
-    title: 'Details',
-  };
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          height: Dimensions.get('window').height - 64,
-          alignItems: 'center',
-          justifyContent: 'center',
+        onNavigationStateChange={(
+          prevNavigationState: NavigationState,
+          nextNavigationState: NavigationState,
+          action: NavigationAction,
+        ) => {
+          if (!nextNavigationState.isTransitioning) return;
+          console.log('-------------Navigation Params----------');
+          // console.log(prevNavigationState, nextNavigationState, action);
+          const route = nextNavigationState.routes[nextNavigationState.index];
+          console.log(`routeName: ${route.routeName}`);
+          console.log(`params: ${route.params}`);
+          console.log('----------------------------------------');
         }}
-      >
-        <Text>Details Screen</Text>
-        <Button title="后退" onPress={() => this.props.navigation.goBack()} />
-      </View>
-    );
-  }
-}
-
-const AppNavigator = createStackNavigator(
-  {
-    Home: {
-      screen: HomeScreen,
-      path: '',
-    },
-    Details: {
-      screen: DetailsScreen,
-      path: 'details',
-    },
-  },
-  {
-    initialRouteName: 'Home',
-    defaultNavigationOptions: {
-      gesturesEnabled: true,
-    },
-  },
-);
-
-// history, String types: "hash", "memory", "browser", defaults to: "browser"
-const App = isWeb ? createBrowserApp(AppNavigator, { history: 'hash' }) : createAppContainer(AppNavigator);
+      />
+    </View>
+  );
+};
 
 export default App;

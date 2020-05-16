@@ -9,6 +9,13 @@
     "sourceMap": true,
     "outDir": "./dist/ts",
     "rootDir": "src",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@navigators": ["src/navigators"],
+      "@pages": ["src/pages"],
+      "@utilities/*": ["src/utilities/*"]
+    },
     "removeComments": true,
     "noEmit": true,
     "isolatedModules": true,
