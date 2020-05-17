@@ -8,7 +8,7 @@ const base = require('./webpack.config.base.js');
 const UglifyjsPlugin = require('uglifyjs-webpack-plugin'); // 压缩js插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 抽离css插件
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin'); // 压缩css插件
-const Dotenv = require('dotenv-webpack'); // 注入全局变量插件
+const getClientEnvironment = require('./env'); // 读取环境变量
 
 const commonCssUse = [
   // 'style-loader',
@@ -72,10 +72,6 @@ module.exports = smart(base, {
     }),
     new OptimizeCssAssetsWebpackPlugin(),
     // 注入全局变量
-    new Dotenv({
-      path: path.resolve(appDirectory, '.env.production'),
-      expand: true,
-      defaults: path.resolve(appDirectory, '.env'),
-    }),
+    new webpack.DefinePlugin(getClientEnvironment('.env.production')),
   ],
 });

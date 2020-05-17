@@ -144,7 +144,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode project.env.get("APP_VERSION_CODE").toString().toInteger()
-        versionName project.env.get("App_VERSION_NAME").toString()
+        versionName project.env.get("APP_VERSION_NAME").toString()
 
         resValue "string", "build_config_package", "com.lelemarket"
     }

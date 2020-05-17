@@ -199,6 +199,7 @@ module.exports = {
       components: path.resolve(appDirectory, 'src/components/'),
       navigators: path.resolve(appDirectory, 'src/navigators'),
       pages: path.resolve(appDirectory, 'src/pages'),
+      modules: path.resolve(appDirectory, 'src/modules'),
       utilities: path.resolve(appDirectory, './src/utilities/'),
     },
     // modules: ['web_modules', 'node_modules'],

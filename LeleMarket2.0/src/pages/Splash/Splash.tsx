@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
-import NavigationApi from '../../navigators';
+import NavigationApi from '../../navigators/NavigationApi';
 
 const styles = StyleSheet.create({
   container: {

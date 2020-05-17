@@ -19,6 +19,10 @@ module.exports = {
             rootPathPrefix: 'pages',
           },
           {
+            rootPathSuffix: './src/modules',
+            rootPathPrefix: 'modules',
+          },
+          {
             rootPathSuffix: './src/utilities',
             rootPathPrefix: 'utilities/',
           },

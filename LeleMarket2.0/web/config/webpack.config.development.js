@@ -1,21 +1,16 @@
 'use strict';
 
-const path = require('path');
+const webpack = require('webpack');
 const { smart } = require('webpack-merge');
-const base = require('./webpack.config.base.js');
-const Dotenv = require('dotenv-webpack'); // 注入全局变量插件
 
-const appDirectory = path.resolve(__dirname, '../../');
+const base = require('./webpack.config.base.js');
+const getClientEnvironment = require('./env'); // 读取环境变量
 
 module.exports = smart(base, {
   mode: 'development',
   devtool: 'eval-source-map',
   plugins: [
     // 注入全局变量
-    new Dotenv({
-      path: path.resolve(appDirectory, '.env.development'),
-      expand: true,
-      defaults: path.resolve(appDirectory, '.env'),
-    }),
+    new webpack.DefinePlugin(getClientEnvironment('.env.development')),
   ],
 });

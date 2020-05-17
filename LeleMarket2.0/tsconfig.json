@@ -25,6 +25,7 @@
       "components/*": ["src/components/*"],
       "navigators": ["src/navigators"],
       "pages": ["src/pages"],
+      "modules": ["src/modules"],
       "utilities/*": ["src/utilities/*"]
     },
     "allowSyntheticDefaultImports": true,

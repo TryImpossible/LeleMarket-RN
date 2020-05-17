@@ -5,6 +5,7 @@
 import { AppRegistry } from 'react-native';
 import App from './src/App';
 import { name as appName } from './app.json';
+import { DotEnv } from './src/modules';
 
 AppRegistry.registerComponent(appName, () => App);
 
@@ -14,4 +15,4 @@ AppRegistry.runApplication(appName, {
   rootTag: document.getElementById('app'),
 });
 
-console.warn('ENV：', process.env.ENV, typeof process.env.ENV);
+console.warn('ENV：', DotEnv);
