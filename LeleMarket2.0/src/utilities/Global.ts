@@ -1,6 +1,8 @@
+import _ from 'lodash';
 import { toDP, toSP } from './ScreenAdapter';
 import { IS_ANDROID, IS_IOS, IOS_IS_IPHONE_X, IS_WEB, SCREEN_WIDTH, SCREEN_HEIGHT, ONE_PX } from './Constants';
 
+global._ = _;
 global._toDP = toDP;
 global._toSP = toSP;
 global.__ANDROID__ = IS_ANDROID;

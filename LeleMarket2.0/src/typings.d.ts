@@ -93,6 +93,7 @@ declare module '*.module.css' {
 /// <reference types="node" />
 /// <reference types="react" />
 /// <reference types="react-dom" />
+/// <reference types="lodash" />
 
 interface Window {
   __DEV__: boolean | false;
@@ -104,6 +105,7 @@ declare namespace NodeJS {
     readonly PUBLIC_URL: string;
   }
   interface Global {
+    _: _;
     _toDP: (size: number, enableHeightAdapt: boolean) => number;
     _toSP: (size: number) => number;
     __ANDROID__: boolean;
@@ -117,6 +119,7 @@ declare namespace NodeJS {
   }
 }
 
+const _: _;
 const _toDP: (size: number, enableHeightAdapt?: boolean) => number;
 const _toSP: (size: number) => number;
 const __ANDROID__: boolean;
