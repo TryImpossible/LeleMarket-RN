@@ -24,7 +24,7 @@
       "src/*": ["src/*"],
       "components/*": ["src/components/*"],
       "navigators": ["src/navigators"],
-      "pages": ["src/pages"],
+      "screens": ["src/screens"],
       "modules": ["src/modules"],
       "utilities/*": ["src/utilities/*"]
     },

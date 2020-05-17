@@ -198,7 +198,7 @@ module.exports = {
       src: path.resolve(appDirectory, 'src/'),
       components: path.resolve(appDirectory, 'src/components/'),
       navigators: path.resolve(appDirectory, 'src/navigators'),
-      pages: path.resolve(appDirectory, 'src/pages'),
+      screens: path.resolve(appDirectory, 'src/screens'),
       modules: path.resolve(appDirectory, 'src/modules'),
       utilities: path.resolve(appDirectory, './src/utilities/'),
     },

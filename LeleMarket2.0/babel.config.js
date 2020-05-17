@@ -15,8 +15,8 @@ module.exports = {
             rootPathPrefix: 'navigators',
           },
           {
-            rootPathSuffix: './src/pages',
-            rootPathPrefix: 'pages',
+            rootPathSuffix: './src/screens',
+            rootPathPrefix: 'screens',
           },
           {
             rootPathSuffix: './src/modules',
