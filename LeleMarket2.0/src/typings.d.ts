@@ -95,7 +95,7 @@ declare module '*.module.css' {
 /// <reference types="react-dom" />
 /// <reference types="lodash" />
 
-interface Window {
+declare interface Window {
   __DEV__: boolean | false;
 }
 
@@ -119,14 +119,14 @@ declare namespace NodeJS {
   }
 }
 
-const _: _;
-const _toDP: (size: number, enableHeightAdapt?: boolean) => number;
-const _toSP: (size: number) => number;
-const __ANDROID__: boolean;
-const __IOS__: boolean;
-const __IPHONEX__: boolean;
-const __WEB__: boolean;
-const __WIDTH__: number;
-const __HEIGHT__: number;
-const __ONEPX__: number;
-const _c: () => string;
+declare const _: _;
+declare const _toDP: (size: number, enableHeightAdapt?: boolean) => number;
+declare const _toSP: (size: number) => number;
+declare const __ANDROID__: boolean;
+declare const __IOS__: boolean;
+declare const __IPHONEX__: boolean;
+declare const __WEB__: boolean;
+declare const __WIDTH__: number;
+declare const __HEIGHT__: number;
+declare const __ONEPX__: number;
+declare const _c: () => string;

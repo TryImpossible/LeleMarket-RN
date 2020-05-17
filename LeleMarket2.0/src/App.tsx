@@ -2,9 +2,10 @@ import './utilities/Global';
 
 import React from 'react';
 import { StatusBar, View } from 'react-native';
+import { NavigationState, NavigationAction } from 'react-navigation';
 import AppNavigator from 'src/navigators/AppNavigator';
 import NavigationService from 'src/navigators/NavigationService';
-import { NavigationState, NavigationAction } from 'react-navigation';
+import { Window } from 'components/common';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           console.log('----------------------------------------');
         }}
       />
+      <Window />
     </View>
   );
 };
