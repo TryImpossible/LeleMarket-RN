@@ -57,11 +57,9 @@ buck-out/
 
 # LeleMarket
 __tests__
-SVG
 local-cli
 LeleMarket2.0/dist/*
 !LeleMarket2.0/dist/screenshot/
-resources
 UI
 private
 .vscode/launch.json
