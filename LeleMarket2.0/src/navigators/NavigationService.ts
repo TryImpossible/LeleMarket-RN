@@ -1,22 +1,39 @@
-import { NavigationActions, StackActions, NavigationParams, NavigationNavigateAction } from 'react-navigation';
+import {
+  NavigationContainer,
+  NavigationProp,
+  NavigationState,
+  NavigationRoute,
+  NavigationActions,
+  StackActions,
+  NavigationParams,
+  NavigationNavigateAction,
+} from 'react-navigation';
 
-let topLevelNavigator;
+let topLevelNavigator: NavigationContainer & NavigationProp<NavigationState>;
 
-const getTopLevelNavigator = () => {
+const getTopLevelNavigator = (): NavigationContainer & NavigationProp<NavigationState> => {
   if (!topLevelNavigator) throw Error('topLevelNavigator is undefined, maybe not initialize');
   return topLevelNavigator;
 };
 
-const setTopLevelNavigator = (navigatorRef) => {
+const setTopLevelNavigator = (navigatorRef: NavigationContainer & NavigationProp<NavigationState>) => {
   topLevelNavigator = navigatorRef;
 };
 
 const getRoutes = () => {
-  return getTopLevelNavigator().state.nav.routes;
+  const state: any = getTopLevelNavigator().state;
+  if (!state) {
+    throw Error('internal error, it should not appear');
+  }
+  return state.nav.routes;
 };
 
 const getIndex = () => {
-  return getTopLevelNavigator().state.nav.index;
+  const state: any = getTopLevelNavigator().state;
+  if (!state) {
+    throw Error('internal error, it should not appear');
+  }
+  return state.nav.index;
 };
 
 const navigate = (routeName: string, params?: NavigationParams) => {
@@ -37,7 +54,7 @@ const goBack = (routeName: string | undefined = undefined) => {
       throw Error(`Can't go back to "${routeName}", no routes`);
     }
 
-    const index = routes.findIndex((route) => route.routeName === routeName);
+    const index = routes.findIndex((route: NavigationRoute) => route.routeName === routeName);
     // NOTE: key不是目标页面的key,而是可以在key为undefined时goBack到目标页面的那个页面的key. 如果key为null, 那么会回到任何地方.
     const screenRoute = routes[index + 1];
     if (!(screenRoute && screenRoute.key)) {

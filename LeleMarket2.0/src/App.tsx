@@ -2,7 +2,8 @@ import './utilities/Global';
 
 import React from 'react';
 import { StatusBar, View } from 'react-native';
-import { AppNavigator, NavigationService } from 'navigators';
+import AppNavigator from 'src/navigators/AppNavigator';
+import NavigationService from 'src/navigators/NavigationService';
 import { NavigationState, NavigationAction } from 'react-navigation';
 
 const App = () => {
@@ -15,15 +16,11 @@ const App = () => {
           if (!nav) return;
           NavigationService.setTopLevelNavigator(nav);
         }}
-        onNavigationStateChange={(
-          prevNavigationState: NavigationState,
-          nextNavigationState: NavigationState,
-          action: NavigationAction,
-        ) => {
-          if (!nextNavigationState.isTransitioning) return;
+        onNavigationStateChange={(prevState: NavigationState, nextState: NavigationState, action: NavigationAction) => {
+          if (!nextState.isTransitioning) return;
           console.log('-------------Navigation Params----------');
-          // console.log(prevNavigationState, nextNavigationState, action);
-          const route = nextNavigationState.routes[nextNavigationState.index];
+          // console.log(prevState, nextState, action);
+          const route = nextState.routes[nextState.index];
           console.log(`routeName: ${route.routeName}`);
           console.log(`params: ${route.params}`);
           console.log('----------------------------------------');

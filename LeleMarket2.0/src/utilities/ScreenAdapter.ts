@@ -14,7 +14,7 @@ const WIDTH_SCALE_RATIO: number = width / UI_DESIGN_WIDTH; // 宽缩放比
 const HEIGHT_SCALE_RATIO: number = height / UI_DESIGN_HEIGHT; // 高缩放比
 
 // / 屏幕尺寸适配方法
-export const toDP = (size: number, enableHeightAdapt: boolean = false): number => {
+export const toDP = (size: number, enableHeightAdapt?: boolean): number => {
   return size * (enableHeightAdapt ? HEIGHT_SCALE_RATIO : WIDTH_SCALE_RATIO);
 };
 

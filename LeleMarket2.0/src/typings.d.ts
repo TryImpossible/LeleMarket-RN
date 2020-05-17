@@ -117,7 +117,7 @@ declare namespace NodeJS {
   }
 }
 
-const _toDP: (size: number, enableHeightAdapt: boolean) => number;
+const _toDP: (size: number, enableHeightAdapt?: boolean) => number;
 const _toSP: (size: number) => number;
 const __ANDROID__: boolean;
 const __IOS__: boolean;
