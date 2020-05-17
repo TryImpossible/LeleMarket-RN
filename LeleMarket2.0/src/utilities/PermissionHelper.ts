@@ -2,7 +2,9 @@ import { PermissionsAndroid } from 'react-native';
 
 class PermissionHelper {
   static async requestPhoto() {
-    if (__IOS__) return Promise.resolve(true);
+    if (__IOS__) {
+      return Promise.resolve(true);
+    }
     const permissions = [PermissionsAndroid.PERMISSIONS.CAMERA, PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE];
     try {
       const granteds = await PermissionsAndroid.requestMultiple(permissions);
@@ -20,7 +22,9 @@ class PermissionHelper {
   }
 
   static async requestLocation() {
-    if (__IOS__) return Promise.resolve(true);
+    if (__IOS__) {
+      return Promise.resolve(true);
+    }
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {

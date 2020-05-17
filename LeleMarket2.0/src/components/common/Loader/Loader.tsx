@@ -15,7 +15,9 @@ const styles = StyleSheet.create({
 
 const Loader = () => {
   [loaderVisible, setLoaderVisible] = useState(false);
-  if (!loaderVisible) return null;
+  if (!loaderVisible) {
+    return null;
+  }
   return (
     <View style={[StyleSheet.absoluteFill, styles.container]}>
       <ActivityIndicator size={'large'} animating={loaderVisible} />

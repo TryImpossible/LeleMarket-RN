@@ -14,7 +14,9 @@ global.__HEIGHT__ = SCREEN_HEIGHT;
 global.__ONEPX__ = ONE_PX;
 global._c = () => {
   const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-  if (color.length !== 7) return global._c();
+  if (color.length !== 7) {
+    return global._c();
+  }
   return color;
 };
 window.__DEV__ = true;

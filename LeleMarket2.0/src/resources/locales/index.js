@@ -3,7 +3,7 @@ import zhHans from './zh-Hans';
 
 const locales = {
   en, // 英文
-  'zh-Hans': zhHans // 简体中文,
+  'zh-Hans': zhHans, // 简体中文,
   // 'en-US': en,
   // 'en-CN': en,
   // 'zh-CN': zhHans,

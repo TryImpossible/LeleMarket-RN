@@ -21,5 +21,5 @@ export default {
   ..._loader,
   ..._badge,
   ...colors,
-  ...dimens
+  ...dimens,
 };

@@ -8,7 +8,7 @@ export default {
       left: 0,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'rgba(191,191,191, 0.3)'
-    }
-  }
+      backgroundColor: 'rgba(191,191,191, 0.3)',
+    },
+  },
 };

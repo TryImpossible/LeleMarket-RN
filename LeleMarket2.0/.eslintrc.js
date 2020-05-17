@@ -1,8 +1,8 @@
 module.exports = {
   root: true,
-  extends: ['@react-native-community', 'prettier', 'plugin:prettier/recommended'],
+  extends: '@react-native-community',
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'react', 'prettier'],
+  plugins: ['@typescript-eslint'],
   globals: {
     window: true,
     fetch: true,
@@ -27,5 +27,8 @@ module.exports = {
     'no-var': 'error',
     // 优先使用 interface 而不是 type
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+    // https://github.com/typescript-eslint/typescript-eslint/blob/v2.28.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
   },
 };

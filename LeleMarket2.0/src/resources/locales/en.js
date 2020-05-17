@@ -78,7 +78,6 @@ export default {
       progress: '{number} points sprint progress',
       singIn: 'SIGN IN TODAY',
       alreadySingIn: 'TODAY SIGNED',
-      // eslint-disable-next-line quotes
       congratulations: `Congratulations\ncomplete today's check-in`,
       wealth: 'Wealth bi',
       coinAmount: '+{amount}',

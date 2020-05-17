@@ -16,6 +16,7 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SplashPage = ({ navigation }: Props) => {
   setTimeout(() => {
     Loader.show();

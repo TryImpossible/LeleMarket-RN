@@ -80,7 +80,7 @@ export const isEmpty = (data: any): boolean => {
     return data.length === 0;
   }
   if (isObject(data)) {
-    return Object.keys(data).length === 0 || JSON.stringify(data) == '{}';
+    return Object.keys(data).length === 0 || JSON.stringify(data) === '{}';
   }
   return false;
 };

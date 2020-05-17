@@ -12,7 +12,9 @@ import {
 let topLevelNavigator: NavigationContainer & NavigationProp<NavigationState>;
 
 const getTopLevelNavigator = (): NavigationContainer & NavigationProp<NavigationState> => {
-  if (!topLevelNavigator) throw Error('topLevelNavigator is undefined, maybe not initialize');
+  if (!topLevelNavigator) {
+    throw Error('topLevelNavigator is undefined, maybe not initialize');
+  }
   return topLevelNavigator;
 };
 

@@ -21,11 +21,11 @@ const routeConfigMap: NavigationRouteConfigMap<
   Mine: { screen: () => <Text>Mine</Text> },
 };
 
-declare type Config = {
+interface Config {
   lazy?: boolean;
   tabBarComponent?: React.ComponentType<any>;
   tabBarOptions?: BottomTabBarOptions;
-};
+}
 
 const stackConfig: CreateNavigatorConfig<
   Partial<Config>,

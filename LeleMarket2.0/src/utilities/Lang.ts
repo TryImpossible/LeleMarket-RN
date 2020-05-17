@@ -6,10 +6,10 @@ const LangManager = {
   register(langData: LangData, lang: Lang) {
     Object.assign(this, langData, { lang });
   },
-  get(key: string) {
+  get(key: string): string {
     let message = key.split(/\./).reduce((last, current) => last && last[current], this);
     if (!message) {
-      message = `Missing ${LangManager.themes}.${key}`;
+      message = `Missing ${LangManager.lang}.${key}`;
     }
     return message;
   },

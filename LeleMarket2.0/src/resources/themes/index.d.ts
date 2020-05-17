@@ -1,7 +1,10 @@
 export type Theme = 'customize';
-
 export type ThemeData = object;
+// export default {
+//   customize: ThemeData,
+// };
 
-export default {
-  customize: themeData,
+declare const themes: {
+  customize: ThemeData;
 };
+export default themes;
