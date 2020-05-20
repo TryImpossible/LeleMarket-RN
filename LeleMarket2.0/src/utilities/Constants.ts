@@ -10,7 +10,6 @@ export const IS_WEB = Platform.OS === 'web';
 
 export const SCREEN_WIDTH: number = width;
 export const SCREEN_HEIGHT: number = height;
-/* eslint-disable-next-line */
 export const STATUSBAR_HEIGHT: number = IS_ANDROID ? StatusBar.currentHeight || 24 : IOS_IS_IPHONE_X ? 44 : 20;
 export const NAVBAR_HEIGHT: number = 44;
 export const TABBAR_HEIGHT: number = 49;

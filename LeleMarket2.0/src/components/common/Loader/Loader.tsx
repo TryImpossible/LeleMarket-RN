@@ -13,7 +13,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const Loader = () => {
+export interface LoaderProps {}
+
+interface LoaderType extends React.FC<LoaderProps> {
+  show: Function;
+  hide: Function;
+  //   UserName: React.FunctionComponent<LoginItemProps>;
+  //   Password: React.FunctionComponent<LoginItemProps>;
+  //   Mobile: React.FunctionComponent<LoginItemProps>;
+  //   Captcha: React.FunctionComponent<LoginItemProps>;
+}
+
+const Loader: LoaderType = () => {
   [loaderVisible, setLoaderVisible] = useState(false);
   if (!loaderVisible) {
     return null;
@@ -24,7 +35,8 @@ const Loader = () => {
     </View>
   );
 };
-Loader.show = () => setLoaderVisible(true);
-Loader.hide = () => setLoaderVisible(false);
+
+Loader.show = (): void => setLoaderVisible(true);
+Loader.hide = (): void => setLoaderVisible(false);
 
 export default Loader;
