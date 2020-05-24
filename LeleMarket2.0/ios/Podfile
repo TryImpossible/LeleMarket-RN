@@ -10,28 +10,28 @@ def add_flipper_pods!(versions = {})
   versions['Flipper-PeerTalk'] ||= '~> 0.0.4'
   versions['Flipper-RSocket'] ||= '~> 1.0'
 
-  pod 'FlipperKit', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/FlipperKitLayoutPlugin', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/SKIOSNetworkPlugin', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/FlipperKitUserDefaultsPlugin', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/FlipperKitReactPlugin', versions['Flipper'], :configuration => 'Debug'
+  pod 'FlipperKit', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/FlipperKitLayoutPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/SKIOSNetworkPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/FlipperKitUserDefaultsPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/FlipperKitReactPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
 
   # List all transitive dependencies for FlipperKit pods
   # to avoid them being linked in Release builds
-  pod 'Flipper', versions['Flipper'], :configuration => 'Debug'
-  pod 'Flipper-DoubleConversion', versions['DoubleConversion'], :configuration => 'Debug'
-  pod 'Flipper-Folly', versions['Flipper-Folly'], :configuration => 'Debug'
-  pod 'Flipper-Glog', versions['Flipper-Glog'], :configuration => 'Debug'
-  pod 'Flipper-PeerTalk', versions['Flipper-PeerTalk'], :configuration => 'Debug'
-  pod 'Flipper-RSocket', versions['Flipper-RSocket'], :configuration => 'Debug'
-  pod 'FlipperKit/Core', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/CppBridge', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/FBCxxFollyDynamicConvert', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/FBDefines', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/FKPortForwarding', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/FlipperKitHighlightOverlay', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/FlipperKitLayoutTextSearchable', versions['Flipper'], :configuration => 'Debug'
-  pod 'FlipperKit/FlipperKitNetworkPlugin', versions['Flipper'], :configuration => 'Debug'
+  pod 'Flipper', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'Flipper-DoubleConversion', versions['DoubleConversion'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'Flipper-Folly', versions['Flipper-Folly'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'Flipper-Glog', versions['Flipper-Glog'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'Flipper-PeerTalk', versions['Flipper-PeerTalk'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'Flipper-RSocket', versions['Flipper-RSocket'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/Core', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/CppBridge', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/FBCxxFollyDynamicConvert', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/FBDefines', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/FKPortForwarding', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/FlipperKitHighlightOverlay', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/FlipperKitLayoutTextSearchable', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
+  pod 'FlipperKit/FlipperKitNetworkPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
 end
 
 # Post Install processing for Flipper
@@ -46,6 +46,7 @@ def flipper_post_install(installer)
 end
 
 target 'LeleMarket' do
+  project 'LeleMarket', 'DevRelease' => :release, 'StagRelease' => :release, 'ProdRelease' => :release, 'DevDebug' => :debug, 'StagDebug' => :debug, 'ProdDebug' => :debug
   # Pods for LeleMarket
   pod 'boost-for-react-native', :git => "https://gitee.com/damon-s/boost-for-react-native.git"
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
@@ -96,11 +97,11 @@ target 'LeleMarket' do
   end
 end
 
-target 'LeleMarket-tvOS' do
-  # Pods for LeleMarket-tvOS
-
-  target 'LeleMarket-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-end
+#target 'LeleMarket-tvOS' do
+#  # Pods for LeleMarket-tvOS
+#
+#  target 'LeleMarket-tvOSTests' do
+#    inherit! :search_paths
+#    # Pods for testing
+#  end
+#end

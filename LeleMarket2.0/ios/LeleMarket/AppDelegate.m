@@ -3,6 +3,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "ReactNativeConfig.h"
 
 #if DEBUG
 #import <FlipperKit/FlipperClient.h>
@@ -43,6 +44,16 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  // then read individual keys like:
+  NSString *ENV = [ReactNativeConfig envFor:@"ENV"];
+  NSLog(@"ENV=%@", ENV);
+
+  // or just fetch the whole config
+  NSDictionary *config = [ReactNativeConfig env];
+  
+  NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+  
   return YES;
 }
 
