@@ -52,6 +52,9 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
+# react-native-config codegen
+ios/tmp.xcconfig
+
 # Bundle artifact
 *.jsbundle
 

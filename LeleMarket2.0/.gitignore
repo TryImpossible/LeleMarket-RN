@@ -59,5 +59,8 @@ buck-out/
 # Bundle artifact
 *.jsbundle
 
+# react-native-config codegen
+ios/tmp.xcconfig
+
 # CocoaPods
 /ios/Pods/
