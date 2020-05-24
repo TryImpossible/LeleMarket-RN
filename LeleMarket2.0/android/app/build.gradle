@@ -146,7 +146,11 @@ android {
         versionCode project.env.get("APP_VERSION_CODE").toString().toInteger()
         versionName project.env.get("APP_VERSION_NAME").toString()
 
+        flavorDimensions 'default'
         resValue "string", "build_config_package", "com.lelemarket"
+    }
+    dexOptions {
+        jumboMode true
     }
     splits {
         abi {
@@ -172,17 +176,18 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
             signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 
-    flavorDimensions 'default'
     productFlavors {
         dev {
             dimension "default"
-//            applicationId "com.lelemarket.dev"
-//            versionNameSuffix "-dev"
+            applicationId "com.lelemarket.dev"
+            versionNameSuffix "-dev"
             manifestPlaceholders = [
                     app_icon: "@mipmap/ic_launcher",
                     app_name: 'DevLeleMarket',
@@ -190,8 +195,8 @@ android {
         }
         stag {
             dimension "default"
-//            applicationId "com.lelemarket.stag"
-//            versionNameSuffix "-stag"
+            applicationId "com.lelemarket.stag"
+            versionNameSuffix "-stag"
             manifestPlaceholders = [
                     app_icon: "@mipmap/ic_launcher",
                     app_name: 'StagLeleMarket',
@@ -199,11 +204,11 @@ android {
         }
         prod {
             dimension "default"
-//            applicationId "com.lelemarket.prod"
-//            versionNameSuffix "-prod"
+            applicationId "com.lelemarket"
+            versionNameSuffix ""
             manifestPlaceholders = [
                     app_icon: "@mipmap/ic_launcher",
-                    app_name: 'ProdLeleMarket',
+                    app_name: 'LeleMarket',
             ]
         }
     }
@@ -213,6 +218,10 @@ android {
         pickFirst "lib/arm64-v8a/libc++_shared.so"
         pickFirst "lib/x86/libc++_shared.so"
         pickFirst "lib/x86_64/libc++_shared.so"
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     // applicationVariants are e.g. debug, release

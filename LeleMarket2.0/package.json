@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "cross-env ENVFILE=.env.development && react-native run-android --appId com.lelemarket --variant devDebug",
+    "android": "cross-env ENVFILE=.env.development && react-native run-android --variant devDebug",
     "ios": "cross-env ENVFILE=.env.development && react-native run-ios",
     "start": "cross-env ENVFILE=.env.development && react-native start --reset-cache --verbose",
     "dll": "webpack-cli --config ./web/config/webpack.dll.config.js --progress --inline --colors",
