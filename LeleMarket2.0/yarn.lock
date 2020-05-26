@@ -1100,6 +1100,11 @@
   resolved "https://registry.npm.taobao.org/@types/color-name/download/@types/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha1-HBJhu+qhCoBVu8XYq4S3sq/IRqA=
 
+"@types/crypto-js@^3.1.47":
+  version "3.1.47"
+  resolved "https://registry.npm.taobao.org/@types/crypto-js/download/@types/crypto-js-3.1.47.tgz#36e549dd3f1322742a3a738e7c113ebe48221860"
+  integrity sha1-NuVJ3T8TInQqOnOOfBE+vkgiGGA=
+
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/@types/eslint-visitor-keys/download/@types/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"
@@ -2984,6 +2989,11 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-js@^3.1.9-1:
+  version "3.3.0"
+  resolved "https://registry.npm.taobao.org/crypto-js/download/crypto-js-3.3.0.tgz#846dd1cce2f68aacfa156c8578f926a609b7976b"
+  integrity sha1-hG3RzOL2iqz6FWyFePkmpgm3l2s=
 
 css-blank-pseudo@^0.1.4:
   version "0.1.4"
@@ -8881,6 +8891,11 @@ react-native-config@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/react-native-config/download/react-native-config-1.0.0.tgz#fada8f79996db1eadcee9e221afd713c91f677e5"
   integrity sha1-+tqPeZltserc7p4iGv1xPJH2d+U=
+
+react-native-device-info@^5.5.8:
+  version "5.5.8"
+  resolved "https://registry.npm.taobao.org/react-native-device-info/download/react-native-device-info-5.5.8.tgz#5b971db0b550b1e53eb176c5042812429cf3a16b"
+  integrity sha1-W5cdsLVQseU+sXbFBCgSQpzzoWs=
 
 react-native-gesture-handler@^1.6.1:
   version "1.6.1"

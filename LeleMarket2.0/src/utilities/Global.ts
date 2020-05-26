@@ -19,6 +19,7 @@ global._c = () => {
   }
   return color;
 };
+
 window.__DEV__ = true;
 
 if (!__DEV__) {
