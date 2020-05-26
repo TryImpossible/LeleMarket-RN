@@ -15,6 +15,8 @@ import {
   THIRD_PARTY_BASEURL,
 } from '../Const';
 import { CustomAxiosRequestConfig, ResultData } from './index';
+import LoggerInterceptor from './LoggerInterceptor';
+import LoaderInterceptor from './LoaderInterceptor';
 
 function buildSignature(params: { [name: string]: any }) {
   let str = Object.keys(params)
@@ -171,14 +173,9 @@ const post = (url: string, body: object = {}, config: CustomAxiosRequestConfig =
 
 instance.interceptors.request.use(
   (req: CustomAxiosRequestConfig) => {
-    // if (request.showLoader) {
-    //   const timer = setTimeout(() => {
-    //     if (request.showLoader) {
-    //       // Loader.show();
-    //     }
-    //     clearTimeout(timer);
-    //   }, 500);
-    // }
+    LoggerInterceptor.request(req);
+    LoaderInterceptor.request(req);
+    Logger.info(req);
     // removePending(config);
     // if (!filterUrl.includes(config.url)) {
     //   Object.assign(config, {
@@ -187,75 +184,48 @@ instance.interceptors.request.use(
     //     }),
     //   });
     // }
-    Object.assign(request, { startTime: new Date().getTime() });
     return req;
+    // README: 这里throw new Error()和 return Promise.reject()会被下面捕获
   },
   (error) => {
-    logger({
-      title: 'Before Request Fail',
-      content: [['error', error, 'red']],
-      color: 'red',
-    });
+    LoggerInterceptor.error(error);
     Logger.info(error);
     return Promise.reject(error);
   },
 );
 
-// instance.interceptors.response.use(
-//   (response) => {
-//     const { config, data } = response;
-//     const endTime = new Date().getTime();
-//     const timeSpace = endTime - config.startTime;
-//     Object.assign(config, { endTime, timeSpace });
-//     logger({
-//       title: 'Request Success',
-//       content: [
-//         ['url', config.url],
-//         ['config', config],
-//         ['result', data],
-//       ],,
-//     });
-//     Logger.info(response);
-//     if (config.showLoader) {
-//       Loader.hide();
-//       Object.assign(config, { showLoader: false });
-//     }
-//     removePending(response.config);
-//     return response;
-//   },
-//   (error) => {
-//     const { config, message } = error;
-//     config &&
-//       logger({
-//         title: `Request Fail,${JSON.stringify(instance)}`,
-//         content: [
-//           ['url', config.url, 'red'],
-//           ['config', config, 'red'],
-//           ['error', error.toString(), 'red'],
-//         ],
-//         color: 'red',
-//       });
-//     Logger.info(error);
-//     if (config && config.showLoader) {
-//       Loader.hide();
-//       Object.assign(config, { showLoader: false });
-//     }
-//     if (message && message.includes('timeout')) {
-//       return Promise.reject(
-//         Object.assign(new Error(), {
-//           code: REQUEST_TIMEOUT_ERROR,
-//           message: REQUEST_TIMEOUT_ERROR,
-//           showToast: config && !config.url.includes('/game/'),
-//         }),
-//       );
-//     }
-//     if (message && message.includes(REQUEST_DUPLICATED)) {
-//       return Promise.reject(Object.assign(new Error(), { code: REQUEST_DUPLICATED, message: REQUEST_DUPLICATED }));
-//     }
-//     error.showToast = config && !config.url.includes('/game/');
-//     return Promise.reject(error);
-//   },
-// );
+instance.interceptors.response.use(
+  (response) => {
+    LoggerInterceptor.response(response);
+    LoaderInterceptor.response(response);
+    Logger.info(response);
+
+    const { config, data } = response;
+    // removePending(response.config);
+    return response;
+    // README: 这里throw new Error()和 return Promise.reject()不会被下面捕获
+  },
+  (error) => {
+    LoggerInterceptor.error(error);
+    LoaderInterceptor.response(error);
+    const { config, message } = error;
+    Logger.info(error);
+    if (message && message.includes('timeout')) {
+      return Promise.reject(
+        Object.assign(new Error(), {
+          code: REQUEST_TIMEOUT_ERROR,
+          message: REQUEST_TIMEOUT_ERROR,
+          showToast: config && !config.url.includes('/game/'),
+        }),
+      );
+    }
+    if (message && message.includes(REQUEST_DUPLICATED)) {
+      return Promise.reject(Object.assign(new Error(), { code: REQUEST_DUPLICATED, message: REQUEST_DUPLICATED }));
+    }
+    error.showToast = config && !config.url.includes('/game/');
+    return Promise.reject(error);
+  },
+);
 
 const HttpClient = {
   get,

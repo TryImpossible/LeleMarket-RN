@@ -7,7 +7,7 @@ const LangManager = {
     Object.assign(this, langData, { lang });
   },
   get(key: string): string {
-    let message = key.split(/\./).reduce((last, current) => last && last[current], this);
+    let message = key.split(/\./).reduce((last: any, current) => last && last[current], this);
     if (!message) {
       message = `Missing ${LangManager.lang}.${key}`;
     }

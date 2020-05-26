@@ -6,9 +6,10 @@ import { NavigationState, NavigationAction } from 'react-navigation';
 import AppNavigator from 'src/navigators/AppNavigator';
 import NavigationService from 'src/navigators/NavigationService';
 import { Window } from 'components/common';
-import HttpClient from './services/http/HttpClient';
+import ServerApi from './services/http/ServerApi';
 
 const App = () => {
+  ServerApi.testGet();
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent animated />

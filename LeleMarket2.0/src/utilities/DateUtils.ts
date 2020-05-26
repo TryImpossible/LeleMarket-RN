@@ -1,9 +1,11 @@
+type DataStr = string | undefined | null;
+
 class DateUtils {
   /**
    * 格式化时间
    * @param {*} dateStr
    */
-  static formate(dateStr: string | undefined | null) {
+  static formate(dateStr: DataStr) {
     if (!dateStr) {
       return '';
     }
@@ -16,16 +18,16 @@ class DateUtils {
     const seconds = date.getSeconds();
     // const milliseconds = date.getMilliseconds()
 
-    return `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')} ${String(hour).padStart(
-      2,
-      '0',
-    )}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    return (
+      `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')} ` +
+      `${String(hour).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+    );
   }
 
   /**
    *
    */
-  static diff(startDateStr: string | undefined | null, endDateStr: string | undefined | null, unitOfTime = 'days') {
+  static diff(startDateStr: DataStr, endDateStr: DataStr, unitOfTime = 'days') {
     if (!startDateStr || !endDateStr) {
       return '';
     }
@@ -44,7 +46,7 @@ class DateUtils {
     }
   }
 
-  static formateChatTime(dateStr: string | undefined | null) {
+  static formateChatTime(dateStr: DataStr) {
     if (!dateStr) {
       return;
     }
@@ -125,6 +127,24 @@ class DateUtils {
       return `${targetYear}/${targetMonth}/${targetDay} ${targetHours}:${targetMinutes}`;
     }
     return undefined;
+  }
+
+  static formateLogTime(dateStr: DataStr) {
+    if (!dateStr) {
+      return '';
+    }
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    return (
+      `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} ` +
+      `${String(hour).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+    );
   }
 }
 

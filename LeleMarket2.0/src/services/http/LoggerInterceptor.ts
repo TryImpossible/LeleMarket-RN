@@ -1,27 +1,75 @@
+import { AxiosResponse, AxiosError } from 'axios';
+import DateUtils from 'utilities/DateUtils';
 import { CustomAxiosRequestConfig } from './index';
 
-type Content = [string, any, string?];
+// type Content = [string, any, string?];
 
-type Logger = (groupTitle: string, groupContent: Content, groupColor?: 'green' | 'red') => void;
+// type Print = (groupTitle: string, groupContent: Content, groupColor?: 'green' | 'red') => void;
 
-// type Fun = (x: number, y: number) => number;
-// interface Fun {
-//   (x: number, y: number): number;
-// }
+// const print: Print = (groupTitle, groupContent: any, groupColor = 'green') => {
+//   console.group && console.group(`%c${groupTitle}`, `color: ${groupColor}`);
+//   groupContent.forEach((element: Content) => {
+//     if (element) {
+//       const [title, content, color = 'green'] = element;
+//       console.info && console.info(`%c${title}`, `color: ${color}`, '\n', content);
+//     }
+//   });
+//   console.groupEnd && console.groupEnd();
+// };
 
-const logger: Logger = (groupTitle, groupContent: Content, groupColor = 'green') => {
-  console.group && console.group(`%c${groupTitle}`, `color: ${groupColor}`);
-  groupContent.forEach((element: Content) => {
-    if (element) {
-      const [title, content, color = 'green'] = element;
-      console.info && console.info(`%c${title}`, `color: ${color}`, '\n', content);
-    }
-  });
+type PrintLog = (title?: string, content?: any, color?: 'green' | 'red') => void;
+
+const printLog: PrintLog = (title, content, color = 'green') => {
+  console.group && console.group(`%c${title}`, `color: ${color}`);
+  console.info && console.info(content);
   console.groupEnd && console.groupEnd();
 };
 
-export function request(req: CustomAxiosRequestConfig) {}
+function request(req: CustomAxiosRequestConfig) {
+  // console.log('req', req);
+  const { baseURL, url, method } = req;
+  const prefixStr = '[Axios Request]';
+  const timeStr = DateUtils.formateLogTime(new Date().toUTCString());
+  const methodStr = method?.toUpperCase();
+  const urlStr = baseURL ? baseURL + url : url;
+  const title = `${prefixStr} [${timeStr}] ${methodStr} ${urlStr}`;
+  const content = req;
+  printLog(title, content);
+}
 
-export function response() {}
+function response(res: AxiosResponse) {
+  // console.log('res', res);
+  const {
+    config: { baseURL, url, method },
+  } = res;
+  const prefixStr = '[Axios Response]';
+  const timeStr = DateUtils.formateLogTime(new Date().toUTCString());
+  const methodStr = method?.toUpperCase();
+  const urlStr = baseURL ? baseURL + url : url;
+  const title = `${prefixStr} [${timeStr}] ${methodStr} ${urlStr}`;
+  const content = res;
+  printLog(title, content);
+}
 
-export function error() {}
+function error(err: AxiosError) {
+  // console.log('err', err);
+  const { config } = err;
+  if (config) {
+    const { baseURL, url, method } = config;
+    const prefixStr = '[Axios Error]';
+    const timeStr = DateUtils.formateLogTime(new Date().toUTCString());
+    const methodStr = method?.toUpperCase();
+    const urlStr = baseURL ? baseURL + url : url;
+    const title = `${prefixStr} [${timeStr}] ${methodStr} ${urlStr}`;
+    const content = err;
+    printLog(title, content);
+  } else {
+    printLog('[Axios Error]', err);
+  }
+}
+
+export default {
+  request,
+  response,
+  error,
+};

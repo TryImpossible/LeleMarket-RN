@@ -1,6 +1,8 @@
 export type Lang = 'en' | 'zh-Hans';
 
-export type LangData = object;
+export interface LangData {
+  [name: string]: any;
+}
 
 declare const locales: { en: LangData; 'zh-Hans': LangData };
 export default locales;

@@ -1,5 +1,7 @@
 export type Theme = 'customize';
-export type ThemeData = object;
+export interface ThemeData {
+  [name: string]: any;
+}
 
 declare const themes: {
   customize: ThemeData;
