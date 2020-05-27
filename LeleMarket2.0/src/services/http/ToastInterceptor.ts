@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { REQUEST_FAIL_TOAST, REQUEST_FAIL_ALERT } from '../Const';
+import { Toast } from 'components/common';
 
 export interface ResultData {
   code: number;
@@ -7,7 +8,7 @@ export interface ResultData {
   data: object | any[];
 }
 
-function Toast(res: AxiosResponse<ResultData>) {
+function toast(res: AxiosResponse<ResultData>) {
   // console.log('res', res);
   const {
     data: { code, message },
@@ -15,11 +16,11 @@ function Toast(res: AxiosResponse<ResultData>) {
   switch (code) {
     case REQUEST_FAIL_TOAST:
     case REQUEST_FAIL_ALERT:
-      // Toast.show(message);
+      Toast.show(message);
       break;
     default:
       break;
   }
 }
 
-export default Toast;
+export default toast;

@@ -20,7 +20,7 @@ interface LoaderFunction extends React.FC<LoaderProps> {
   //   Captcha: React.FunctionComponent<LoginItemProps>;
 }
 
-const defaultVisible = false;
+const defaultVisible: boolean = false;
 let loaderVisible: boolean = defaultVisible;
 let setLoaderVisible: Function = () => {};
 
