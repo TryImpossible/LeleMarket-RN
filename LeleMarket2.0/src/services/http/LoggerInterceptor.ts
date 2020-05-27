@@ -1,6 +1,5 @@
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import DateUtils from 'utilities/DateUtils';
-import { CustomAxiosRequestConfig } from './index';
 
 // type Content = [string, any, string?];
 
@@ -25,7 +24,7 @@ const printLog: PrintLog = (title, content, color = 'green') => {
   console.groupEnd && console.groupEnd();
 };
 
-function request(req: CustomAxiosRequestConfig) {
+function request(req: AxiosRequestConfig) {
   // console.log('req', req);
   const { baseURL, url, method } = req;
   const prefixStr = '[Axios Request]';
@@ -53,19 +52,7 @@ function response(res: AxiosResponse) {
 
 function error(err: AxiosError) {
   // console.log('err', err);
-  const { config } = err;
-  if (config) {
-    const { baseURL, url, method } = config;
-    const prefixStr = '[Axios Error]';
-    const timeStr = DateUtils.formateLogTime(new Date().toUTCString());
-    const methodStr = method?.toUpperCase();
-    const urlStr = baseURL ? baseURL + url : url;
-    const title = `${prefixStr} [${timeStr}] ${methodStr} ${urlStr}`;
-    const content = err;
-    printLog(title, content);
-  } else {
-    printLog('[Axios Error]', err);
-  }
+  printLog('[Axios Error]', err);
 }
 
 export default {

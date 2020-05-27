@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { MD5 } from 'crypto-js';
 import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
@@ -9,14 +9,24 @@ import {
   REQUEST_DUPLICATED,
   REQUEST_TIMEOUT_ERROR,
   REQUEST_SUCCESS,
-  REQUEST_FAIL_TOAST,
-  REQUEST_FAIL_ALERT,
-  REQUEST_FAIL_TOKEN_EXPIRE,
   THIRD_PARTY_BASEURL,
 } from '../Const';
-import { CustomAxiosRequestConfig, ResultData } from './index';
 import LoggerInterceptor from './LoggerInterceptor';
 import LoaderInterceptor from './LoaderInterceptor';
+import ToastInterceptor from './ToastInterceptor';
+import TokenExpireInterceptor from './TokenExpireInterceptor';
+
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  showLoader?: boolean;
+  startTime?: number;
+  endTime?: number;
+}
+
+export interface ResultData {
+  code: number;
+  message: string;
+  data: object | any[];
+}
 
 function buildSignature(params: { [name: string]: any }) {
   let str = Object.keys(params)
@@ -60,8 +70,8 @@ const defaultConfig: CustomAxiosRequestConfig = {
 
 const onSuccess = (response: AxiosResponse<ResultData>) => {
   const {
-    config: { baseURL = '', url = '' },
-    data: { code, message },
+    config: { baseURL = '' },
+    data: { code },
   } = response;
   if (THIRD_PARTY_BASEURL.some((item) => baseURL.includes(item))) {
     return Promise.resolve(response.data);
@@ -70,53 +80,17 @@ const onSuccess = (response: AxiosResponse<ResultData>) => {
   if (code === REQUEST_SUCCESS) {
     return Promise.resolve(response.data);
   } else {
-    switch (code) {
-      case REQUEST_FAIL_TOAST:
-        // Toast
-        if (url.includes('/game/') || url.includes('common/check-version')) {
-          break;
-        }
-        // Toast.show(message);
-        break;
-      case REQUEST_FAIL_ALERT:
-        // Alert
-        if (url.includes('/game/')) {
-          break;
-        }
-        // Confirm.getInstance().setContent(message).setCancel(null).show();
-        break;
-      case REQUEST_FAIL_TOKEN_EXPIRE:
-        // relogin
-        // Toast.show(message);
-        // logout();
-        break;
-      default:
-        break;
-    }
-    return Promise.reject(
-      Object.assign({}, response.data, {
-        showToast: code !== REQUEST_FAIL_ALERT && !url.includes('/game/') && !url.includes('common/check-version'),
-      }),
-    );
+    return Promise.reject(response.data);
   }
 };
 
-const onFail = (error) => {
-  const { code, message, showToast = true } = error;
+const onFail = (error: AxiosError) => {
+  const { code } = error;
   switch (code) {
     case REQUEST_DUPLICATED:
-      return null;
     case REQUEST_TIMEOUT_ERROR:
-      if (!showToast) {
-        break;
-      }
-      // Toast.show('request timeout');
-      break;
+      return null;
     default:
-      if (!showToast) {
-        break;
-      }
-      // Toast.show(message);
       break;
   }
   return Promise.reject(error);
@@ -174,7 +148,7 @@ const post = (url: string, body: object = {}, config: CustomAxiosRequestConfig =
 instance.interceptors.request.use(
   (req: CustomAxiosRequestConfig) => {
     LoggerInterceptor.request(req);
-    LoaderInterceptor.request(req);
+    LoaderInterceptor.show(req);
     Logger.info(req);
     // removePending(config);
     // if (!filterUrl.includes(config.url)) {
@@ -197,32 +171,27 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     LoggerInterceptor.response(response);
-    LoaderInterceptor.response(response);
+    LoaderInterceptor.dismiss(response);
+    ToastInterceptor(response);
+    TokenExpireInterceptor(response);
     Logger.info(response);
-
-    const { config, data } = response;
     // removePending(response.config);
     return response;
     // README: 这里throw new Error()和 return Promise.reject()不会被下面捕获
   },
   (error) => {
     LoggerInterceptor.error(error);
-    LoaderInterceptor.response(error);
-    const { config, message } = error;
+    LoaderInterceptor.dismiss(error);
+    const { message } = error;
     Logger.info(error);
     if (message && message.includes('timeout')) {
       return Promise.reject(
         Object.assign(new Error(), {
           code: REQUEST_TIMEOUT_ERROR,
           message: REQUEST_TIMEOUT_ERROR,
-          showToast: config && !config.url.includes('/game/'),
         }),
       );
     }
-    if (message && message.includes(REQUEST_DUPLICATED)) {
-      return Promise.reject(Object.assign(new Error(), { code: REQUEST_DUPLICATED, message: REQUEST_DUPLICATED }));
-    }
-    error.showToast = config && !config.url.includes('/game/');
     return Promise.reject(error);
   },
 );

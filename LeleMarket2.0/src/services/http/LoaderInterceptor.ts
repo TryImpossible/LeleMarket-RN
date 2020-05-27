@@ -1,20 +1,25 @@
-import { AxiosResponse } from 'axios';
-import { CustomAxiosRequestConfig } from './index';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Loader } from 'components/common';
 
-function request(req: CustomAxiosRequestConfig) {
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  showLoader?: boolean;
+  startTime?: number;
+  endTime?: number;
+}
+
+function show(req: CustomAxiosRequestConfig) {
   const { showLoader } = req;
   showLoader && Loader.show();
 }
 
-function response(res: AxiosResponse) {
+function dismiss(res: AxiosResponse) {
   const { config } = res;
   const { showLoader } = config as CustomAxiosRequestConfig;
-  showLoader && Loader.hide();
+  showLoader && Loader.dismiss();
   Object.assign(config, { showLoader: false });
 }
 
 export default {
-  request,
-  response,
+  show,
+  dismiss,
 };

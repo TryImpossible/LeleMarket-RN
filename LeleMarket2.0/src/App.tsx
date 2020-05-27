@@ -1,17 +1,23 @@
 import './utilities/Global';
 
 import React from 'react';
-import { StatusBar, View } from 'react-native';
+import { StyleSheet, StatusBar, View } from 'react-native';
 import { NavigationState, NavigationAction } from 'react-navigation';
 import AppNavigator from 'src/navigators/AppNavigator';
 import NavigationService from 'src/navigators/NavigationService';
 import { Window } from 'components/common';
 import ServerApi from './services/http/ServerApi';
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+
 const App = () => {
   ServerApi.testGet();
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent animated />
       <AppNavigator
         ref={(nav: any) => {

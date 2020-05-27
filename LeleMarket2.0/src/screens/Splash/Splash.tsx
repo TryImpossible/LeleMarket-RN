@@ -22,7 +22,7 @@ const SplashPage = ({ navigation }: Props) => {
     Loader.show();
   });
   setTimeout(() => {
-    Loader.hide();
+    Loader.dismiss();
   }, 3000);
   return (
     <View style={styles.container}>
