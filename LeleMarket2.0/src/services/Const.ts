@@ -1,9 +1,9 @@
 import { DotEnv } from 'modules';
 
 // HttpClient
-export const REQUEST_BASE_URL: string = 'https://www.fastmock.site';
+export const REQUEST_BASE_URL: string = 'https://api.51app.cn';
 export const REQUEST_KEY: string = '';
-export const REQUEST_SUCCESS: number = 0;
+export const REQUEST_SUCCESS: number = 200;
 export const REQUEST_FAIL: number = -1;
 export const REQUEST_FAIL_TOAST: number = 1;
 export const REQUEST_FAIL_ALERT: number = 2;

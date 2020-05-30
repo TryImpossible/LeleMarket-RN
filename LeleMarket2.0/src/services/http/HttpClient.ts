@@ -22,13 +22,13 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   endTime?: number;
 }
 
-export interface ResultData {
+interface ResultData {
   code: number;
   message: string;
   data: object | any[];
 }
 
-function buildSignature(params: { [name: string]: any }) {
+function buildSignature(params: { [key: string]: any }) {
   let str = Object.keys(params)
     .sort()
     .reduce((last, cureent) => {
@@ -43,7 +43,7 @@ function buildSignature(params: { [name: string]: any }) {
   return MD5(str).toString();
 }
 
-function buildForm(params: { [name: string]: any }) {
+function buildForm(params: { [key: string]: any }) {
   const form = new FormData();
   Object.keys(params)
     .sort()
@@ -65,7 +65,6 @@ const defaultConfig: CustomAxiosRequestConfig = {
     'T-Device-IMEI': DeviceInfo.getUniqueId(),
     'T-Device-Model': DeviceInfo.getModel(),
   },
-  showLoader: true,
 };
 
 const onSuccess = (response: AxiosResponse<ResultData>) => {
@@ -99,7 +98,10 @@ const onFail = (error: AxiosError) => {
 const instance: AxiosInstance = axios.create(defaultConfig);
 
 const request = (config: CustomAxiosRequestConfig) => {
-  return instance.request(config).then(onSuccess).catch(onFail);
+  return instance
+    .request({ showLoader: true, ...config })
+    .then(onSuccess)
+    .catch(onFail);
 };
 
 const get = (url: string, query: object = {}, config: CustomAxiosRequestConfig = {}) => {

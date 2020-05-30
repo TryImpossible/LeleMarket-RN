@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import NavigationApi from 'navigators';
-import { Loader } from 'components/common';
+import { Loader, Toast } from 'components/common';
 import ServerApi from '../../services/http/ServerApi';
 
 const testRequest = () => {
@@ -37,7 +37,14 @@ const SplashPage = ({ navigation }: Props) => {
   testRequest();
   return (
     <View style={styles.container}>
-      <Text onPress={() => NavigationApi.startMain()}>闪屏页</Text>
+      <Text
+        onPress={() => {
+          Toast.show('测试');
+          // NavigationApi.startMain();
+        }}
+      >
+        闪屏页
+      </Text>
     </View>
   );
 };

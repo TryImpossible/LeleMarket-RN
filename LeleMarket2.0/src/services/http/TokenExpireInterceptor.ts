@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { REQUEST_FAIL_TOKEN_EXPIRE } from '../Const';
+import { Toast } from 'components/common';
 
 export interface ResultData {
   code: number;
@@ -12,7 +13,7 @@ function tokenExpire(res: AxiosResponse<ResultData>) {
     data: { code },
   } = res;
   if (code === REQUEST_FAIL_TOKEN_EXPIRE) {
-    // Toash.show();
+    Toast.show();
     // logout()
   }
 }
