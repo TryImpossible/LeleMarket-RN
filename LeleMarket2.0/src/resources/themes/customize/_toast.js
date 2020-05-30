@@ -1,5 +1,5 @@
 import { white } from './colors';
-import { fontSizeTitle } from './dimens';
+import { textTitleSize } from './dimens';
 
 export default {
   Toast: {
@@ -15,7 +15,7 @@ export default {
       alignItems: 'center',
     },
     textStyle: {
-      fontSize: _toSP(fontSizeTitle),
+      fontSize: _toSP(textTitleSize),
       color: white,
     },
   },

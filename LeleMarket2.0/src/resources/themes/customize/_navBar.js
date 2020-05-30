@@ -1,5 +1,5 @@
-import { backgroundLight, textPrimary, textSecondary, themePrimary } from './colors';
-import { heightNavBar, heightStatusBar, fontSizeTitle, fontSizeHeadline } from './dimens';
+import { backgroundColor, textNormalColor, textDarkColor, accentColor } from './colors';
+import { navBarHeight, statusBarHeight, textNormalSize, textTitleSize } from './dimens';
 
 export default {
   NavBar: {
@@ -7,9 +7,9 @@ export default {
       flexDirection: 'column',
       alignItems: 'center',
       width: '100%',
-      height: _toDP(heightNavBar) + heightStatusBar,
-      paddingTop: heightStatusBar,
-      backgroundColor: backgroundLight,
+      height: _toDP(navBarHeight) + statusBarHeight,
+      paddingTop: statusBarHeight,
+      backgroundColor: backgroundColor,
     },
     headerStyle: {
       width: '100%',
@@ -24,8 +24,8 @@ export default {
       alignItems: 'center',
     },
     headerLeftStyle: {
-      height: _toDP(heightNavBar),
-      minWidth: _toDP(heightNavBar),
+      height: _toDP(navBarHeight),
+      minWidth: _toDP(navBarHeight),
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
@@ -35,8 +35,8 @@ export default {
       height: _toDP(17),
     },
     headerLeftTitleStyle: {
-      fontSize: _toSP(fontSizeTitle),
-      color: textSecondary,
+      fontSize: _toSP(textNormalSize),
+      color: textNormalColor,
       lineHeight: _toDP(16),
     },
     headerTitleContainerStyle: {
@@ -45,8 +45,8 @@ export default {
       maxWidth: _toDP(200),
     },
     headerTitleStyle: {
-      fontSize: _toSP(fontSizeHeadline),
-      color: textPrimary,
+      fontSize: _toSP(textTitleSize),
+      color: textDarkColor,
     },
     headerRightContainerStyle: {
       flex: 1,
@@ -55,15 +55,15 @@ export default {
       alignItems: 'center',
     },
     headerRightStyle: {
-      height: _toDP(heightNavBar),
-      minWidth: _toDP(heightNavBar),
+      height: _toDP(navBarHeight),
+      minWidth: _toDP(navBarHeight),
       justifyContent: 'center',
       alignItems: 'center',
       paddingHorizontal: _toDP(16),
     },
     headerRightTitleStyle: {
-      fontSize: _toSP(fontSizeTitle),
-      color: themePrimary,
+      fontSize: _toSP(textNormalSize),
+      color: accentColor,
     },
   },
 };

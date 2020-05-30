@@ -1,5 +1,5 @@
 import { onePX } from './dimens';
-import { LineSecondary } from './colors';
+import { dividerColor } from './colors';
 
 export default {
   Form: {
@@ -20,7 +20,7 @@ export default {
       flex: 1,
       height: '100%',
       borderBottomWidth: onePX,
-      borderColor: LineSecondary,
+      borderColor: dividerColor,
       flexDirection: 'row',
       alignItems: 'center',
     },

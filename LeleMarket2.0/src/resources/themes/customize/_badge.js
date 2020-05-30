@@ -1,4 +1,4 @@
-import { themeSecondary, white } from './colors';
+import { accentColor, white } from './colors';
 
 export default {
   Badge: {
@@ -9,13 +9,13 @@ export default {
       width: _toDP(7),
       height: _toDP(7),
       borderRadius: _toDP(3.5),
-      backgroundColor: themeSecondary,
+      backgroundColor: accentColor,
     },
     capsuleStyle: {
       width: _toDP(24),
       height: _toDP(16),
       borderRadius: _toDP(7),
-      backgroundColor: themeSecondary,
+      backgroundColor: accentColor,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -23,7 +23,7 @@ export default {
       width: _toDP(20),
       height: _toDP(20),
       borderRadius: _toDP(10),
-      backgroundColor: themeSecondary,
+      backgroundColor: accentColor,
       justifyContent: 'center',
       alignItems: 'center',
     },

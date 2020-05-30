@@ -1,4 +1,4 @@
-import { backgroundLight } from './colors';
+import { screenBackgroundColor } from './colors';
 
 export default {
   Screen: {
@@ -6,7 +6,7 @@ export default {
       flex: 1,
       width: '100%',
       height: '100%',
-      backgroundColor: backgroundLight,
+      backgroundColor: screenBackgroundColor,
     },
   },
 };

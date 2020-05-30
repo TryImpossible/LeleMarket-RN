@@ -1,12 +1,12 @@
 import { white } from './colors';
-import { heightTabBar, heightSafeBottom } from './dimens';
+import { tabBarHeight, safeBottomHeight } from './dimens';
 
 export default {
   TabBar: {
     style: {
       width: '100%',
-      height: _toDP(heightTabBar + heightSafeBottom),
-      paddingBottom: _toDP(heightSafeBottom),
+      height: _toDP(tabBarHeight + safeBottomHeight),
+      paddingBottom: _toDP(safeBottomHeight),
       backgroundColor: white,
       flexDirection: 'row',
       alignItems: 'center',

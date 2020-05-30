@@ -14,6 +14,6 @@ export const NAVBAR_HEIGHT: number = 44;
 export const TABBAR_HEIGHT: number = 49;
 export const SAFE_BOTTOM_HEIGHT: number = IOS_IS_IPHONE_X ? 34 : 0;
 export const ONE_PX: number = (PixelRatio.get() === 3 ? 2 : 1) / PixelRatio.get();
-export const SEPARATOR_SIZE: number = StyleSheet.hairlineWidth;
+export const DIVIDER_HEIGHT: number = StyleSheet.hairlineWidth;
 
 export const PRIMARY_COLOR = '#FFFFFF';

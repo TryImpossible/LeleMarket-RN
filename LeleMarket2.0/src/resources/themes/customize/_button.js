@@ -1,5 +1,5 @@
-import { buttonPrimary, white, LineSecondary } from './colors';
-import { fontSizeButton, onePX } from './dimens';
+import { buttonColor, white, dividerColor } from './colors';
+import { textTitleSize, onePX } from './dimens';
 
 export default {
   Button: {
@@ -9,7 +9,7 @@ export default {
     },
     title: {
       color: white,
-      fontSize: _toSP(fontSizeButton),
+      fontSize: _toSP(textTitleSize),
       textAlign: 'center',
       padding: 0,
     },
@@ -18,7 +18,7 @@ export default {
       width: _toDP(131),
       height: _toDP(42),
       borderRadius: _toDP(21),
-      backgroundColor: buttonPrimary,
+      backgroundColor: buttonColor,
     },
     countDown: {
       style: {
@@ -40,7 +40,7 @@ export default {
         paddingHorizontal: _toDP(3),
         marginRight: _toDP(12),
         borderBottomWidth: onePX,
-        borderColor: LineSecondary,
+        borderColor: dividerColor,
       },
       title: {
         fontSize: _toSP(14),

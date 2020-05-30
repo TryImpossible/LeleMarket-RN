@@ -1,4 +1,3 @@
-import _safeAreaView from './_safeAreaView';
 import _screen from './_screen';
 import _navBar from './_navBar';
 import _tabBar from './_tabBar';
@@ -11,7 +10,6 @@ import * as colors from './colors';
 import * as dimens from './dimens';
 
 export default {
-  ..._safeAreaView,
   ..._screen,
   ..._navBar,
   ..._tabBar,
