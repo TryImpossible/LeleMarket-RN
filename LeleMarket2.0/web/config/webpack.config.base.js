@@ -81,6 +81,7 @@ const babelLoaderConfiguration = {
     path.resolve(appDirectory, 'node_modules/@react-navigation'),
     path.resolve(appDirectory, 'node_modules/react-navigation-tabs'),
     path.resolve(appDirectory, 'node_modules/react-native-reanimated'),
+    path.resolve(appDirectory, 'node_modules/react-native-device-info'),
   ],
   use: [
     'thread-loader',
@@ -195,12 +196,16 @@ module.exports = {
     // This will only alias the exact import "react-native"
     alias: {
       'react-native$': 'react-native-web', // 使RN代码中import自react-native的组件指向了react-native-web
-      src: path.resolve(appDirectory, 'src/'),
-      components: path.resolve(appDirectory, 'src/components/'),
-      navigators: path.resolve(appDirectory, 'src/navigators'),
-      screens: path.resolve(appDirectory, 'src/screens'),
+      'src/': path.resolve(appDirectory, 'src/'),
+      'components/': path.resolve(appDirectory, 'src/components/'),
       modules: path.resolve(appDirectory, 'src/modules'),
-      utilities: path.resolve(appDirectory, './src/utilities/'),
+      navigators: path.resolve(appDirectory, 'src/navigators'),
+      'resources/': path.resolve(appDirectory, 'src/resources/'),
+      screens: path.resolve(appDirectory, 'src/screens'),
+      'services/': path.resolve(appDirectory, 'src/services/'),
+      storage: path.resolve(appDirectory, 'src/storage'),
+      utilities: path.resolve(appDirectory, 'src/utilities'),
+      'utilities/': path.resolve(appDirectory, './src/utilities/'),
     },
     // modules: ['web_modules', 'node_modules'],
     extensions: ['.web.ts', '.ts', '.web.tsx', '.tsx', '.web.js', '.js', '.web.jsx', '.jsx'],

@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import NavigationApi from 'navigators';
 import { ScreenLayout, Loader, Toast } from 'components/common';
-import ServerApi from '../../services/http/ServerApi';
+import ServerApi from 'services/http/ServerApi';
 
 const testRequest = () => {
   ServerApi.testGet()

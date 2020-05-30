@@ -23,10 +23,14 @@
     "paths": {
       "src/*": ["src/*"],
       "components/*": ["src/components/*"],
-      "navigators": ["src/navigators"],
-      "screens": ["src/screens"],
       "modules": ["src/modules"],
-      "utilities/*": ["src/utilities/*"]
+      "navigators": ["src/navigators"],
+      "resources/*": ["src/resources/*"],
+      "screens": ["src/screens"],
+      "services/*": ["src/services/*"],
+      "storage": ["src/storage"],
+      "utilities": ["src/utilities"],
+      "utilities/*": ["src/utilities/*"],
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
