@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import NavigationApi from 'navigators';
-import { Loader, Toast } from 'components/common';
+import { ScreenLayout, Loader, Toast } from 'components/common';
 import ServerApi from '../../services/http/ServerApi';
 
 const testRequest = () => {
@@ -22,7 +22,6 @@ const testLoader = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -36,7 +35,7 @@ interface Props {
 const SplashPage = ({ navigation }: Props) => {
   testRequest();
   return (
-    <View style={styles.container}>
+    <ScreenLayout style={styles.container}>
       <Text
         onPress={() => {
           Toast.show('测试');
@@ -45,7 +44,7 @@ const SplashPage = ({ navigation }: Props) => {
       >
         闪屏页
       </Text>
-    </View>
+    </ScreenLayout>
   );
 };
 
