@@ -33,7 +33,10 @@ interface Props {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SplashPage = ({ navigation }: Props) => {
-  testRequest();
+  setTimeout(() => {
+    Loader.show();
+  }, 200);
+  // testRequest();
   return (
     <ScreenLayout style={styles.container}>
       <Text

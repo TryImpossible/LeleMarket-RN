@@ -1,12 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, FlexStyle } from 'react-native';
+import { View, FlexStyle } from 'react-native';
 import { NavigationEvents, NavigationEventsProps } from 'react-navigation';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+import Theme from 'utilities/Theme';
 
 interface ScreenProps extends NavigationEventsProps {
   style?: FlexStyle;
@@ -14,7 +9,7 @@ interface ScreenProps extends NavigationEventsProps {
 
 const ScreenLayout: React.FC<ScreenProps> = ({ children, style, ...restProps }) => {
   return (
-    <View style={[styles.container, style]}>
+    <View style={[Theme.ScreenLayout.style, style]}>
       <NavigationEvents {...restProps} />
       {children}
     </View>

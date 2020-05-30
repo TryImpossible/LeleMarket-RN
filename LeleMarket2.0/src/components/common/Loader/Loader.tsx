@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ActivityIndicator, Animated, Easing, FlexStyle } from 'react-native';
+import Theme from 'utilities/Theme';
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  box: {
-    backgroundColor: '#333333',
-    width: _toDP(90),
-    height: _toDP(90),
-    borderRadius: _toDP(5),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -39,7 +32,7 @@ const Loader: LoaderFunction = () => {
   }
   return (
     <View style={[StyleSheet.absoluteFill, styles.container]}>
-      <Animated.View style={[styles.box]}>
+      <Animated.View style={[Theme.Loader.style]}>
         <Animated.View style={{ transform: [{ scale: bounceValue }] }}>
           <ActivityIndicator size={'large'} color="#FFF" animating={loaderVisible} />
         </Animated.View>

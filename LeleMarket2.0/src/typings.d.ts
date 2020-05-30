@@ -116,7 +116,7 @@ declare namespace NodeJS {
     __HEIGHT__: number;
     __ONEPX__: number;
     _c: () => string;
-    user: { [name: string]: string };
+    user: { [name: string]: any };
   }
 }
 

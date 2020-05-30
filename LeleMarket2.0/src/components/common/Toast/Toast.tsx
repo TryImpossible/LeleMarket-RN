@@ -1,24 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, Animated, Easing } from 'react-native';
 import Container from './Container';
+import Theme from 'utilities/Theme';
 
-const styles = StyleSheet.create({
-  box: {
-    minWidth: _toDP(120),
-    maxWidth: _toDP(270),
-    marginVertical: _toDP(50),
-    borderRadius: _toDP(8),
-    backgroundColor: '#333333',
-    paddingHorizontal: _toDP(16),
-    paddingVertical: _toDP(12),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    color: '#FFF',
-    fontSize: _toSP(15),
-  },
-});
+const styles = StyleSheet.create({});
 
 type Position = 'top' | 'center' | 'bottom';
 
@@ -60,8 +45,8 @@ const Toast: ToastFunction = () => {
   const scale = bounceValue.interpolate({ inputRange: [0, 0.8, 1], outputRange: [0, 1.2, 1] });
   return (
     <Container position={position}>
-      <Animated.View style={[styles.box, { opacity: opacityValue, transform: [{ scale }] }]}>
-        <Text style={styles.text} numberOfLines={0}>
+      <Animated.View style={[Theme.Toast.style, { opacity: opacityValue, transform: [{ scale }] }]}>
+        <Text style={Theme.Toast.textStyle} numberOfLines={0}>
           {message}
         </Text>
       </Animated.View>

@@ -1,22 +1,20 @@
 import { white } from './colors';
-import { textTitleSize } from './dimens';
+import { textNormalSize } from './dimens';
 
 export default {
-  Toast: {
-    style: {
-      minWidth: _toDP(120),
-      maxWidth: _toDP(270),
-      marginVertical: _toDP(50),
-      borderRadius: 8,
-      backgroundColor: '#606060',
-      paddingHorizontal: _toDP(16),
-      paddingVertical: _toDP(12),
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    textStyle: {
-      fontSize: _toSP(textTitleSize),
-      color: white,
-    },
+  style: {
+    minWidth: _toDP(120),
+    maxWidth: _toDP(270),
+    marginVertical: _toDP(50),
+    borderRadius: _toDP(8),
+    backgroundColor: '#333333',
+    paddingHorizontal: _toDP(16),
+    paddingVertical: _toDP(12),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textStyle: {
+    fontSize: _toSP(textNormalSize),
+    color: white,
   },
 };

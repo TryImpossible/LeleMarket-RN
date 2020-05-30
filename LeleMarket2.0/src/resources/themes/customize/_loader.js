@@ -1,14 +1,10 @@
 export default {
-  Loader: {
-    style: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(191,191,191, 0.3)',
-    },
+  style: {
+    backgroundColor: '#333333',
+    width: _toDP(90),
+    height: _toDP(90),
+    borderRadius: _toDP(5),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 };

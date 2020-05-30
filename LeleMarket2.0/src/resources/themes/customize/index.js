@@ -1,4 +1,4 @@
-import _screen from './_screen';
+import _screenLayout from './_screenLayout';
 import _navBar from './_navBar';
 import _tabBar from './_tabBar';
 import _toast from './_toast';
@@ -10,14 +10,14 @@ import * as colors from './colors';
 import * as dimens from './dimens';
 
 export default {
-  ..._screen,
-  ..._navBar,
-  ..._tabBar,
-  ..._toast,
-  ..._button,
-  ..._form,
-  ..._loader,
-  ..._badge,
-  ...colors,
-  ...dimens,
+  ScreenLayout: _screenLayout,
+  NavBar: _navBar,
+  TabBar: _tabBar,
+  Toast: _toast,
+  Button: _button,
+  Form: _form,
+  Loader: _loader,
+  Badge: _badge,
+  Colors: colors,
+  Dimens: dimens,
 };

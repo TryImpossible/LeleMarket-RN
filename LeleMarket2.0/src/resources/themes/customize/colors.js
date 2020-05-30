@@ -5,21 +5,21 @@ export const red = '#FF0000';
 export const yellow = '#FFFF00';
 export const blue = '#0000FF';
 
-export const primaryColor = '';
-export const primaryColorLight = '';
-export const primaryColorDark = '';
+export const primaryColor = white;
+export const primaryColorLight = white;
+export const primaryColorDark = white;
 
-export const accentColor = '';
+export const accentColor = '#FE3F56';
 
-export const backgroundColor = '';
-export const screenBackgroundColor = '';
+export const backgroundColor = white;
+export const screenBackgroundColor = '#F7F7F7';
 export const dialogBackgroundColor = '';
 
-export const statusBarColor = '';
-export const nvaBarColor = '';
-export const bottomTabBarColor = '';
-export const cardColor = '';
-export const dividerColor = '';
+export const statusBarColor = white;
+export const nvaBarColor = white;
+export const bottomTabBarColor = white;
+export const cardColor = white;
+export const dividerColor = '#F1F1F1';
 export const focusColor = '';
 export const hoverColor = '';
 export const highlightColor = '';
@@ -35,8 +35,8 @@ export const toggleableActiveColor = '';
 
 export const buttonColor = '';
 
-export const textDarkColor = '';
-export const textNormalColor = '';
-export const textLightColor = '';
+export const textDarkColor = '#000000';
+export const textNormalColor = '#333333';
+export const textLightColor = '#6A6A6A';
 export const textSelectionColor = '';
 export const textSelectionHandleColor = '';
