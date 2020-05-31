@@ -1,7 +1,17 @@
 import en from './en';
 import zhHans from './zh-Hans';
 
-const locales = {
+export type Lang = 'en' | 'zh-Hans' | string;
+
+export type LangData = typeof en;
+
+interface Locales {
+  en: LangData;
+  'zh-Hans': LangData;
+  [name: string]: LangData;
+}
+
+const locales: Locales = {
   en, // 英文
   'zh-Hans': zhHans, // 简体中文,
   // 'en-US': en,

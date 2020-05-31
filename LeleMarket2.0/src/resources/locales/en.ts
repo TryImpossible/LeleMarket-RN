@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 export default {
   appName: 'LeleMarket',
   globals: {
@@ -78,7 +77,7 @@ export default {
       progress: '{number} points sprint progress',
       singIn: 'SIGN IN TODAY',
       alreadySingIn: 'TODAY SIGNED',
-      congratulations: `Congratulations\ncomplete today's check-in`,
+      congratulations: "Congratulations\ncomplete today's check-in",
       wealth: 'Wealth bi',
       coinAmount: '+{amount}',
       coinCurrency: '{coin} coin',

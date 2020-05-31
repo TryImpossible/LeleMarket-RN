@@ -77,8 +77,7 @@ export default {
       progress: '{number} 分冲刺进度',
       singIn: '今日签到',
       alreadySingIn: '今日已签到',
-      // eslint-disable-next-line quotes
-      congratulations: `恭喜你\n完成今日签到`,
+      congratulations: '恭喜你\n完成今日签到',
       wealth: '财富比',
       coinAmount: '+{amount}',
       coinCurrency: '{coin} 币',
@@ -126,10 +125,12 @@ export default {
       byPhone: '手机号登录',
       byEmail: '邮箱登录',
       forgetPwd: '忘记密码',
+      submit: '登录',
     },
     register: {
       byPhone: '手机号注册',
       byEmail: '邮箱注册',
+      submit: '注册',
     },
     basicInfo: {
       title: '完善基本信息',
@@ -282,6 +283,7 @@ export default {
     editNickName: {
       title: '编辑昵称',
       save: '保存',
+      hint: '填写昵称',
       limit: '最多20个字符',
     },
     editSignature: {
