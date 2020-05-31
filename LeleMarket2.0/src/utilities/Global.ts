@@ -12,10 +12,10 @@ global.__WEB__ = IS_WEB;
 global.__WIDTH__ = SCREEN_WIDTH;
 global.__HEIGHT__ = SCREEN_HEIGHT;
 global.__ONEPX__ = ONE_PX;
-global._c = () => {
+global._color = () => {
   const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
   if (color.length !== 7) {
-    return global._c();
+    return global._color();
   }
   return color;
 };

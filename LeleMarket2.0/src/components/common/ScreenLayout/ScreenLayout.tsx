@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, FlexStyle } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { NavigationEvents, NavigationEventsProps } from 'react-navigation';
 import Theme from 'utilities/Theme';
 
 interface ScreenProps extends NavigationEventsProps {
-  style?: FlexStyle;
+  style?: ViewStyle;
 }
 
 const ScreenLayout: React.FC<ScreenProps> = ({ children, style, ...restProps }) => {

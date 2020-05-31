@@ -5,7 +5,7 @@ import Theme from 'utilities/Theme';
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: Theme.transparent,
+    backgroundColor: Theme.Colors.transparent,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',

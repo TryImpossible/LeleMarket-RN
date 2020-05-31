@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ActivityIndicator, Animated, Easing, FlexStyle } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, Animated, Easing, ViewStyle } from 'react-native';
 import Theme from 'utilities/Theme';
 
 const styles = StyleSheet.create({
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
 });
 
 export interface LoaderProps {
-  style?: FlexStyle;
+  style?: ViewStyle;
 }
 
 interface LoaderFunction extends React.FC<LoaderProps> {

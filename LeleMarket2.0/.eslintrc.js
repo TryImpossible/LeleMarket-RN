@@ -7,6 +7,10 @@ module.exports = {
     window: true,
     fetch: true,
     FormData: true,
+    requestAnimationFrame: true,
+    navigator: true,
+    alert: true,
+    _: true,
     __DEV__: true,
     __ANDROID__: true,
     __IOS__: true,
@@ -17,10 +21,7 @@ module.exports = {
     __ONEPX__: true,
     _toDP: true,
     _toSP: true,
-    _c: true,
-    requestAnimationFrame: true,
-    navigator: true,
-    alert: true,
+    _color: true,
   },
   rules: {
     // 禁止使用 var
