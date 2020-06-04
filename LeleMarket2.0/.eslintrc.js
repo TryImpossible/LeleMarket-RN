@@ -22,6 +22,8 @@ module.exports = {
     _toDP: true,
     _toSP: true,
     _color: true,
+    Theme: true,
+    Lang: true,
   },
   rules: {
     // 禁止使用 var

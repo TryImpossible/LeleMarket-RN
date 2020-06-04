@@ -31,10 +31,19 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
+const print = () => {
+  console.warn('Lang', Lang.globals.confirm);
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SplashPage = ({ navigation }: Props) => {
   setTimeout(() => {
     Loader.show();
+    console.warn('__ANDROID__', __ANDROID__);
+    console.warn('startsWith', _.startsWith('123', '1'));
+    // console.warn('Theme', Theme.Colors.white);
+    console.warn('Lang', Lang.appName);
+    print();
   }, 200);
   // testRequest();
   return (

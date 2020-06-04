@@ -1,5 +1,4 @@
 import * as Constants from './Constants';
-import * as Global from './Global';
 import * as ScreenAdapter from './ScreenAdapter';
 import Lang from './Lang';
 import Theme from './Theme';
@@ -9,15 +8,4 @@ import getLocation from './getLocation';
 import prefetchImage from './prefetchImage';
 import PermissionHelper from './PermissionHelper';
 
-export {
-  Constants,
-  Global,
-  ScreenAdapter,
-  Lang,
-  Theme,
-  Validator,
-  Logger,
-  getLocation,
-  prefetchImage,
-  PermissionHelper,
-};
+export { Constants, ScreenAdapter, Lang, Theme, Validator, Logger, getLocation, prefetchImage, PermissionHelper };

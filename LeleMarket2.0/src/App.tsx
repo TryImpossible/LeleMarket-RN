@@ -1,4 +1,5 @@
-import './utilities/Global';
+import './globals/basics';
+import './globals/common';
 
 import React from 'react';
 import { StyleSheet, StatusBar, View } from 'react-native';
@@ -8,7 +9,7 @@ import NavigationService from 'src/navigators/NavigationService';
 import { Window } from 'components/common';
 import locales from 'resources/locales';
 import themes from 'resources/themes';
-import { Lang, Theme } from 'utilities';
+import { Lang, Theme } from 'src/utilities';
 
 Lang.register(locales['zh-Hans'], 'zh-Hans'); // 初始化语言，默认简体中文
 Theme.register(themes.customize, 'customize'); // 初始化主题

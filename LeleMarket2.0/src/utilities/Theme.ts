@@ -1,9 +1,9 @@
-import themes from '../resources/themes';
+import themes, { ThemeData, Theme } from '../resources/themes';
 
 const ThemeManager = {
   theme: 'customize',
   ...themes.customize,
-  register(themeData: object, theme: 'customize' | string) {
+  register(themeData: ThemeData, theme: Theme) {
     Object.assign(this, themeData, { theme });
   },
 };

@@ -1,8 +1,10 @@
-import _ from 'lodash';
-import { toDP, toSP } from './ScreenAdapter';
-import { IS_ANDROID, IS_IOS, IOS_IS_IPHONE_X, IS_WEB, SCREEN_WIDTH, SCREEN_HEIGHT, ONE_PX } from './Constants';
+import lodash from 'lodash';
+import { toDP, toSP } from 'utilities/ScreenAdapter';
+import { IS_ANDROID, IS_IOS, IOS_IS_IPHONE_X, IS_WEB, SCREEN_WIDTH, SCREEN_HEIGHT, ONE_PX } from 'utilities/Constants';
 
-global._ = _;
+window.__DEV__ = true;
+
+global._ = lodash;
 global._toDP = toDP;
 global._toSP = toSP;
 global.__ANDROID__ = IS_ANDROID;
@@ -19,8 +21,6 @@ global._color = () => {
   }
   return color;
 };
-
-window.__DEV__ = true;
 
 if (!__DEV__) {
   global.console = {
