@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import Theme from './utilities/Theme';
-import Lang from './utilities/Lang';
+import ThemeManager from 'resources/themes';
+import LangManager from 'resources/locales';
 
 type LODASH = typeof _;
-type THEME = typeof Theme;
-type LANG = typeof Lang;
+type THEME = typeof ThemeManager;
+type LANG = typeof LangManager;
 
 declare global {
   interface Window {

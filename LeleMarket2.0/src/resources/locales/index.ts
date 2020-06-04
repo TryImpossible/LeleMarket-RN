@@ -32,4 +32,21 @@ const locales: Locales = {
   // 'zh-Hant-TW': zhHant // 台湾使用的繁体中文
 };
 
-export default locales;
+const LangManager = {
+  lang: 'en',
+  ...locales.en,
+  register(langData: LangData, lang: Lang) {
+    Object.assign(this, langData, { lang });
+  },
+  get(key: string): string {
+    let message = key.split(/\./).reduce((last: any, current) => last && last[current], this);
+    if (!message) {
+      message = `Missing ${LangManager.lang}.${key}`;
+    }
+    return message;
+  },
+};
+
+export default LangManager;
+
+export { locales };

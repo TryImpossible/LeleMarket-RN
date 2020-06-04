@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ActivityIndicator, Animated, Easing, ViewStyle } from 'react-native';
-import Theme from 'utilities/Theme';
 
 const styles = StyleSheet.create({
   container: {

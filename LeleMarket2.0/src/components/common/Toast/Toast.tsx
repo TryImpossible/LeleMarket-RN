@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Text, Animated, Easing } from 'react-native';
 import Container from './Container';
-import Theme from 'utilities/Theme';
 
 type Position = 'top' | 'center' | 'bottom';
 
