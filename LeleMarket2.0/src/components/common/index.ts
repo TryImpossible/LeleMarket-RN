@@ -6,5 +6,6 @@ import FailureView from './FailureView';
 import LoadingView from './LoadingView';
 import NoNetworkView from './NoNetworkView';
 import ScreenLayout from './ScreenLayout';
+import MainTabBar from './MainTabBar';
 
-export { Window, Loader, Toast, EmptyView, FailureView, LoadingView, NoNetworkView, ScreenLayout };
+export { Window, Loader, Toast, EmptyView, FailureView, LoadingView, NoNetworkView, ScreenLayout, MainTabBar };

@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get('window');
 
 export const IS_IOS: boolean = Platform.OS === 'ios';
 export const IS_ANDROID: boolean = Platform.OS === 'android';
-export const IOS_IS_IPHONE_X: boolean = !!(IS_IOS && !Platform.isTV && height === 812 && width === 375);
+export const IOS_IS_IPHONE_X: boolean = !!(IS_IOS && !Platform.isTV && height >= 812 && width >= 375);
 export const IS_WEB = Platform.OS === 'web';
 
 export const SCREEN_WIDTH: number = width;

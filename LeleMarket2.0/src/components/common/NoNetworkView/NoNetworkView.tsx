@@ -6,7 +6,7 @@ import {
   Text,
   StyleProp,
   ViewStyle,
-  ImageSourcePropType,
+  ImageRequireSource,
   ImageStyle,
   TextStyle,
 } from 'react-native';
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 
 export interface NoNetworkViewProps {
   style?: StyleProp<ViewStyle>;
-  icon?: ImageSourcePropType;
+  icon?: ImageRequireSource;
   iconStyle?: StyleProp<ImageStyle>;
   prompt?: string | number;
   promptStyle?: StyleProp<TextStyle>;

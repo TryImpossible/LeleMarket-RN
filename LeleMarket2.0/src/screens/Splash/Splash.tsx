@@ -1,29 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, Image, View, Text } from 'react-native';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import NavigationApi from 'navigators';
-import { ScreenLayout, Loader, Toast } from 'components/common';
-import ServerApi from 'services/http/ServerApi';
-
-const testRequest = () => {
-  ServerApi.testGet()
-    .then((res) => {})
-    .catch(() => {});
-};
-
-const testLoader = () => {
-  setTimeout(() => {
-    Loader.show();
-  });
-  setTimeout(() => {
-    Loader.dismiss();
-  }, 3000);
-};
+import { ScreenLayout } from 'components/common';
+import IMAGES from 'resources/images';
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 });
 
@@ -33,34 +17,50 @@ interface Props {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SplashPage = ({ navigation }: Props) => {
-  // setTimeout(() => {
-  //   // Loader.show();
-  //   console.warn('__ANDROID__', __ANDROID__);
-  //   console.warn('startsWith', _.startsWith('123', '1'));
-  //   console.warn('Theme', Theme.Colors.white);
-  //   console.warn('Lang', Lang.appName);
-  // }, 200);
-  // testRequest();
+  setTimeout(() => {
+    NavigationApi.startMain();
+  }, 2000);
+
   return (
     <ScreenLayout style={styles.container}>
-      <View style={{ alignSelf: 'stretch', backgroundColor: 'red' }} />
-      <Text
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: Theme.Dimens.safeBottomHeight,
+        }}
+      >
+        <Image
+          style={{
+            width: _toDP(60),
+            height: _toDP(60),
+            borderRadius: _toDP(10),
+          }}
+          source={IMAGES.app_logo}
+        />
+        <Text
+          style={{ marginLeft: _toDP(30), fontSize: _toSP(24), color: Theme.Colors.textLightColor, fontWeight: 'bold' }}
+        >
+          {Lang.get('appName')}
+        </Text>
+      </View>
+      {/* <Text
         adjustsFontSizeToFit={true}
         numberOfLines={1}
         style={{ width: 30 }}
         onPress={() => {
-          Toast.show('测试');
-          // NavigationApi.startMain();
+          NavigationApi.startMain();
         }}
       >
         闪屏页
-      </Text>
+      </Text> */}
     </ScreenLayout>
   );
 };
 
-SplashPage.navigationOptions = {
-  title: 'Details',
-};
+// SplashPage.navigationOptions = {
+//   title: 'SplashPage',
+// };
 
 export default SplashPage;

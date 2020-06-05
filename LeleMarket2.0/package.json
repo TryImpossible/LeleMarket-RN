@@ -13,7 +13,9 @@
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "precommit": "lint-staged",
     "prettier": "prettier --write src/**",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "image": "node local-cli/generator/imagescript.js",
+    "svg": "node local-cli/generator/svgscript.js"
   },
   "dependencies": {
     "@react-navigation/web": "^1.0.0-alpha.9",
@@ -57,6 +59,7 @@
     "babel-plugin-react-native-web": "^0.12.2",
     "babel-plugin-root-import": "^6.5.0",
     "clean-webpack-plugin": "^3.0.0",
+    "colors": "^1.4.0",
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^7.0.2",
     "css-loader": "^3.5.2",

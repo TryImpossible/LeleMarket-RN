@@ -11,6 +11,8 @@ import {
   CreateNavigatorConfig,
   NavigationTabRouterConfig,
 } from 'react-navigation';
+import { MainTabBar } from 'components/common';
+import IMAGES from 'resources/images';
 
 const routeConfigMap: NavigationRouteConfigMap<
   NavigationBottomTabOptions,
@@ -27,6 +29,34 @@ interface Config {
   tabBarOptions?: BottomTabBarOptions;
 }
 
+const mainTabBarData = [
+  {
+    icon: IMAGES.ic_mainTabBar_home_normal,
+    selectedIcon: IMAGES.ic_mainTabBar_home_selected,
+    text: Lang.get('components.mainTabBar.home'),
+  },
+  {
+    icon: IMAGES.ic_mainTabBar_discover_normal,
+    selectedIcon: IMAGES.ic_mainTabBar_discover_selected,
+    text: Lang.get('components.mainTabBar.discover'),
+  },
+  {
+    icon: IMAGES.ic_mainTabBar_customization_normal,
+    selectedIcon: IMAGES.ic_mainTabBar_customization_selected,
+    text: Lang.get('components.mainTabBar.customization'),
+  },
+  {
+    icon: IMAGES.ic_mainTabBar_shopping_cart_normal,
+    selectedIcon: IMAGES.ic_mainTabBar_shopping_cart_selected,
+    text: Lang.get('components.mainTabBar.shoppingCart'),
+  },
+  {
+    icon: IMAGES.ic_mainTabBar_mine_normal,
+    selectedIcon: IMAGES.ic_mainTabBar_mine_selected,
+    text: Lang.get('components.mainTabBar.mine'),
+  },
+];
+
 const stackConfig: CreateNavigatorConfig<
   Partial<Config>,
   NavigationTabRouterConfig,
@@ -38,7 +68,32 @@ const stackConfig: CreateNavigatorConfig<
     header: null,
   },
   backBehavior: 'none',
-  // tabBarComponent: ({ jumpTo, navigation: { navigate } }) => {},
+  tabBarComponent: ({ jumpTo, navigation: { navigate } }) => {
+    return (
+      <MainTabBar
+        data={mainTabBarData}
+        tabBarOnPress={() => {
+          jumpTo(Object.keys(routeConfigMap)[0]);
+        }}
+      />
+    );
+    // return (
+    //   <MainTabBar>
+    //     <MainTabBar.NormalItem
+    //       icon={IMAGES.ic_mainTabBar_home_normal}
+    //       selectedIcon={IMAGES.ic_mainTabBar_home_selected}
+    //       text={Lang.get('components.mainTabBar.home')}
+    //       onPress={() => {}}
+    //     />
+    //     <MainTabBar.NormalItem
+    //       icon={IMAGES.ic_mainTabBar_home_normal}
+    //       selectedIcon={IMAGES.ic_mainTabBar_home_selected}
+    //       text={Lang.get('components.mainTabBar.discover')}
+    //       onPress={() => {}}
+    //     />
+    //   </MainTabBar>
+    // );
+  },
 };
 
 const MainTab = createBottomTabNavigator(routeConfigMap, stackConfig);

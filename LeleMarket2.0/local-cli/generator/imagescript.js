@@ -6,9 +6,9 @@ const IMAGE_DIR_PATH = path.resolve(__dirname, '../../src/resources/images');
 
 const IMAGE_SUFFIX = ['png', 'jgp', 'jpeg', 'gif'];
 
-const IMAGE_EXPORT_PATH = path.join(IMAGE_DIR_PATH, 'index.js');
+const IMAGE_EXPORT_PATH = path.join(IMAGE_DIR_PATH, 'index.ts');
 
-const needFilterFiles = ['index.js', '.DS_Store'];
+const needFilterFiles = ['index.ts', '.DS_Store'];
 
 (function main() {
   const notSupportImage = [];

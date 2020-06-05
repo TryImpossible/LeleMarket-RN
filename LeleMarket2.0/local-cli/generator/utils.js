@@ -14,7 +14,7 @@ function undo(filepath) {
   function del(destpath) {
     if (fs.statSync(destpath).isDirectory()) {
       const files = fs.readdirSync(destpath);
-      files.forEach(file => {
+      files.forEach((file) => {
         const p = path.join(destpath, file);
         del(p);
       });
@@ -36,7 +36,7 @@ function rewriteExport(dirpath) {
   const importArr = [];
   const exportArr = [];
   const files = fs.readdirSync(dirpath);
-  files.forEach(file => {
+  files.forEach((file) => {
     if (!needFilterFiles.includes(file)) {
       const p = path.join(dirpath, file);
       let name;
@@ -57,10 +57,14 @@ function rewriteExport(dirpath) {
 
 let rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 function input(question, isClose = false) {
-  if (!rl) rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-  return new Promise(resolve => {
-    rl.question(question, answer => {
-      if (isClose) rl.close();
+  if (!rl) {
+    rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  }
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => {
+      if (isClose) {
+        rl.close();
+      }
       resolve(answer.trim());
     });
   });
@@ -70,5 +74,5 @@ module.exports = {
   beautify,
   undo,
   rewriteExport,
-  input
+  input,
 };

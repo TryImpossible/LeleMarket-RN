@@ -11,6 +11,13 @@ export default {
     noNetworkView: {
       prompt: '网络出问题了~',
     },
+    mainTabBar: {
+      home: '首页',
+      discover: '发现',
+      customization: '定制',
+      shoppingCart: '购物车',
+      mine: '我的',
+    },
     navBar: {
       back: '返回',
     },
