@@ -7,11 +7,6 @@ import { NavigationState, NavigationAction } from 'react-navigation';
 import AppNavigator from 'src/navigators/AppNavigator';
 import NavigationService from 'src/navigators/NavigationService';
 import { Window } from 'components/common';
-import LangManager, { locales } from 'resources/locales';
-import ThemeManager, { themes } from 'resources/themes';
-
-LangManager.register(locales['zh-Hans'], 'zh-Hans'); // 初始化语言，默认简体中文
-ThemeManager.register(themes.customize, 'customize'); // 初始化主题
 
 const styles = StyleSheet.create({
   container: {

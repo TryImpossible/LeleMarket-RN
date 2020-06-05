@@ -1,2 +1,4 @@
-import NoNetworkView from './NoNetworkView';
+import NoNetworkView, { NoNetworkViewProps } from './NoNetworkView';
+
+export type { NoNetworkViewProps };
 export default NoNetworkView;

@@ -21,6 +21,4 @@ const ThemeManager = {
   },
 };
 
-export default ThemeManager;
-
-export { themes };
+export { ThemeManager as default, themes };

@@ -31,24 +31,23 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-const print = () => {
-  console.warn('Lang', Lang.globals.confirm);
-};
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SplashPage = ({ navigation }: Props) => {
-  setTimeout(() => {
-    Loader.show();
-    console.warn('__ANDROID__', __ANDROID__);
-    console.warn('startsWith', _.startsWith('123', '1'));
-    // console.warn('Theme', Theme.Colors.white);
-    console.warn('Lang', Lang.appName);
-    print();
-  }, 200);
+  // setTimeout(() => {
+  //   // Loader.show();
+  //   console.warn('__ANDROID__', __ANDROID__);
+  //   console.warn('startsWith', _.startsWith('123', '1'));
+  //   console.warn('Theme', Theme.Colors.white);
+  //   console.warn('Lang', Lang.appName);
+  // }, 200);
   // testRequest();
   return (
     <ScreenLayout style={styles.container}>
+      <View style={{ alignSelf: 'stretch', backgroundColor: 'red' }} />
       <Text
+        adjustsFontSizeToFit={true}
+        numberOfLines={1}
+        style={{ width: 30 }}
         onPress={() => {
           Toast.show('测试');
           // NavigationApi.startMain();

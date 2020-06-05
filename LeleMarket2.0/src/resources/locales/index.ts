@@ -41,12 +41,13 @@ const LangManager = {
   get(key: string): string {
     let message = key.split(/\./).reduce((last: any, current) => last && last[current], this);
     if (!message) {
-      message = `Missing ${LangManager.lang}.${key}`;
+      message = `Missing ${this.lang}.${key}`;
     }
     return message;
   },
 };
 
-export default LangManager;
+export { LangManager as default, locales };
 
-export { locales };
+// LocaleContext
+// LocaleProvider

@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
 
 export interface LoaderProps {
   style?: ViewStyle;
+  visible?: boolean;
 }
 
 interface LoaderFunction extends React.FC<LoaderProps> {
@@ -24,8 +25,8 @@ let setLoaderVisible: Function = () => {};
 
 const bounceValue = new Animated.Value(1);
 
-const Loader: LoaderFunction = () => {
-  [loaderVisible, setLoaderVisible] = useState<boolean>(defaultVisible);
+const Loader: LoaderFunction = ({ visible = defaultVisible }) => {
+  [loaderVisible, setLoaderVisible] = useState<boolean>(visible);
   if (!loaderVisible) {
     return null;
   }
