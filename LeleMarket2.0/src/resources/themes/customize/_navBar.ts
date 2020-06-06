@@ -1,67 +1,69 @@
+import { StyleProp, ViewStyle, ImageStyle, TextStyle } from 'react-native';
 import { backgroundColor, textNormalColor, textDarkColor, accentColor } from './colors';
 import { navBarHeight, statusBarHeight, textNormalSize, textTitleSize } from './dimens';
 
 export default {
   style: {
-    flexDirection: 'column',
-    alignItems: 'center',
     width: '100%',
     height: _toDP(navBarHeight) + statusBarHeight,
     paddingTop: statusBarHeight,
     backgroundColor: backgroundColor,
-  },
-  headerStyle: {
-    width: '100%',
-    height: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  headerLeftContainerStyle: {
+  } as StyleProp<ViewStyle>,
+  backContainerStyle: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  headerLeftStyle: {
+  } as StyleProp<ViewStyle>,
+  backStyle: {
     height: _toDP(navBarHeight),
     minWidth: _toDP(navBarHeight),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  headerLeftImageStyle: {
-    width: _toDP(10),
-    height: _toDP(17),
-  },
-  headerLeftTitleStyle: {
+    paddingLeft: _toDP(6),
+    paddingRight: _toDP(16),
+  } as StyleProp<ViewStyle>,
+  backIconStyle: {
+    width: _toDP(24),
+    height: _toDP(24),
+  } as StyleProp<ImageStyle>,
+  backTitleStyle: {
     fontSize: _toSP(textNormalSize),
     color: textNormalColor,
     lineHeight: _toDP(16),
-  },
-  headerTitleContainerStyle: {
+  } as StyleProp<TextStyle>,
+  titleContainerStyle: {
     justifyContent: 'center',
     alignItems: 'center',
     maxWidth: _toDP(200),
-  },
-  headerTitleStyle: {
+  } as StyleProp<ViewStyle>,
+  titleStyle: {
     fontSize: _toSP(textTitleSize),
     color: textDarkColor,
-  },
-  headerRightContainerStyle: {
+  } as StyleProp<TextStyle>,
+  menuContainerStyle: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-  },
-  headerRightStyle: {
+  } as StyleProp<ViewStyle>,
+  menuStyle: {
     height: _toDP(navBarHeight),
     minWidth: _toDP(navBarHeight),
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: _toDP(16),
-  },
-  headerRightTitleStyle: {
+  } as StyleProp<ViewStyle>,
+  menuIconStyle: {
+    width: _toDP(26),
+    height: _toDP(26),
+  } as StyleProp<ImageStyle>,
+  menuTitleStyle: {
     fontSize: _toSP(textNormalSize),
     color: accentColor,
-  },
+  } as StyleProp<TextStyle>,
 };

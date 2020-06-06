@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { NavigationEvents, NavigationEventCallback } from 'react-navigation';
-import LoadStateLayout, { LoadStateLayoutProps } from '../LoadStateLayout';
+import NavBar from '../NavBar';
 
-interface ScreenProps extends LoadStateLayoutProps {
+interface ScreenProps {
   style?: StyleProp<ViewStyle>;
   onWillFocus?: NavigationEventCallback;
   onDidFocus?: NavigationEventCallback;
   onWillBlur?: NavigationEventCallback;
   onDidBlur?: NavigationEventCallback;
+  title?: string;
 }
 
 const ScreenLayout: React.FC<ScreenProps> = ({
@@ -18,7 +19,7 @@ const ScreenLayout: React.FC<ScreenProps> = ({
   onDidFocus,
   onWillBlur,
   onDidBlur,
-  ...restProps
+  title,
 }) => {
   return (
     <View style={[Theme.ScreenLayout.style, style]}>
@@ -28,7 +29,8 @@ const ScreenLayout: React.FC<ScreenProps> = ({
         onWillBlur={onWillBlur}
         onDidBlur={onDidBlur}
       />
-      <LoadStateLayout {...restProps}>{children}</LoadStateLayout>
+      {title && <NavBar title={title} />}
+      {children}
     </View>
   );
 };

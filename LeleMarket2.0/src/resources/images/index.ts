@@ -10,4 +10,6 @@ export default {
   ic_mainTabBar_mine_selected: require('./ic_mainTabBar_mine_selected.png'),
   ic_mainTabBar_shopping_cart_normal: require('./ic_mainTabBar_shopping_cart_normal.png'),
   ic_mainTabBar_shopping_cart_selected: require('./ic_mainTabBar_shopping_cart_selected.png'),
+  ic_nav_back_gray: require('./ic_nav_back_gray.png'),
+  ic_nav_menu: require('./ic_nav_menu.png'),
 };

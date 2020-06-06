@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import EmptyView, { EmptyViewProps } from '../EmptyView';
 import LoadingView, { LoaderProps as LoadingProps } from '../LoadingView';
 import FailureView, { FailureViewProps } from '../FailureView';
@@ -29,13 +30,13 @@ const LoadStateLayout: React.FC<LoadStateLayoutProps> = ({
   noNetwork,
 }) => {
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: 'red', justifyContent: 'flex-end' }}>
       {children}
       {state === 'empty' && (empty || <EmptyView {...emptyProps} />)}
       {state === 'loading' && (loading || <LoadingView visible {...loadingProps} />)}
       {state === 'failure' && (failure || <FailureView {...failurePorps} />)}
       {state === 'noNetwork' && (noNetwork || <NoNetworkView {...noNetworkProps} />)}
-    </>
+    </View>
   );
 };
 

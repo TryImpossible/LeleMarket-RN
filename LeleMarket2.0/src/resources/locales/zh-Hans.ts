@@ -20,6 +20,8 @@ export default {
     },
     navBar: {
       back: '返回',
+      title: '我是标题',
+      menu: '菜单',
     },
     toast: {
       message: '我是Toast',

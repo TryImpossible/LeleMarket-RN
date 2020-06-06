@@ -38,7 +38,6 @@ export interface ItemProps {
 }
 
 const NormalItem: React.FC<ItemProps> = ({ style, icon, selectedIcon, isSelected, text, onPress }) => {
-  console.warn(123);
   return (
     <TouchableOpacity activeOpacity={1} style={[styles.item]} onPress={onPress}>
       <Image source={!isSelected ? icon : selectedIcon} style={[styles.normalIcon, style]} />
@@ -72,4 +71,4 @@ function isEqual(prevProps: ItemProps, nextProps: ItemProps) {
   return prevProps.isSelected === nextProps.isSelected;
 }
 
-export default { NormalItem: React.memo(NormalItem, isEqual), RaisedItem: React.memo(RaisedItem) };
+export default { NormalItem: React.memo(NormalItem, isEqual), RaisedItem: React.memo(RaisedItem, isEqual) };

@@ -4,10 +4,9 @@ import Item, { ItemProps } from './Item';
 
 const styles = StyleSheet.create({
   mainTabBar: {
-    width: __WIDTH__,
+    width: '100%',
     height: Theme.Dimens.bottomTabBarHeight + Theme.Dimens.safeBottomHeight,
     paddingBottom: Theme.Dimens.safeBottomHeight,
-    // backgroundColor: _color(),
     flexDirection: 'row',
     borderTopColor: Theme.Colors.dividerColor,
     borderTopWidth: Theme.Dimens.dividerHeight,

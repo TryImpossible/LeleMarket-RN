@@ -74,7 +74,7 @@ const StackConfig: CreateNavigatorConfig<
   NavigationStackOptions,
   NavigationStackProp<NavigationRoute, any>
 > = {
-  initialRouteName: 'Main',
+  initialRouteName: 'Splash',
   headerMode: 'screen',
   defaultNavigationOptions: {
     gesturesEnabled: __IOS__,
