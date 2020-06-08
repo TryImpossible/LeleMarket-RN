@@ -13,13 +13,14 @@ import {
 } from 'react-navigation';
 import { MainTabBar } from 'components/common';
 import IMAGES from 'resources/images';
+import Home from './Home';
 
 const routeConfigMap: NavigationRouteConfigMap<
   NavigationBottomTabOptions,
   NavigationTabProp<NavigationRoute<NavigationParams>, any>,
   unknown
 > = {
-  Home: { screen: () => <Text>Home</Text> },
+  Home,
   Mine: { screen: () => <Text>Mine</Text> },
 };
 

@@ -8,5 +8,18 @@ import NoNetworkView from './NoNetworkView';
 import ScreenLayout from './ScreenLayout';
 import MainTabBar from './MainTabBar';
 import NavBar from './NavBar';
+import TabView from './TabView';
 
-export { Window, Loader, Toast, EmptyView, FailureView, LoadingView, NoNetworkView, ScreenLayout, MainTabBar, NavBar };
+export {
+  Window,
+  Loader,
+  Toast,
+  EmptyView,
+  FailureView,
+  LoadingView,
+  NoNetworkView,
+  ScreenLayout,
+  MainTabBar,
+  NavBar,
+  TabView,
+};

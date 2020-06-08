@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, StyleProp, ViewStyle } from 'react-native';
-import Item, { ItemProps } from './Item';
+import TabItem, { ItemProps } from './TabItem';
 
 const styles = StyleSheet.create({
   mainTabBar: {
@@ -30,9 +30,9 @@ const MainTabBar: React.FC<MainTabBarProps> & {
     <View style={styles.mainTabBar}>
       {data !== undefined &&
         data.map((item, index) => {
-          const CurrentItem = index === 2 ? Item.RaisedItem : Item.NormalItem;
+          const Item = index === 2 ? TabItem.RaisedItem : TabItem.NormalItem;
           return (
-            <CurrentItem
+            <Item
               key={String(index)}
               {...item}
               isSelected={index === selectedIndex}
@@ -61,6 +61,6 @@ MainTabBar.defaultProps = {
   initialIndex: 0,
 };
 
-MainTabBar.NormalItem = Item.NormalItem;
-MainTabBar.RaisedItem = Item.RaisedItem;
+MainTabBar.NormalItem = TabItem.NormalItem;
+MainTabBar.RaisedItem = TabItem.RaisedItem;
 export default MainTabBar;

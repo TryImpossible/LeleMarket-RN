@@ -19,11 +19,12 @@ const styles = StyleSheet.create({
     height: _toDP(44),
   },
   normalText: {
-    marginVertical: _toDP(2),
+    marginTop: _toDP(2),
+    marginBottom: _toDP(4),
     fontSize: _toSP(Theme.Dimens.textSmallMiniSize),
   },
   raisedText: {
-    marginBottom: _toDP(2),
+    marginBottom: _toDP(4),
     fontSize: _toSP(Theme.Dimens.textSmallMiniSize),
   },
 });
