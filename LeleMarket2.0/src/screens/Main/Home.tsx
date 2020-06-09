@@ -30,30 +30,22 @@ const Pager = ({ index }: { index: number }) => {
 
   setTimeout(() => {
     setLoader(false);
-  }, 3000);
-  if (loader) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size={'large'} />
-      </View>
-    );
-  } else {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignSelf: 'stretch',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: _color(),
-        }}
-      >
-        {loader && <ActivityIndicator size="small" />}
-        {!loader && <Text>{index}</Text>}
-      </View>
-    );
-    // return <FlatList data={Array(100).fill(1)} renderItem={({ item, index }) => <Text>{index}</Text>} />;
-  }
+  }, 1500);
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: loader ? 'transparent' : _color(),
+      }}
+    >
+      {loader && <ActivityIndicator size="large" />}
+      {!loader && <Text>{index}</Text>}
+    </View>
+  );
+
+  // return <FlatList data={Array(100).fill(1)} renderItem={({ item, index }) => <Text>{index}</Text>} />;
 };
 
 const Home: React.FC<{}> = () => {

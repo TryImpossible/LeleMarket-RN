@@ -260,7 +260,7 @@ class TabBar extends Component<TabBarProps, TabBarState> {
       <View style={[styles.tabBar, style]}>
         {renderLeftSection && renderLeftSection()}
         <ScrollView
-          style={{ flex: 1 }}
+          style={{ flex: 1, height: '100%' }}
           ref={this.scrollView}
           contentContainerStyle={[
             styles.contentContainerStyle,

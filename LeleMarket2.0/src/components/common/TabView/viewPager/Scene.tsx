@@ -26,8 +26,11 @@ class Scene extends Component<SceneProps, SceneState> {
     placeholder: null,
   };
 
+  private viewRef: React.RefObject<View>;
+
   constructor(props: SceneProps) {
     super(props);
+    this.viewRef = React.createRef<View>();
     const { visible, getRef } = props;
     this.state = {
       visible,
@@ -35,7 +38,7 @@ class Scene extends Component<SceneProps, SceneState> {
     getRef && getRef(this);
   }
 
-  onVisibilityLoad() {
+  public onVisibilityLoad() {
     const { visible } = this.state;
     !visible &&
       this.setState({
@@ -43,10 +46,20 @@ class Scene extends Component<SceneProps, SceneState> {
       });
   }
 
+  public setNativeProps(nativeProps: object) {
+    if (this.viewRef.current) {
+      this.viewRef.current.setNativeProps(nativeProps);
+    }
+  }
+
   render() {
     const { style, children, placeholder } = this.props;
     const { visible } = this.state;
-    return <View style={[styles.scene, StyleSheet.flatten(style)]}>{visible ? children : placeholder}</View>;
+    return (
+      <View ref={this.viewRef} style={[styles.scene, style]}>
+        {visible ? children : placeholder}
+      </View>
+    );
   }
 }
 

@@ -21,8 +21,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'visible',
-    height: _toDP(Theme.Dimens.tabBarHeight),
-    lineHeight: _toDP(Theme.Dimens.tabBarHeight),
   },
 });
 

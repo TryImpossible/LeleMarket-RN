@@ -54,7 +54,6 @@ class MyViewPager extends Component<MyViewPagerProps> {
   scrollViewRef: React.RefObject<ScrollView>;
   contentWidth: number;
   timer: NodeJS.Timeout | null;
-  viewPagerRef: React.RefObject<ViewPager>;
   sceneRefs: { [key: number]: any };
   visibleSceneIndexs: Array<number>;
   selectedIndex: number;
@@ -65,7 +64,6 @@ class MyViewPager extends Component<MyViewPagerProps> {
     this.scrollViewRef = React.createRef<ScrollView>();
     this.contentWidth = 0;
     this.timer = null;
-    this.viewPagerRef = React.createRef<ViewPager>();
     this.sceneRefs = {};
     this.visibleSceneIndexs = [initialIndex];
     this.selectedIndex = initialIndex;
@@ -76,9 +74,11 @@ class MyViewPager extends Component<MyViewPagerProps> {
     const { initialIndex = 0 } = this.props;
     if (initialIndex > 0) {
       this.timer = setTimeout(() => {
-        this.scrollViewRef.current && this.scrollViewRef.current.scrollTo({ x: this.contentWidth, animated: false });
-      }, 0);
+        this.scrollViewRef.current &&
+          this.scrollViewRef.current.scrollTo({ x: this.contentWidth * initialIndex, animated: false });
+      }, 100);
     }
+    Object.values(this.sceneRefs).forEach((ref) => ref && ref.setNativeProps({ style: { width: __WIDTH__ } }));
   }
 
   componentWillUnmount() {
@@ -91,13 +91,9 @@ class MyViewPager extends Component<MyViewPagerProps> {
     if (index === this.selectedIndex) {
       return;
     }
-    if (this.viewPagerRef.current) {
+    if (this.scrollViewRef.current) {
       const animated = Math.abs(index - this.selectedIndex) === 1;
-      if (animated) {
-        this.viewPagerRef.current.setPage(index);
-      } else {
-        this.viewPagerRef.current.setPageWithoutAnimation(index);
-      }
+      this.scrollViewRef.current && this.scrollViewRef.current.scrollTo({ x: this.contentWidth * index, animated });
     }
 
     this.selectedIndex = index;
@@ -152,20 +148,39 @@ class MyViewPager extends Component<MyViewPagerProps> {
           const position = Math.floor(x / width);
           const offset = x % width;
           onPagerScroll && onPagerScroll(position, offset);
-        }}
-        onMomentumScrollEnd={({
-          nativeEvent: {
-            contentOffset: { x },
-            layoutMeasurement: { width },
-          },
-        }) => {
-          const index = Math.floor(x / width);
-          this.selectedIndex = index;
-          if (!this.visibleSceneIndexs.includes(index)) {
-            this.sceneRefs[index] && this.sceneRefs[index].onVisibilityLoad();
+          this.selectedIndex = position;
+          if (!this.visibleSceneIndexs.includes(position)) {
+            this.sceneRefs[position] && this.sceneRefs[position].onVisibilityLoad();
           }
-          onIndexChange && onIndexChange(index, () => {});
+          onIndexChange && onIndexChange(position, () => {});
         }}
+        // onScrollBeginDrag={() => {
+        //   // web不支持
+        //   console.warn('onScrollBeginDrag');
+        // }}
+        // onScrollEndDrag={() => {
+        //   // web不支持
+        //   console.warn('onScrollEndDrag');
+        // }}
+        // onMomentumScrollBegin={() => {
+        //   // web不支持
+        //   console.warn('onMomentumScrollBegin');
+        // }}
+        // onMomentumScrollEnd={({
+        //   nativeEvent: {
+        //     contentOffset: { x },
+        //     layoutMeasurement: { width },
+        //   },
+        // }) => {
+        //   // web不支持
+        //   console.warn('onMomentumScrollEnd');
+        //   const index = Math.floor(x / width);
+        //   this.selectedIndex = index;
+        //   if (!this.visibleSceneIndexs.includes(index)) {
+        //     this.sceneRefs[index] && this.sceneRefs[index].onVisibilityLoad();
+        //   }
+        //   onIndexChange && onIndexChange(index, () => {});
+        // }}
       >
         {routes.map((route, index) => {
           return (
@@ -174,7 +189,7 @@ class MyViewPager extends Component<MyViewPagerProps> {
               getRef={(ref) => {
                 this.sceneRefs[index] = ref;
               }}
-              style={sceneContainerStyle}
+              style={[sceneContainerStyle, { flexGrow: 1 }]}
               placeholder={renderLazyPlaceholder && renderLazyPlaceholder()}
               visible={!lazy || index === initialIndex}
             >
