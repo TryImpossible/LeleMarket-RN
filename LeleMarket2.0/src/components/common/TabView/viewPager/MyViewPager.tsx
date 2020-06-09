@@ -114,9 +114,11 @@ class MyViewPager extends Component<MyViewPagerProps> {
         keyboardDismissMode={keyboardDismissMode}
         scrollEnabled={swipeEnabled}
         onPageScroll={({ nativeEvent: { position, offset } }) => {
+          // console.warn('onPageScroll');
           onPagerScroll && onPagerScroll(position, offset);
         }}
         onPageSelected={({ nativeEvent: { position } }) => {
+          // console.warn('onPageSelected');
           this.selectedIndex = position;
           if (!this.visibleSceneIndexs.includes(position)) {
             this.sceneRefs[position] && this.sceneRefs[position].onVisibilityLoad();

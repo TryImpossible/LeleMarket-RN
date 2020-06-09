@@ -86,6 +86,7 @@ interface TabBarProps extends Omit<TabItemProps, 'style' | 'onLayout' | 'onPress
   initialIndex?: number;
   onTabPress?: (index: number) => void;
   onTabChange?: (index: number) => void;
+  indicatorWidthPrecent?: number;
   tabMode: 'scrollable' | 'fixed';
 }
 
@@ -96,6 +97,7 @@ interface TabBarState {
 class TabBar extends Component<TabBarProps, TabBarState> {
   static defaultProps = {
     initialIndex: 0,
+    indicatorWidthPrecent: 1,
     bounces: true,
     scrollEnabled: true,
     tabMode: 'fixed',
@@ -160,6 +162,10 @@ class TabBar extends Component<TabBarProps, TabBarState> {
     const { x, width } = this.tabItemLayout[index];
     const leftValue = x + _toDP(24) / 2;
     const widthValue = width - _toDP(24);
+
+    // const precent = (this.props.indicatorWidthPrecent || 0) % 1;
+    // const leftValue = x + (width * (1 - precent)) / 2;
+    // const widthValue = width * precent;
 
     if (animated) {
       // animations.push(

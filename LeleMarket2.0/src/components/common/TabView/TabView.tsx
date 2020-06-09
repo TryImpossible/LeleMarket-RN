@@ -25,6 +25,7 @@ interface TabViewProps {
   tabBarActiveColor?: string;
   tabBarInactiveColor?: string;
   scrollEnabled?: boolean;
+  bounces?: boolean;
   onTabBarPress?: (index: number) => void;
   renderTabBarLabel?: ({ route, isActive }: { route: RouteProps; isActive?: boolean }) => React.ReactNode;
   renderTabBarIcon?: ({ route, isActive }: { route: RouteProps; isActive?: boolean }) => React.ReactNode;
@@ -41,11 +42,12 @@ interface TabViewProps {
   renderTabBarLeftSection?: () => React.ReactNode;
   renderTabBarRightSection?: () => React.ReactNode;
   tabBarMode?: 'scrollable' | 'fixed';
+  // tabBarIndicatorWidthPrecent?: number;
 
   onIndexChange?: (index: number) => void;
   renderScene: ({ route, index }: PagerProps) => React.ReactNode;
   lazy?: boolean;
-  lazyPreloadDistance?: number;
+  // lazyPreloadDistance?: number;
   sceneContainerStyle?: StyleProp<ViewStyle>;
   renderLazyPlaceholder?: () => React.ReactNode;
   keyboardDismissMode?: 'on-drag' | 'none';
@@ -62,7 +64,8 @@ class TabView extends Component<TabViewProps> {
 
   static defaultProps = {
     tabBarPosition: 'top',
-    scrollEnabled: false,
+    scrollEnabled: true,
+    bounces: true,
     lazy: true,
     swipeEnabled: true,
     initialIndex: 0,
@@ -84,6 +87,7 @@ class TabView extends Component<TabViewProps> {
       tabBarActiveColor,
       tabBarInactiveColor,
       scrollEnabled,
+      bounces,
       onTabBarPress,
       renderTabBarLabel,
       renderTabBarIcon,
@@ -91,13 +95,14 @@ class TabView extends Component<TabViewProps> {
       renderTabBarIndicator,
       renderTabBarLeftSection,
       renderTabBarRightSection,
+      // tabBarIndicatorWidthPrecent,
       tabBarMode,
 
       navigationState,
       onIndexChange,
       renderScene,
       lazy,
-      lazyPreloadDistance,
+      // lazyPreloadDistance,
       sceneContainerStyle,
       renderLazyPlaceholder,
       keyboardDismissMode,
@@ -141,9 +146,11 @@ class TabView extends Component<TabViewProps> {
             }}
             initialIndex={initialIndex}
             scrollEnabled={scrollEnabled}
+            bounces={bounces}
             renderLeftSection={renderTabBarLeftSection}
             renderRightSection={renderTabBarRightSection}
             tabMode={tabBarMode}
+            // indicatorWidthPrecent={tabBarIndicatorWidthPrecent}
           />
         );
       }
@@ -158,7 +165,7 @@ class TabView extends Component<TabViewProps> {
           sceneContainerStyle={sceneContainerStyle}
           initialIndex={initialIndex}
           lazy={lazy}
-          lazyPreloadDistance={lazyPreloadDistance}
+          // lazyPreloadDistance={lazyPreloadDistance}
           renderLazyPlaceholder={renderLazyPlaceholder}
           onIndexChange={(index, callback) => {
             this.tabBarRef.current && this.tabBarRef.current.scrollToIndex(index, callback);

@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
 const data = [
   { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.app_logo },
   { key: 'home', title: Lang.get('components.mainTabBar.discover'), badge: 1 },
-  { key: 'home', title: Lang.get('components.mainTabBar.customization') },
-  { key: 'home', title: Lang.get('components.mainTabBar.shoppingCart') },
-  { key: 'mine', title: Lang.get('components.mainTabBar.mine') },
+  // { key: 'home', title: Lang.get('components.mainTabBar.customization') },
+  // { key: 'home', title: Lang.get('components.mainTabBar.shoppingCart') },
+  // { key: 'mine', title: Lang.get('components.mainTabBar.mine') },
   // { key: 'home', title: Lang.get('components.mainTabBar.customization') },
   // { key: 'home', title: Lang.get('components.mainTabBar.shoppingCart') },
   // { key: 'mine', title: Lang.get('components.mainTabBar.mine') },
@@ -58,6 +58,7 @@ const Home: React.FC<{}> = () => {
         //   return null;
         // }}
         tabBarStyle={{ backgroundColor: 'yellow' }}
+        // tabBarIndicatorWidthPrecent={0.6}
         renderTabBarLeftSection={() => (
           <View style={{ width: _toDP(30), height: _toDP(48), backgroundColor: 'black' }} />
         )}

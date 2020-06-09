@@ -6,6 +6,7 @@ import { StyleSheet, View, StyleProp, ViewStyle } from 'react-native';
 const styles = StyleSheet.create({
   scene: {
     flex: 1,
+    backgroundColor: 'transparent',
   },
 });
 
