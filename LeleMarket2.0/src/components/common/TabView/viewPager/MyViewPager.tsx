@@ -20,9 +20,10 @@ export interface RouteProps {
   badge?: number;
 }
 
-export interface PagerProps {
+export interface SceneProps {
   route: RouteProps;
   index: number;
+  jumpTo: (index: number) => void;
 }
 
 export interface MyViewPagerProps {
@@ -30,7 +31,7 @@ export interface MyViewPagerProps {
   routes: Array<RouteProps>;
   onIndexChange?: (index: number, callback: () => void) => void;
   sceneContainerStyle?: StyleProp<ViewStyle>;
-  renderScene: ({ route, index }: PagerProps) => React.ReactNode;
+  renderScene: ({ route, index, jumpTo }: SceneProps) => React.ReactNode;
   bounces?: boolean;
   lazy?: boolean;
   lazyPreloadDistance?: number;
@@ -148,7 +149,7 @@ class MyViewPager extends Component<MyViewPagerProps> {
               placeholder={renderLazyPlaceholder && renderLazyPlaceholder()}
               visible={!lazy || index === initialIndex}
             >
-              {renderScene({ route, index })}
+              {renderScene({ route, index, jumpTo: (positon) => this.scrollToIndex(positon) })}
             </Scene>
           );
         })}

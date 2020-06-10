@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
 import { ScreenLayout, TabView } from 'components/common';
 import IMAGES from 'resources/images';
+import Discover from './Discover';
 
 const styles = StyleSheet.create({
   home: {
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
 });
 
 const data = [
-  { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.app_logo },
+  { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.ic_nav_menu },
   { key: 'discover', title: Lang.get('components.mainTabBar.discover'), badge: 1 },
   { key: 'customization', title: Lang.get('components.mainTabBar.customization') },
   // { key: 'home', title: Lang.get('components.mainTabBar.shoppingCart') },
@@ -25,7 +26,9 @@ const data = [
   // { key: 'mine', title: Lang.get('components.mainTabBar.mine') },
 ];
 
-const Pager = ({ index }: { index: number }) => {
+let tabViewRef: React.RefObject<TabView> = React.createRef<TabView>();
+
+const Pager = ({ index, jumpTo }: { index: number; jumpTo: (index: number) => void }) => {
   const [loader, setLoader] = React.useState(true);
 
   setTimeout(() => {
@@ -41,7 +44,22 @@ const Pager = ({ index }: { index: number }) => {
       }}
     >
       {loader && <ActivityIndicator size="large" />}
-      {!loader && <Text>{index}</Text>}
+      {index === 1 && !loader && <Discover />}
+      {index !== 1 && (
+        <>
+          {!loader && <Text>{index}</Text>}
+          {index === 0 && (
+            <Text
+              onPress={() => {
+                // jumpTo(1)
+                tabViewRef.current && tabViewRef.current.jumpTo(1);
+              }}
+            >
+              跳转页面2
+            </Text>
+          )}
+        </>
+      )}
     </View>
   );
 
@@ -52,6 +70,7 @@ const Home: React.FC<{}> = () => {
   return (
     <ScreenLayout style={styles.home}>
       <TabView
+        ref={tabViewRef}
         style={{ marginTop: Theme.Dimens.statusBarHeight }}
         navigationState={data}
         // renderTabBar={() => {
@@ -59,15 +78,17 @@ const Home: React.FC<{}> = () => {
         // }}
         tabBarStyle={{ backgroundColor: 'yellow' }}
         // tabBarIndicatorWidthPrecent={0.6}
+        initialIndex={2}
         renderTabBarLeftSection={() => (
           <View style={{ width: _toDP(30), height: _toDP(48), backgroundColor: 'black' }} />
         )}
         renderTabBarRightSection={() => (
           <View style={{ width: _toDP(50), height: _toDP(48), backgroundColor: 'black' }} />
         )}
-        renderScene={({ index }) => <Pager index={index} />}
+        renderScene={({ index, jumpTo }) => <Pager index={index} jumpTo={jumpTo} />}
         // renderTabBarLabel={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
         // renderTabBarBadge={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
+        // tabBarIndicatorMode="label"
         // tabBarMode="scrollable"
       />
     </ScreenLayout>

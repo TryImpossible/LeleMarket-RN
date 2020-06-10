@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
 //   return { inputRange, outputRange };
 // }
 
-interface TabBarProps extends Omit<TabItemProps, 'style' | 'onLayout' | 'onPress' | 'route'> {
+interface TabBarProps extends Omit<TabItemProps, 'style' | 'onTabLayout' | 'onLabelLayout' | 'onPress' | 'route'> {
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
   tabStyle?: StyleProp<ViewStyle>;
@@ -86,8 +86,9 @@ interface TabBarProps extends Omit<TabItemProps, 'style' | 'onLayout' | 'onPress
   initialIndex?: number;
   onTabPress?: (index: number) => void;
   onTabChange?: (index: number) => void;
-  indicatorWidthPrecent?: number;
-  tabMode: 'scrollable' | 'fixed';
+  indicatorMode?: 'tab' | 'label';
+  indicatorWidthRatio?: number;
+  tabMode?: 'scrollable' | 'fixed';
 }
 
 interface TabBarState {
@@ -97,9 +98,10 @@ interface TabBarState {
 class TabBar extends Component<TabBarProps, TabBarState> {
   static defaultProps = {
     initialIndex: 0,
-    indicatorWidthPrecent: 1,
     bounces: true,
     scrollEnabled: true,
+    indicatorMode: 'tab',
+    indicatorWidthRatio: 1,
     tabMode: 'fixed',
   };
 
@@ -112,6 +114,7 @@ class TabBar extends Component<TabBarProps, TabBarState> {
   scrollViewWidth: number;
   scrollViewHeight: number;
   tabItemLayout: { [key: number]: LayoutRectangle } = {};
+  tabLabelLayout: { [key: number]: LayoutRectangle } = {};
   timer: NodeJS.Timeout | null;
   selectedIndex: number;
 
@@ -153,19 +156,26 @@ class TabBar extends Component<TabBarProps, TabBarState> {
     // if (this[`label${index}`]) {
     //   this[`label${index}`].setNativeProps({ style: { opacity: 1 } });
     // }
-    if (!this.tabItemLayout[index]) {
+    if (!this.tabItemLayout[index] || !this.tabLabelLayout[index]) {
       return;
     }
 
     const animated = this.selectedIndex === -1 || Math.abs(index - this.selectedIndex) === 1;
     const animations: Array<CompositeAnimation> = [];
     const { x, width } = this.tabItemLayout[index];
-    const leftValue = x + _toDP(24) / 2;
-    const widthValue = width - _toDP(24);
+    const { width: labelWidth } = this.tabLabelLayout[index];
+    const { indicatorMode, indicatorWidthRatio = 1 } = this.props;
 
-    // const precent = (this.props.indicatorWidthPrecent || 0) % 1;
-    // const leftValue = x + (width * (1 - precent)) / 2;
-    // const widthValue = width * precent;
+    let ratio = indicatorWidthRatio % 1;
+    ratio = ratio === 0 && indicatorWidthRatio >= 1 ? 1 : ratio;
+
+    let leftValue = x + (width - width * ratio) / 2;
+    let widthValue = width * ratio;
+
+    if (indicatorMode === 'label') {
+      leftValue = x + (width - labelWidth * ratio) / 2;
+      widthValue = labelWidth * ratio;
+    }
 
     if (animated) {
       // animations.push(
@@ -293,9 +303,13 @@ class TabBar extends Component<TabBarProps, TabBarState> {
                 route={route}
                 style={[tabStyle, tabMode === 'fixed' ? { flex: 1 } : {}]}
                 key={`TabItem${String(index)}`}
-                onLayout={({ nativeEvent: { layout } }) => {
+                onTabLayout={({ nativeEvent: { layout } }) => {
                   // console.warn(`tabItem${index}Layout`, layout);
                   this.tabItemLayout[index] = layout;
+                }}
+                onLabelLayout={({ nativeEvent: { layout } }) => {
+                  // console.warn(`tabItem${index}Layout`, layout);
+                  this.tabLabelLayout[index] = layout;
                 }}
                 isActive={isActive}
                 activeColor={activeColor}

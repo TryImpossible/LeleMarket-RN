@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle, TextStyle, Animated } from 'react-native';
-import ViewPager, { RouteProps, PagerProps } from './viewPager/MyViewPager';
+import ViewPager, { RouteProps, SceneProps } from './viewPager/MyViewPager';
 import TabBar from './tabBar/TabBar';
 
 const styles = StyleSheet.create({
@@ -41,11 +41,12 @@ interface TabViewProps {
   }) => React.ReactNode;
   renderTabBarLeftSection?: () => React.ReactNode;
   renderTabBarRightSection?: () => React.ReactNode;
+  tabBarIndicatorMode?: 'tab' | 'label';
+  tabBarIndicatorWidthRatio?: number;
   tabBarMode?: 'scrollable' | 'fixed';
-  // tabBarIndicatorWidthPrecent?: number;
 
   onIndexChange?: (index: number) => void;
-  renderScene: ({ route, index }: PagerProps) => React.ReactNode;
+  renderScene: ({ route, index, jumpTo }: SceneProps) => React.ReactNode;
   lazy?: boolean;
   // lazyPreloadDistance?: number;
   sceneContainerStyle?: StyleProp<ViewStyle>;
@@ -73,6 +74,11 @@ class TabView extends Component<TabViewProps> {
     tabBarInactiveColor: Theme.Colors.transparent,
   };
 
+  public jumpTo(position: number): void {
+    this.tabBarRef.current && this.tabBarRef.current.scrollToIndex(position);
+    this.viewPagerRef.current && this.viewPagerRef.current.scrollToIndex(position);
+  }
+
   render() {
     const {
       style,
@@ -95,7 +101,8 @@ class TabView extends Component<TabViewProps> {
       renderTabBarIndicator,
       renderTabBarLeftSection,
       renderTabBarRightSection,
-      // tabBarIndicatorWidthPrecent,
+      tabBarIndicatorMode,
+      tabBarIndicatorWidthRatio,
       tabBarMode,
 
       navigationState,
@@ -149,8 +156,9 @@ class TabView extends Component<TabViewProps> {
             bounces={bounces}
             renderLeftSection={renderTabBarLeftSection}
             renderRightSection={renderTabBarRightSection}
+            indicatorMode={tabBarIndicatorMode}
+            indicatorWidthRatio={tabBarIndicatorWidthRatio}
             tabMode={tabBarMode}
-            // indicatorWidthPrecent={tabBarIndicatorWidthPrecent}
           />
         );
       }

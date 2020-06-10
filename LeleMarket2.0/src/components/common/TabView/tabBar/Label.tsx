@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { StyleSheet, Animated, StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, Animated, StyleProp, ViewStyle, LayoutChangeEvent } from 'react-native';
 
 const styles = StyleSheet.create({
   labelStyle: {
@@ -16,6 +16,7 @@ export interface LabelProps {
   colorValue?: Animated.Value;
   scaleValue?: Animated.Value;
   label?: string;
+  onLayout?: (event: LayoutChangeEvent) => void;
 }
 
 const Label: React.FC<LabelProps> = ({
@@ -24,10 +25,12 @@ const Label: React.FC<LabelProps> = ({
   //  scaleValue,
   isActive,
   label,
+  onLayout,
 }) => {
   return (
     <Animated.Text
       // ref={(ref) => (this[`label${index}`] = ref)}
+      onLayout={onLayout}
       style={[
         styles.labelStyle,
         {

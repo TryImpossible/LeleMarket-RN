@@ -33,10 +33,11 @@ export interface RouteProps {
   badge?: number;
 }
 
-export interface TabItemProps extends Omit<LabelProps, 'style' | 'label'> {
+export interface TabItemProps extends Omit<LabelProps, 'style' | 'label' | 'onLayout'> {
   route: RouteProps;
   style?: StyleProp<ViewStyle>;
-  onLayout?: (event: LayoutChangeEvent) => void;
+  onTabLayout?: (event: LayoutChangeEvent) => void;
+  onLabelLayout?: (event: LayoutChangeEvent) => void;
   activeColor?: string;
   inactiveColor?: string;
   onPress?: () => void;
@@ -50,7 +51,8 @@ export interface TabItemProps extends Omit<LabelProps, 'style' | 'label'> {
 const TabItem: React.FC<TabItemProps> = ({
   route,
   style,
-  onLayout,
+  onTabLayout,
+  onLabelLayout,
   isActive,
   activeColor,
   inactiveColor,
@@ -66,7 +68,7 @@ const TabItem: React.FC<TabItemProps> = ({
   const { title, icon, badge = 0 } = route;
   return (
     <TouchableOpacity
-      onLayout={onLayout}
+      onLayout={onTabLayout}
       activeOpacity={1}
       style={[
         styles.tabStyle,
@@ -79,7 +81,14 @@ const TabItem: React.FC<TabItemProps> = ({
     >
       {icon && ((renderIcon && renderIcon({ route, isActive })) || <Icon source={icon} />)}
       {(renderLabel && renderLabel({ route, isActive })) || (
-        <Label style={labelStyle} isActive={isActive} colorValue={colorValue} scaleValue={scaleValue} label={title} />
+        <Label
+          style={labelStyle}
+          isActive={isActive}
+          colorValue={colorValue}
+          scaleValue={scaleValue}
+          label={title}
+          onLayout={onLabelLayout}
+        />
       )}
       {badge > 0 && ((renderBadge && renderBadge({ route, isActive })) || <Badge style={bdageStyle} count={badge} />)}
     </TouchableOpacity>
