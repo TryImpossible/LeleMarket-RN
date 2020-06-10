@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { NavigationBottomTabOptions, NavigationTabProp, createBottomTabNavigator } from 'react-navigation-tabs';
 import { BottomTabBarOptions } from 'react-navigation-tabs/lib/typescript/src/types';
 import {
@@ -15,6 +15,9 @@ import { MainTabBar } from 'components/common';
 import IMAGES from 'resources/images';
 import Home from './Home';
 import Discover from './Discover';
+import Customization from './Customization';
+import ShoppingCart from './ShoppingCart';
+import Mine from './Mine';
 
 const routeConfigMap: NavigationRouteConfigMap<
   NavigationBottomTabOptions,
@@ -23,9 +26,9 @@ const routeConfigMap: NavigationRouteConfigMap<
 > = {
   Home,
   Discover,
-  customization: Discover,
-  shoppingCart: { screen: () => <Text>shoppingCart</Text> },
-  Mine: { screen: () => <Text>Mine</Text> },
+  Customization,
+  ShoppingCart,
+  Mine,
 };
 
 interface Config {
@@ -68,7 +71,7 @@ const stackConfig: CreateNavigatorConfig<
   Partial<NavigationBottomTabOptions>,
   NavigationTabProp<NavigationRoute<NavigationParams>, any>
 > = {
-  initialRouteName: 'Discover',
+  initialRouteName: 'Home',
   navigationOptions: {
     header: null,
   },

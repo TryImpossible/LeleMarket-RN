@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
-import { TabView } from 'components/common';
+import { ScreenLayout, TabView } from 'components/common';
 import IMAGES from 'resources/images';
 
 const styles = StyleSheet.create({
@@ -50,7 +50,7 @@ const Pager = ({ index }: { index: number }) => {
 
 const Home: React.FC<{}> = () => {
   return (
-    <View style={styles.home}>
+    <ScreenLayout style={styles.home}>
       <TabView
         style={{ marginTop: Theme.Dimens.statusBarHeight }}
         navigationState={data}
@@ -70,7 +70,7 @@ const Home: React.FC<{}> = () => {
         // renderTabBarBadge={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
         // tabBarMode="scrollable"
       />
-    </View>
+    </ScreenLayout>
   );
 };
 
