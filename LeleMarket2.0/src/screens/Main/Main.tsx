@@ -14,6 +14,7 @@ import {
 import { MainTabBar } from 'components/common';
 import IMAGES from 'resources/images';
 import Home from './Home';
+import Discover from './Discover';
 
 const routeConfigMap: NavigationRouteConfigMap<
   NavigationBottomTabOptions,
@@ -21,6 +22,9 @@ const routeConfigMap: NavigationRouteConfigMap<
   unknown
 > = {
   Home,
+  Discover,
+  customization: Discover,
+  shoppingCart: { screen: () => <Text>shoppingCart</Text> },
   Mine: { screen: () => <Text>Mine</Text> },
 };
 
@@ -64,7 +68,7 @@ const stackConfig: CreateNavigatorConfig<
   Partial<NavigationBottomTabOptions>,
   NavigationTabProp<NavigationRoute<NavigationParams>, any>
 > = {
-  initialRouteName: 'Home',
+  initialRouteName: 'Discover',
   navigationOptions: {
     header: null,
   },
@@ -73,8 +77,8 @@ const stackConfig: CreateNavigatorConfig<
     return (
       <MainTabBar
         data={mainTabBarData}
-        tabBarOnPress={() => {
-          jumpTo(Object.keys(routeConfigMap)[0]);
+        tabBarOnPress={(index) => {
+          jumpTo(Object.keys(routeConfigMap)[index]);
         }}
       />
     );

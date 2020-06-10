@@ -13,7 +13,7 @@
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "precommit": "lint-staged",
     "prettier": "prettier --write src/**",
-    "tsc": "tsc",
+    "tsc": "tsc --noEmit",
     "image": "node local-cli/generator/imagescript.js",
     "svg": "node local-cli/generator/svgscript.js"
   },

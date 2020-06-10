@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
 
 const data = [
   { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.app_logo },
-  { key: 'home', title: Lang.get('components.mainTabBar.discover'), badge: 1 },
-  // { key: 'home', title: Lang.get('components.mainTabBar.customization') },
+  { key: 'discover', title: Lang.get('components.mainTabBar.discover'), badge: 1 },
+  { key: 'customization', title: Lang.get('components.mainTabBar.customization') },
   // { key: 'home', title: Lang.get('components.mainTabBar.shoppingCart') },
   // { key: 'mine', title: Lang.get('components.mainTabBar.mine') },
   // { key: 'home', title: Lang.get('components.mainTabBar.customization') },

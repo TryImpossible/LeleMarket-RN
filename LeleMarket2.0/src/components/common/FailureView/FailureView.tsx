@@ -10,7 +10,7 @@ import {
   ImageStyle,
   TextStyle,
 } from 'react-native';
-import { app_logo } from 'resources/images';
+import IMAGES from 'resources/images';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +37,7 @@ export interface FailureViewProps {
   promptStyle?: StyleProp<TextStyle>;
 }
 
-const FailureView: React.FC<FailureViewProps> = ({ style, icon = app_logo, iconStyle, prompt, promptStyle }) => {
+const FailureView: React.FC<FailureViewProps> = ({ style, icon = IMAGES.app_logo, iconStyle, prompt, promptStyle }) => {
   return (
     <View style={[StyleSheet.absoluteFill, styles.container, style]}>
       <Image source={icon} style={[styles.icon, iconStyle]} />

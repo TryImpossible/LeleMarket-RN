@@ -9,6 +9,7 @@ import ScreenLayout from './ScreenLayout';
 import MainTabBar from './MainTabBar';
 import NavBar from './NavBar';
 import TabView from './TabView';
+import PagedList from './PagedList';
 
 export {
   Window,
@@ -22,4 +23,5 @@ export {
   MainTabBar,
   NavBar,
   TabView,
+  PagedList,
 };
