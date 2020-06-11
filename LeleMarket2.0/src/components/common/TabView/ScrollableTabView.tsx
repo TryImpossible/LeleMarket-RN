@@ -1,7 +1,11 @@
-import React, { PureComponent } from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle, TextStyle, Animated } from 'react-native';
+import React, { Component } from 'react';
+import { YellowBox, View, StyleSheet, StyleProp, ViewStyle, TextStyle, Animated, ScrollView } from 'react-native';
 import ViewPager, { RouteProps, SceneProps } from './viewPager/MyViewPager';
 import TabBar from './tabBar/TabBar';
+
+YellowBox.ignoreWarnings([
+  'irtualizedLists should never be nested inside plain ScrollViews with the same orientation - use another VirtualizedList-backed container instead',
+]);
 
 const styles = StyleSheet.create({
   container: {
@@ -9,13 +13,10 @@ const styles = StyleSheet.create({
   },
 });
 
-type TabBarPosition = 'top' | 'bottom';
-
-interface TabViewProps {
+interface ScrollableTabViewProps {
   style?: StyleProp<ViewStyle>;
   navigationState: Array<RouteProps>;
   renderTabBar?: (props: any) => React.ReactElement | null;
-  tabBarPosition?: TabBarPosition;
 
   tabBarStyle?: StyleProp<ViewStyle>;
   tabBarContentContainerStyle?: StyleProp<ViewStyle>;
@@ -59,7 +60,10 @@ interface TabViewProps {
   initialIndex?: number;
 }
 
-class TabView extends React.Component<TabViewProps> {
+class ScrollableTabView extends Component<ScrollableTabViewProps> {
+  scrollViewRef: React.RefObject<ScrollView> = React.createRef<ScrollView>();
+  headerViewRef: React.RefObject<View> = React.createRef<View>();
+  mainViewRef: React.RefObject<View> = React.createRef<View>();
   tabBarRef: React.RefObject<TabBar> = React.createRef<TabBar>();
   viewPagerRef: React.RefObject<ViewPager> = React.createRef<ViewPager>();
 
@@ -83,7 +87,6 @@ class TabView extends React.Component<TabViewProps> {
     const {
       style,
       renderTabBar,
-      tabBarPosition,
 
       tabBarStyle,
       tabBarContentContainerStyle,
@@ -119,7 +122,7 @@ class TabView extends React.Component<TabViewProps> {
       onPagerScroll,
       initialIndex,
     } = this.props;
-    const renderTabBarComponent = () => {
+    const TabBarComponent = () => {
       if (renderTabBar) {
         return renderTabBar({
           ref: this.tabBarRef,
@@ -165,31 +168,43 @@ class TabView extends React.Component<TabViewProps> {
     };
 
     return (
-      <View style={[styles.container, style]}>
-        {tabBarPosition === 'top' && renderTabBarComponent()}
-        <ViewPager
-          ref={this.viewPagerRef}
-          routes={navigationState}
-          sceneContainerStyle={sceneContainerStyle}
-          initialIndex={initialIndex}
-          lazy={lazy}
-          // lazyPreloadDistance={lazyPreloadDistance}
-          renderLazyPlaceholder={renderLazyPlaceholder}
-          onIndexChange={(index, callback) => {
-            this.tabBarRef.current && this.tabBarRef.current.scrollToIndex(index, callback);
-            onIndexChange && onIndexChange(index);
-          }}
-          renderScene={renderScene}
-          keyboardDismissMode={keyboardDismissMode}
-          swipeEnabled={swipeEnabled}
-          onSwipeStart={onSwipeStart}
-          onSwipeEnd={onSwipeEnd}
-          onPagerScroll={onPagerScroll}
-        />
-        {tabBarPosition === 'bottom' && renderTabBarComponent()}
-      </View>
+      <ScrollView
+        ref={this.scrollViewRef}
+        contentContainerStyle={{ flexGrow: 1 }}
+        onLayout={({
+          nativeEvent: {
+            layout: { width, height },
+          },
+        }) => {
+          // console.warn('scrollView', width, height);
+        }}
+      >
+        <View ref={this.headerViewRef} style={{ height: 500, backgroundColor: 'red' }} />
+        <View ref={this.mainViewRef} style={[styles.container, style, { height: __HEIGHT__ }]}>
+          <TabBarComponent />
+          <ViewPager
+            ref={this.viewPagerRef}
+            routes={navigationState}
+            sceneContainerStyle={sceneContainerStyle}
+            initialIndex={initialIndex}
+            lazy={lazy}
+            // lazyPreloadDistance={lazyPreloadDistance}
+            renderLazyPlaceholder={renderLazyPlaceholder}
+            onIndexChange={(index, callback) => {
+              this.tabBarRef.current && this.tabBarRef.current.scrollToIndex(index, callback);
+              onIndexChange && onIndexChange(index);
+            }}
+            renderScene={renderScene}
+            keyboardDismissMode={keyboardDismissMode}
+            swipeEnabled={swipeEnabled}
+            onSwipeStart={onSwipeStart}
+            onSwipeEnd={onSwipeEnd}
+            onPagerScroll={onPagerScroll}
+          />
+        </View>
+      </ScrollView>
     );
   }
 }
 
-export default TabView;
+export default ScrollableTabView;

@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, View, StyleProp, ViewStyle } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -21,7 +21,7 @@ interface SceneState {
   visible?: boolean;
 }
 
-class Scene extends Component<SceneProps, SceneState> {
+class Scene extends React.PureComponent<SceneProps, SceneState> {
   static defaultProps = {
     visible: false,
     placeholder: null,
@@ -56,9 +56,18 @@ class Scene extends Component<SceneProps, SceneState> {
   render() {
     const { style, children, placeholder } = this.props;
     const { visible } = this.state;
+
+    const rebuildChildren = React.Children.map(children, (child) => {
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child);
+      } else {
+        return child;
+      }
+    });
+
     return (
       <View ref={this.viewRef} style={[styles.scene, style]}>
-        {visible ? children : placeholder}
+        {visible ? rebuildChildren : placeholder}
       </View>
     );
   }

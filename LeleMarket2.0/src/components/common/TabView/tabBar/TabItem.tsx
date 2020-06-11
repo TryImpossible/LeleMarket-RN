@@ -96,7 +96,27 @@ const TabItem: React.FC<TabItemProps> = ({
 };
 
 function isEqual(prevProps: TabItemProps, nextProps: TabItemProps) {
-  return prevProps.isActive === nextProps.isActive;
+  type Key = 'route' | 'isActive' | 'activeColor' | 'inactiveColor' | 'colorValue' | 'scaleValue';
+  const equalPropsKeys: Key[] = [
+    'route',
+    // 'style',
+    'isActive',
+    'activeColor',
+    'inactiveColor',
+    // 'labelStyle',
+    'colorValue',
+    'scaleValue',
+    // 'bdageStyle',
+  ];
+
+  let isEq: boolean = true;
+  for (const key of equalPropsKeys) {
+    if (prevProps[key] !== nextProps[key]) {
+      isEq = false;
+      break;
+    }
+  }
+  return isEq;
 }
 
 export default React.memo(TabItem, isEqual);

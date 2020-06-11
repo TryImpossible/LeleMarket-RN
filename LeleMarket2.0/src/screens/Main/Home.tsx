@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
-import { ScreenLayout, TabView } from 'components/common';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { ScreenLayout } from 'components/common';
+import TabView, { ScrollableTabView } from 'components/common/TabView';
 import IMAGES from 'resources/images';
 import Discover from './Discover';
 
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const data = [
+const default_data = [
   { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.ic_nav_menu },
   { key: 'discover', title: Lang.get('components.mainTabBar.discover'), badge: 1 },
   { key: 'customization', title: Lang.get('components.mainTabBar.customization') },
@@ -26,7 +27,7 @@ const data = [
   // { key: 'mine', title: Lang.get('components.mainTabBar.mine') },
 ];
 
-let tabViewRef: React.RefObject<TabView> = React.createRef<TabView>();
+let tabViewRef: React.RefObject<ScrollableTabView> = React.createRef<ScrollableTabView>();
 
 const Pager = ({ index, jumpTo }: { index: number; jumpTo: (index: number) => void }) => {
   const [loader, setLoader] = React.useState(true);
@@ -62,11 +63,80 @@ const Pager = ({ index, jumpTo }: { index: number; jumpTo: (index: number) => vo
       )}
     </View>
   );
-
-  // return <FlatList data={Array(100).fill(1)} renderItem={({ item, index }) => <Text>{index}</Text>} />;
 };
 
+// class HomeC extends React.PureComponent {
+//   state = {
+//     index: 1,
+//     data: default_data,
+//   };
+
+//   componentDidMount() {
+//     setTimeout(() => {
+//       this.setState({
+//         data: Object.assign(
+//           [],
+//           [
+//             { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.ic_nav_menu },
+//             { key: 'discover', title: Lang.get('components.mainTabBar.discover'), badge: 0 },
+//             // { key: 'customization', title: Lang.get('components.mainTabBar.customization') },
+//           ],
+//         ),
+//       });
+//       // setIndex(1);
+//     }, 3000);
+//   }
+
+//   render() {
+//     const { data, index } = this.state;
+//     return (
+//       <ScreenLayout style={styles.home}>
+//         <TabView
+//           ref={tabViewRef}
+//           style={{ marginTop: Theme.Dimens.statusBarHeight }}
+//           navigationState={data}
+//           // renderTabBar={() => {
+//           //   return null;
+//           // }}
+//           tabBarStyle={{ backgroundColor: 'yellow' }}
+//           // tabBarIndicatorMode="label"
+//           // tabBarIndicatorWidthPrecent={0.6}
+//           initialIndex={index}
+//           renderTabBarLeftSection={() => (
+//             <View style={{ width: _toDP(30), height: _toDP(48), backgroundColor: 'black' }} />
+//           )}
+//           renderTabBarRightSection={() => (
+//             <View style={{ width: _toDP(50), height: _toDP(48), backgroundColor: 'black' }} />
+//           )}
+//           renderScene={({ index, jumpTo }) => <Pager index={index} jumpTo={jumpTo} />}
+//           // renderTabBarLabel={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
+//           // renderTabBarBadge={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
+//           // tabBarIndicatorMode="label"
+//           // tabBarMode="scrollable"
+//         />
+//       </ScreenLayout>
+//     );
+//   }
+// }
+
 const Home: React.FC<{}> = () => {
+  const [index, setIndex] = React.useState(0);
+  const [data, setData] = React.useState(default_data);
+  React.useEffect(() => {
+    setTimeout(() => {
+      // setIndex(1);
+      setData(
+        Object.assign(
+          [],
+          [
+            { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.ic_nav_menu },
+            { key: 'discover', title: Lang.get('components.mainTabBar.discover'), badge: 0 },
+            { key: 'customization', title: Lang.get('components.mainTabBar.customization') },
+          ],
+        ),
+      );
+    }, 3000);
+  }, []);
   return (
     <ScreenLayout style={styles.home}>
       <TabView
@@ -77,8 +147,9 @@ const Home: React.FC<{}> = () => {
         //   return null;
         // }}
         tabBarStyle={{ backgroundColor: 'yellow' }}
+        // tabBarIndicatorMode="label"
         // tabBarIndicatorWidthPrecent={0.6}
-        initialIndex={2}
+        initialIndex={index}
         renderTabBarLeftSection={() => (
           <View style={{ width: _toDP(30), height: _toDP(48), backgroundColor: 'black' }} />
         )}
@@ -95,4 +166,5 @@ const Home: React.FC<{}> = () => {
   );
 };
 
-export default React.memo(Home, () => true);
+export default React.memo(Home, () => false);
+// export default HomeC;

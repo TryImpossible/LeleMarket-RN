@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, StyleProp, ViewStyle, ImageURISource, ImageRequireSource, ScrollView } from 'react-native';
 import Scene from './Scene';
 
@@ -19,9 +19,10 @@ export interface RouteProps {
   badge?: number;
 }
 
-export interface PagerProps {
+export interface SceneProps {
   route: RouteProps;
   index: number;
+  jumpTo: (index: number) => void;
 }
 
 export interface MyViewPagerProps {
@@ -29,7 +30,7 @@ export interface MyViewPagerProps {
   routes: Array<RouteProps>;
   onIndexChange?: (index: number, callback: () => void) => void;
   sceneContainerStyle?: StyleProp<ViewStyle>;
-  renderScene: ({ route, index }: PagerProps) => React.ReactNode;
+  renderScene: ({ route, index, jumpTo }: SceneProps) => React.ReactNode;
   bounces?: boolean;
   lazy?: boolean;
   lazyPreloadDistance?: number;
@@ -42,7 +43,7 @@ export interface MyViewPagerProps {
   initialIndex?: number;
 }
 
-class MyViewPager extends Component<MyViewPagerProps> {
+class MyViewPager extends React.PureComponent<MyViewPagerProps> {
   static defaultProps = {
     lazy: true,
     swipeEnabled: true,
@@ -110,8 +111,8 @@ class MyViewPager extends Component<MyViewPagerProps> {
       renderScene,
       swipeEnabled,
       onPagerScroll,
-      onSwipeStart,
-      onSwipeEnd,
+      // onSwipeStart,
+      // onSwipeEnd,
       initialIndex,
       bounces,
       lazy,
@@ -193,7 +194,7 @@ class MyViewPager extends Component<MyViewPagerProps> {
               placeholder={renderLazyPlaceholder && renderLazyPlaceholder()}
               visible={!lazy || index === initialIndex}
             >
-              {renderScene({ route, index })}
+              {renderScene({ route, index, jumpTo: (positon) => this.scrollToIndex(positon) })}
             </Scene>
           );
         })}

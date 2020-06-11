@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, StyleProp, ViewStyle, ImageURISource, ImageRequireSource } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import Scene from './Scene';
@@ -44,7 +44,7 @@ export interface MyViewPagerProps {
   initialIndex?: number;
 }
 
-class MyViewPager extends Component<MyViewPagerProps> {
+class MyViewPager extends React.PureComponent<MyViewPagerProps> {
   static defaultProps = {
     lazy: true,
     swipeEnabled: true,

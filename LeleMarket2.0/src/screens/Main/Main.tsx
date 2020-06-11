@@ -76,6 +76,7 @@ const stackConfig: CreateNavigatorConfig<
     header: null,
   },
   backBehavior: 'none',
+  lazy: true,
   tabBarComponent: ({ jumpTo, navigation: { navigate } }) => {
     return (
       <MainTabBar

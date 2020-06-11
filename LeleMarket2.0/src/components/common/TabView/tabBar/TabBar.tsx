@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -95,7 +95,7 @@ interface TabBarState {
   selectedIndex: number;
 }
 
-class TabBar extends Component<TabBarProps, TabBarState> {
+class TabBar extends React.PureComponent<TabBarProps, TabBarState> {
   static defaultProps = {
     initialIndex: 0,
     bounces: true,
@@ -130,37 +130,51 @@ class TabBar extends Component<TabBarProps, TabBarState> {
     this.scrollViewHeight = 0;
     this.tabItemLayout = {};
     this.timer = null;
-    this.selectedIndex = -1;
+    this.selectedIndex = 0;
 
     this.state = {
-      selectedIndex: -1,
+      selectedIndex: 0,
     };
   }
 
-  componentDidMount() {
-    this.timer = setTimeout(() => {
-      if (this.state.selectedIndex === -1 && !!this.scrollViewWidth && !!this.scrollViewHeight) {
-        this.scrollToIndex(this.props.initialIndex || 0);
-      }
-    }, 200);
-  }
+  // componentDidMount() {
+  //   this.timer = setTimeout(() => {
+  //     if (this.state.selectedIndex === -1 && !!this.scrollViewWidth && !!this.scrollViewHeight) {
+  //       this.scrollToIndex(this.props.initialIndex || 0);
+  //       console.warn('ds');
+  //     }
+  //   }, 200);
+  // }
+
+  // UNSAFE_componentWillReceiveProps(nextProps: TabBarProps) {
+  //   console.warn('UNSAFE_componentWillReceiveProps');
+  //   if (this.props.routes !== nextProps.routes) {
+  //     this.scrollToIndex(this.state.selectedIndex);
+  //   }
+  // }
+
+  // componentDidUpdate() {
+  //   console.warn('componentDidUpdate');
+  // }
+
+  // static getDerivedStateFromProps(props, state) {
+  //   console.warn('getDerivedStateFromProps');
+  //   return null;
+  // }
 
   componentWillUnmount() {
     this.timer && clearTimeout(this.timer);
   }
 
   scrollToIndex(index: number, callback?: () => void) {
-    if (index === this.selectedIndex) {
+    if (index === this.selectedIndex && index !== this.props.initialIndex) {
       return;
     }
-    // if (this[`label${index}`]) {
-    //   this[`label${index}`].setNativeProps({ style: { opacity: 1 } });
-    // }
     if (!this.tabItemLayout[index] || !this.tabLabelLayout[index]) {
       return;
     }
 
-    const animated = this.selectedIndex === -1 || Math.abs(index - this.selectedIndex) === 1;
+    const animated = this.props.initialIndex === index || Math.abs(index - this.selectedIndex) === 1;
     const animations: Array<CompositeAnimation> = [];
     const { x, width } = this.tabItemLayout[index];
     const { width: labelWidth } = this.tabLabelLayout[index];

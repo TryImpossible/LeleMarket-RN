@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { FlatList, Text } from 'react-native';
 import { ScreenLayout } from 'components/common';
 import PagedList, { PullUpStatus, PullDownStatus } from 'components/common/PagedList';
@@ -58,4 +58,4 @@ const Discover = () => {
   );
 };
 
-export default Discover;
+export default memo(Discover, () => true);
