@@ -28,13 +28,14 @@ interface CompositeAnimation {
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: _toDP(Theme.Dimens.tabBarHeight),
+    minHeight: _toDP(Theme.Dimens.tabBarHeight),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
   contentContainerStyle: {
     height: '100%',
+    paddingVertical: 8,
   },
 });
 

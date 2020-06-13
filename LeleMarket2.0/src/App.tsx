@@ -6,7 +6,7 @@ import { StyleSheet, StatusBar, View } from 'react-native';
 import { NavigationState, NavigationAction } from 'react-navigation';
 import AppNavigator from 'src/navigators/AppNavigator';
 import NavigationService from 'src/navigators/NavigationService';
-import { Window } from 'components/common';
+import Window from 'components/common/Window';
 
 const styles = StyleSheet.create({
   container: {

@@ -72,13 +72,17 @@ class MyViewPager extends React.PureComponent<MyViewPagerProps> {
 
   componentDidMount() {
     // NOTE: 实现initialPage功能
-    const { initialIndex = 0 } = this.props;
-    if (initialIndex > 0) {
-      this.timer = setTimeout(() => {
+    const { initialIndex = 0, onIndexChange } = this.props;
+    this.timer = setTimeout(() => {
+      if (initialIndex === 0) {
+        onIndexChange && onIndexChange(0, () => {});
+      }
+      if (initialIndex > 0) {
         this.scrollViewRef.current &&
           this.scrollViewRef.current.scrollTo({ x: this.contentWidth * initialIndex, animated: false });
-      }, 100);
-    }
+      }
+    }, 100);
+
     Object.values(this.sceneRefs).forEach((ref) => ref && ref.setNativeProps({ style: { width: __WIDTH__ } }));
   }
 

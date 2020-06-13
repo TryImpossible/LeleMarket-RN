@@ -151,10 +151,10 @@ const Home: React.FC<{}> = () => {
         // tabBarIndicatorWidthPrecent={0.6}
         initialIndex={index}
         renderTabBarLeftSection={() => (
-          <View style={{ width: _toDP(30), height: _toDP(48), backgroundColor: 'black' }} />
+          <View style={{ width: _toDP(30), alignSelf: 'stretch', backgroundColor: 'black' }} />
         )}
         renderTabBarRightSection={() => (
-          <View style={{ width: _toDP(50), height: _toDP(48), backgroundColor: 'black' }} />
+          <View style={{ width: _toDP(50), alignSelf: 'stretch', backgroundColor: 'black' }} />
         )}
         renderScene={({ index, jumpTo }) => <Pager index={index} jumpTo={jumpTo} />}
         // renderTabBarLabel={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
