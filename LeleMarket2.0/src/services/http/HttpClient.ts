@@ -1,8 +1,9 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { MD5 } from 'crypto-js';
 import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Logger from 'utilities/Logger';
+import { CustomAxiosRequestConfig, ResultData } from './Types';
 import {
   REQUEST_BASE_URL,
   REQUEST_KEY,
@@ -15,18 +16,6 @@ import LoggerInterceptor from './LoggerInterceptor';
 import LoaderInterceptor from './LoaderInterceptor';
 import ToastInterceptor from './ToastInterceptor';
 import TokenExpireInterceptor from './TokenExpireInterceptor';
-
-interface CustomAxiosRequestConfig extends AxiosRequestConfig {
-  showLoader?: boolean;
-  startTime?: number;
-  endTime?: number;
-}
-
-interface ResultData {
-  code: number;
-  message: string;
-  data: object | any[];
-}
 
 function buildSignature(params: { [key: string]: any }) {
   let str = Object.keys(params)

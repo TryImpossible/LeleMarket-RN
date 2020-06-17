@@ -1,9 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { Dispatch, bindActionCreators } from 'redux';
+import { useStore, useDispatch, useSelector, connect } from 'react-redux';
+import { getIn } from 'immutable';
 import { ScreenLayout } from 'components/common';
 import TabView, { ScrollableTabView } from 'components/common/TabView';
 import IMAGES from 'resources/images';
 import Discover from './Discover';
+import { Meta } from 'src/redux/Types';
+import * as Actions from 'src/redux/actions';
 
 const styles = StyleSheet.create({
   home: {
@@ -65,106 +70,140 @@ const Pager = ({ index, jumpTo }: { index: number; jumpTo: (index: number) => vo
   );
 };
 
-// class HomeC extends React.PureComponent {
-//   state = {
-//     index: 1,
-//     data: default_data,
-//   };
+interface HomeProps {
+  sortHome: any | [];
+  sortHomeReqeust: (meta: Meta) => void;
+}
 
-//   componentDidMount() {
-//     setTimeout(() => {
-//       this.setState({
-//         data: Object.assign(
+class HomeC extends React.PureComponent<HomeProps> {
+  state = {
+    index: 1,
+    data: default_data,
+  };
+
+  async componentDidMount() {
+    // setTimeout(() => {
+    // this.setState({
+    //   data: Object.assign(
+    //     [],
+    //     [
+    //       { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.ic_nav_menu },
+    //       { key: 'discover', title: Lang.get('components.mainTabBar.discover'), badge: 0 },
+    //       // { key: 'customization', title: Lang.get('components.mainTabBar.customization') },
+    //     ],
+    //   ),
+    // });
+    // setIndex(1);
+    // }, 3000);
+    const { sortHome, sortHomeReqeust } = this.props;
+    console.warn(sortHome);
+    sortHomeReqeust({
+      onSuccess: (data: any) => {
+        console.warn(data);
+      },
+      onFailure: () => {},
+    });
+  }
+
+  render() {
+    // console.warn(this.props.appName);
+    const { data } = this.state;
+    return (
+      <ScreenLayout style={styles.home}>
+        <TabView
+          ref={tabViewRef}
+          style={{ marginTop: Theme.Dimens.statusBarHeight }}
+          navigationState={data}
+          // renderTabBar={() => {
+          //   return null;
+          // }}
+          tabBarStyle={{ backgroundColor: 'yellow' }}
+          // tabBarIndicatorMode="label"
+          // tabBarIndicatorWidthPrecent={0.6}
+          initialIndex={0}
+          renderTabBarLeftSection={() => (
+            <View style={{ width: _toDP(30), height: _toDP(48), backgroundColor: 'black' }} />
+          )}
+          renderTabBarRightSection={() => (
+            <View style={{ width: _toDP(50), height: _toDP(48), backgroundColor: 'black' }} />
+          )}
+          renderScene={({ index, jumpTo }) => <Pager index={index} jumpTo={jumpTo} />}
+          // renderTabBarLabel={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
+          // renderTabBarBadge={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
+          // tabBarIndicatorMode="label"
+          // tabBarMode="scrollable"
+        />
+      </ScreenLayout>
+    );
+  }
+}
+
+//将state.counter绑定到props的counter
+const mapStateToProps = (state: any) => {
+  return {
+    sortHome: state.home.sortHome,
+  };
+};
+//将action的所有方法绑定到props上
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    sortHomeReqeust: bindActionCreators(Actions.sortHomeReqeust, dispatch),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(HomeC);
+
+// const Home: React.FC<{}> = (props) => {
+//   const store = useStore();
+//   const dispatch = useDispatch();
+//   // const appName = useSelector((state) => state.appName);
+//   const [index, setIndex] = React.useState(0);
+//   const [data, setData] = React.useState(default_data);
+//   React.useEffect(() => {
+//     setTimeout(async () => {
+//       console.warn(store.getState());
+//       dispatch(await increment());
+//       console.warn(store.getState());
+//       // setIndex(1);
+//       setData(
+//         Object.assign(
 //           [],
 //           [
 //             { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.ic_nav_menu },
 //             { key: 'discover', title: Lang.get('components.mainTabBar.discover'), badge: 0 },
-//             // { key: 'customization', title: Lang.get('components.mainTabBar.customization') },
+//             { key: 'customization', title: Lang.get('components.mainTabBar.customization') },
 //           ],
 //         ),
-//       });
-//       // setIndex(1);
+//       );
 //     }, 3000);
-//   }
+//   }, []);
+//   console.warn(props);
+//   return (
+//     <ScreenLayout style={styles.home}>
+//       <TabView
+//         ref={tabViewRef}
+//         style={{ marginTop: Theme.Dimens.statusBarHeight }}
+//         navigationState={data}
+//         // renderTabBar={() => {
+//         //   return null;
+//         // }}
+//         tabBarStyle={{ backgroundColor: 'yellow' }}
+//         // tabBarIndicatorMode="label"
+//         // tabBarIndicatorWidthPrecent={0.6}
+//         initialIndex={index}
+//         renderTabBarLeftSection={() => (
+//           <View style={{ width: _toDP(30), alignSelf: 'stretch', backgroundColor: 'black' }} />
+//         )}
+//         renderTabBarRightSection={() => (
+//           <View style={{ width: _toDP(50), alignSelf: 'stretch', backgroundColor: 'black' }} />
+//         )}
+//         renderScene={({ index, jumpTo }) => <Pager index={index} jumpTo={jumpTo} />}
+//         // renderTabBarLabel={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
+//         // renderTabBarBadge={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
+//         // tabBarIndicatorMode="label"
+//         // tabBarMode="scrollable"
+//       />
+//     </ScreenLayout>
+//   );
+// };
 
-//   render() {
-//     const { data, index } = this.state;
-//     return (
-//       <ScreenLayout style={styles.home}>
-//         <TabView
-//           ref={tabViewRef}
-//           style={{ marginTop: Theme.Dimens.statusBarHeight }}
-//           navigationState={data}
-//           // renderTabBar={() => {
-//           //   return null;
-//           // }}
-//           tabBarStyle={{ backgroundColor: 'yellow' }}
-//           // tabBarIndicatorMode="label"
-//           // tabBarIndicatorWidthPrecent={0.6}
-//           initialIndex={index}
-//           renderTabBarLeftSection={() => (
-//             <View style={{ width: _toDP(30), height: _toDP(48), backgroundColor: 'black' }} />
-//           )}
-//           renderTabBarRightSection={() => (
-//             <View style={{ width: _toDP(50), height: _toDP(48), backgroundColor: 'black' }} />
-//           )}
-//           renderScene={({ index, jumpTo }) => <Pager index={index} jumpTo={jumpTo} />}
-//           // renderTabBarLabel={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
-//           // renderTabBarBadge={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
-//           // tabBarIndicatorMode="label"
-//           // tabBarMode="scrollable"
-//         />
-//       </ScreenLayout>
-//     );
-//   }
-// }
-
-const Home: React.FC<{}> = () => {
-  const [index, setIndex] = React.useState(0);
-  const [data, setData] = React.useState(default_data);
-  React.useEffect(() => {
-    setTimeout(() => {
-      // setIndex(1);
-      setData(
-        Object.assign(
-          [],
-          [
-            { key: 'home', title: Lang.get('components.mainTabBar.home'), icon: IMAGES.ic_nav_menu },
-            { key: 'discover', title: Lang.get('components.mainTabBar.discover'), badge: 0 },
-            { key: 'customization', title: Lang.get('components.mainTabBar.customization') },
-          ],
-        ),
-      );
-    }, 3000);
-  }, []);
-  return (
-    <ScreenLayout style={styles.home}>
-      <TabView
-        ref={tabViewRef}
-        style={{ marginTop: Theme.Dimens.statusBarHeight }}
-        navigationState={data}
-        // renderTabBar={() => {
-        //   return null;
-        // }}
-        tabBarStyle={{ backgroundColor: 'yellow' }}
-        // tabBarIndicatorMode="label"
-        // tabBarIndicatorWidthPrecent={0.6}
-        initialIndex={index}
-        renderTabBarLeftSection={() => (
-          <View style={{ width: _toDP(30), alignSelf: 'stretch', backgroundColor: 'black' }} />
-        )}
-        renderTabBarRightSection={() => (
-          <View style={{ width: _toDP(50), alignSelf: 'stretch', backgroundColor: 'black' }} />
-        )}
-        renderScene={({ index, jumpTo }) => <Pager index={index} jumpTo={jumpTo} />}
-        // renderTabBarLabel={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
-        // renderTabBarBadge={({ route }) => <Text style={{ color: 'red' }}>{route.title}</Text>}
-        // tabBarIndicatorMode="label"
-        // tabBarMode="scrollable"
-      />
-    </ScreenLayout>
-  );
-};
-
-export default React.memo(Home, () => false);
-// export default HomeC;
+// export default React.memo(Home);

@@ -1,12 +1,7 @@
 import { AxiosResponse } from 'axios';
+import { ResultData } from './Types';
 import { REQUEST_FAIL_TOAST, REQUEST_FAIL_ALERT } from '../Const';
 import { Toast } from 'components/common';
-
-export interface ResultData {
-  code: number;
-  message: string;
-  data: object | any[];
-}
 
 function toast(res: AxiosResponse<ResultData>) {
   // console.log('res', res);

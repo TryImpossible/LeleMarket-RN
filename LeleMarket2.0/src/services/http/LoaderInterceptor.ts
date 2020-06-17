@@ -1,11 +1,6 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
+import { CustomAxiosRequestConfig } from './Types';
 import { Loader } from 'components/common';
-
-interface CustomAxiosRequestConfig extends AxiosRequestConfig {
-  showLoader?: boolean;
-  startTime?: number;
-  endTime?: number;
-}
 
 function show(req: CustomAxiosRequestConfig) {
   const { showLoader } = req;
