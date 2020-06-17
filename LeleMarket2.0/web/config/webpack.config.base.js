@@ -161,6 +161,17 @@ const devServerConfiguration = {
   useLocalIp: true, // 使用本地ip
   open: false, // 是否自动打开
   publicPath: '', // 表示的是打包生成的静态文件所在的位置（若是devServer里面的publicPath没有设置，则会认为是output里面设置的publicPath的值）
+  proxy: {
+    '/api': {
+      target: 'https://api.51app.cn',
+      ws: true,
+      changeOrigin: true,
+      // secure: false,
+      pathRewrite: {
+        '^/api': '',
+      },
+    },
+  }, // 配置多
 };
 
 /**
