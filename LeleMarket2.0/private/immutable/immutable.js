@@ -1,9 +1,9 @@
-const { Map, List, is, Set } = require('immutable');
+const { Map, List, is, Set, isImmutable } = require('immutable');
 
-// const map = Map({ a: 1, b: 2, c: 3 })
-// const mapCopy = map
-// console.log(map)
-// console.log(mapCopy)
+// const map = Map({ a: 1, b: 2, c: 3 });
+// const mapCopy = map;
+// console.log(map);
+// console.log(mapCopy);
 
 // const list1 = List([1, 2])
 // const list2 = list1.push(3, 4, 5)
@@ -54,7 +54,7 @@ const { Map, List, is, Set } = require('immutable');
 // // However the two are value equal.
 // console.log(anotherUpdatedMap.equals(updatedMap))
 
-const m = Map({
-  a: [{ menu: a }, { menu: b }, { menu: c }]
-});
-console.log(m);
+// const m = Map({
+//   a: [{ menu: 'a' }, { menu: 'b' }, { menu: 'c' }],
+// });
+// console.log(m);
