@@ -1,3 +1,35 @@
+// const readyStatePromise = (store) => (next) => (action) => {
+//   if (!action.promise) {
+//     return next(action);
+//   }
+
+//   function makeAction(ready, data) {
+//     let newAction = Object.assign({}, action, { ready }, data);
+//     delete newAction.promise;
+//     return newAction;
+//   }
+
+//   next(makeAction(false));
+//   return action.promise.then(
+//     (result) => {
+//       console.warn('result', result);
+//       return next(makeAction(true, { result }));
+//     },
+//     (error) => {
+//       console.warn('error', error);
+//       return next(makeAction(true, { error }));
+//     },
+//   );
+// };
+
+// const vanillaPromise = (store) => (next) => (action) => {
+//   if (typeof action.then !== 'function') {
+//     return next(action);
+//   }
+
+//   return Promise.resolve(action).then(store.dispatch);
+// };
+
 import * as Redux from 'redux';
 
 export interface FSA {

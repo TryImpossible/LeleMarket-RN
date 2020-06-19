@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
-import home from './home';
+import { combineReducers } from 'redux-immutable';
+import homeReducers from './homeReducers';
 
-export default combineReducers({ home });
+export default combineReducers({ home: homeReducers });

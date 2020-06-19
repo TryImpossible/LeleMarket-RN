@@ -2,12 +2,12 @@ import React from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { Dispatch, bindActionCreators } from 'redux';
 import { useStore, useDispatch, useSelector, connect } from 'react-redux';
-import { getIn } from 'immutable';
+import Immutable from 'immutable';
 import { ScreenLayout } from 'components/common';
 import TabView, { ScrollableTabView } from 'components/common/TabView';
 import IMAGES from 'resources/images';
 import Discover from './Discover';
-import { Meta } from 'src/redux/Types';
+import { Meta } from 'src/redux/typings';
 import * as Actions from 'src/redux/actions';
 
 const styles = StyleSheet.create({
@@ -95,14 +95,16 @@ class HomeC extends React.PureComponent<HomeProps> {
     // });
     // setIndex(1);
     // }, 3000);
-    const { sortHome, sortHomeReqeust } = this.props;
-    console.warn(sortHome);
-    sortHomeReqeust({
+    const { sortHomeReqeust } = this.props;
+    const result = await sortHomeReqeust({
       onSuccess: (data: any) => {
-        console.warn(data);
+        console.warn('data', data);
       },
       onFailure: () => {},
     });
+    const { sortHome } = this.props;
+    console.warn('sortHome', sortHome);
+    // console.warn('result', result);
   }
 
   render() {
@@ -140,14 +142,15 @@ class HomeC extends React.PureComponent<HomeProps> {
 
 //将state.counter绑定到props的counter
 const mapStateToProps = (state: any) => {
+  console.warn('Home.Immutable.isImmutable', state);
   return {
-    sortHome: state.home.sortHome,
+    sortHome: state.getIn(['home', 'topNav']),
   };
 };
 //将action的所有方法绑定到props上
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    sortHomeReqeust: bindActionCreators(Actions.sortHomeReqeust, dispatch),
+    sortHomeReqeust: bindActionCreators(Actions.topNavReqeust, dispatch),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeC);

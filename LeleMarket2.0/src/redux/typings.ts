@@ -7,8 +7,6 @@ export type Type = string;
 export type Payload = any;
 
 export interface Meta {
-  onSuccess?: (data: any) => void;
-  onFailure?: (data: any) => void;
   [key: string]: any;
 }
 

@@ -1,5 +1,5 @@
 import logger from './logger';
 import promise from './promise';
-import request from './request';
+import actionPromise from './actionPromise';
 
-export { logger, promise, request };
+export { logger, promise, actionPromise };
