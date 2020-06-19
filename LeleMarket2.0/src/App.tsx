@@ -11,7 +11,13 @@ import Window from 'components/common/Window';
 import configureStore from 'src/redux/store/configureStore';
 import rootSaga from 'src/redux/sagas';
 
-const store = configureStore();
+// "husky": {
+//   "hooks": {
+//     "pre-commit": "lint-staged"
+//   }
+// },
+
+export const store = configureStore();
 store.runSaga(rootSaga);
 
 const styles = StyleSheet.create({
@@ -33,10 +39,11 @@ const App = () => {
             }
             NavigationService.setTopLevelNavigator(nav);
           }}
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           onNavigationStateChange={(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             prevState: NavigationState,
             nextState: NavigationState,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             action: NavigationAction,
           ) => {
             if (!nextState.isTransitioning) {

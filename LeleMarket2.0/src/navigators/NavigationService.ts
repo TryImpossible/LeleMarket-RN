@@ -9,7 +9,9 @@ import {
   NavigationNavigateAction,
 } from 'react-navigation';
 
-let topLevelNavigator: NavigationContainer & NavigationProp<NavigationState>;
+export type AppNavigatorRef = NavigationContainer & NavigationProp<NavigationState>;
+
+let topLevelNavigator: AppNavigatorRef;
 
 const getTopLevelNavigator = (): NavigationContainer & NavigationProp<NavigationState> => {
   if (!topLevelNavigator) {

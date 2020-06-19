@@ -142,7 +142,6 @@ class TabBar extends React.PureComponent<TabBarProps, TabBarState> {
   //   this.timer = setTimeout(() => {
   //     if (this.state.selectedIndex === -1 && !!this.scrollViewWidth && !!this.scrollViewHeight) {
   //       this.scrollToIndex(this.props.initialIndex || 0);
-  //       console.warn('ds');
   //     }
   //   }, 200);
   // }

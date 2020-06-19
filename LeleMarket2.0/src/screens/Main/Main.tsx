@@ -13,7 +13,7 @@ import {
 } from 'react-navigation';
 import { MainTabBar } from 'components/common';
 import IMAGES from 'resources/images';
-import Home from './Home';
+import Home from '../Home';
 import Discover from './Discover';
 import Customization from './Customization';
 import ShoppingCart from './ShoppingCart';
@@ -77,6 +77,7 @@ const stackConfig: CreateNavigatorConfig<
   },
   backBehavior: 'none',
   lazy: true,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   tabBarComponent: ({ jumpTo, navigation: { navigate } }) => {
     return (
       <MainTabBar

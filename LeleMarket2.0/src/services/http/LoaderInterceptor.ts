@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { CustomAxiosRequestConfig } from './Types';
+import { CustomAxiosRequestConfig } from './typings';
 import { Loader } from 'components/common';
 
 function show(req: CustomAxiosRequestConfig) {

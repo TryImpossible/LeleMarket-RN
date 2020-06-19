@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { ResultData } from './Types';
+import { ResultData } from './typings';
 import { REQUEST_FAIL_TOKEN_EXPIRE } from '../Const';
 import { Toast } from 'components/common';
 

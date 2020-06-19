@@ -22,7 +22,7 @@ function requestMiddleware({ dispatch, getState }: MiddlewareAPI): any {
 
     if (type.endsWith(FULFILLED_SUFFIX)) {
       const key = type.substr(0, type.lastIndexOf(FULFILLED_SUFFIX));
-      const { resolve } = promises[key];
+      const { resolve } = promises[key] || {};
       if (resolve) {
         resolve(action.payload);
         delete promises[key];
@@ -32,7 +32,7 @@ function requestMiddleware({ dispatch, getState }: MiddlewareAPI): any {
 
     if (type.endsWith(REJECTED_SUFFIX)) {
       const key = type.substr(0, type.lastIndexOf(REJECTED_SUFFIX));
-      const { reject } = promises[key];
+      const { reject } = promises[key] || {};
       if (reject) {
         reject(action.payload);
         delete promises[key];

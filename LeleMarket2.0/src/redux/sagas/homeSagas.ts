@@ -5,8 +5,10 @@ import { topNavSuccess, topNavFailure } from '../actions';
 
 function* fetchTopNavData() {
   try {
-    const { data } = yield call(ServerApi.topNav);
-    yield put(topNavSuccess(data));
+    const {
+      data: { topNav },
+    } = yield call(ServerApi.topNav);
+    yield put(topNavSuccess(topNav));
   } catch (error) {
     yield put(topNavFailure());
   }

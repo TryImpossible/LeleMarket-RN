@@ -27,6 +27,8 @@ if (!__DEV__) {
     ...global.console,
     info: () => {},
     log: () => {},
+    group: () => {},
+    groupEnd: () => {},
     warn: () => {},
     debug: () => {},
     error: () => {},
