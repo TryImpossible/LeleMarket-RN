@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle, TextStyle, Animated } from 'react-native';
 import ViewPager, { RouteProps, SceneProps } from './viewPager/MyViewPager';
 import TabBar from './tabBar/TabBar';
@@ -59,7 +59,7 @@ interface TabViewProps {
   initialIndex?: number;
 }
 
-class TabView extends React.Component<TabViewProps> {
+class TabView extends React.PureComponent<TabViewProps> {
   tabBarRef: React.RefObject<TabBar> = React.createRef<TabBar>();
   viewPagerRef: React.RefObject<ViewPager> = React.createRef<ViewPager>();
 
@@ -119,6 +119,9 @@ class TabView extends React.Component<TabViewProps> {
       onPagerScroll,
       initialIndex,
     } = this.props;
+    if (navigationState.length <= 0) {
+      return null;
+    }
     const renderTabBarComponent = () => {
       if (renderTabBar) {
         return renderTabBar({

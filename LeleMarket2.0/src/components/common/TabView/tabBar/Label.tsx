@@ -37,7 +37,7 @@ const Label: React.FC<LabelProps> = ({
           fontWeight: isActive ? 'bold' : 'normal',
           // color: colorValue,
           // transform: [{ scale: scaleValue }],
-          color: isActive ? Theme.Colors.textDarkColor : Theme.Colors.textLightColor,
+          color: isActive ? Theme.Colors.accentColor : Theme.Colors.textDarkColor,
           transform: [{ scale: isActive ? 1.2 : 1 }],
         },
         style,

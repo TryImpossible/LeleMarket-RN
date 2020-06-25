@@ -81,9 +81,9 @@ class MyViewPager extends React.PureComponent<MyViewPagerProps> {
         this.scrollViewRef.current &&
           this.scrollViewRef.current.scrollTo({ x: this.contentWidth * initialIndex, animated: false });
       }
-    }, 100);
 
-    Object.values(this.sceneRefs).forEach((ref) => ref && ref.setNativeProps({ style: { width: __WIDTH__ } }));
+      Object.values(this.sceneRefs).forEach((ref) => ref && ref.setNativeProps({ style: { width: __WIDTH__ } }));
+    }, 100);
   }
 
   componentWillUnmount() {

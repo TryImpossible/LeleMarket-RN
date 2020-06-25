@@ -18,5 +18,6 @@ const ServerApi = {
   testPost: () => HttpClient.post('/diyMall/index/homeRevision2.do'),
 
   topNav: () => HttpClient.get('/diyMall/index/sortHome.do?type=topNav'),
+  choiceness: () => HttpClient.get('/diyMall/index/homeRevision2.do'),
 };
 export default ServerApi;

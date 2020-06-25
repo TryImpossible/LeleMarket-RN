@@ -5,9 +5,3 @@ export interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   startTime?: number;
   endTime?: number;
 }
-
-export interface ResultData {
-  code: number;
-  message: string;
-  data: object | any[];
-}

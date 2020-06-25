@@ -1,6 +1,6 @@
-import { Map } from 'immutable';
+import InitialState from './store/initialState';
 
-export type State = typeof Map;
+export type State = typeof InitialState;
 
 export type Type = string;
 
@@ -10,8 +10,8 @@ export interface Meta {
   [key: string]: any;
 }
 
-export interface Action {
+export interface Action<T> {
   type: Type;
-  payload?: Payload;
+  payload?: T;
   meta?: Meta;
 }

@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios';
-import { ResultData } from './typings';
+import { ResponseResult } from 'src/model/commonModel';
 import { REQUEST_FAIL_TOKEN_EXPIRE } from '../Const';
 import { Toast } from 'components/common';
 
-function tokenExpire(res: AxiosResponse<ResultData>) {
+function tokenExpire(res: AxiosResponse<ResponseResult<any>>) {
   const {
     data: { code },
   } = res;

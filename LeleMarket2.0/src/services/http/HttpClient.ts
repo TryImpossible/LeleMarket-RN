@@ -3,7 +3,8 @@ import { MD5 } from 'crypto-js';
 import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Logger from 'utilities/Logger';
-import { CustomAxiosRequestConfig, ResultData } from './typings';
+import { CustomAxiosRequestConfig } from './typings';
+import { ResponseResult } from 'src/model/commonModel';
 import {
   REQUEST_BASE_URL,
   REQUEST_KEY,
@@ -56,7 +57,7 @@ const defaultConfig: CustomAxiosRequestConfig = {
   },
 };
 
-const onSuccess = (response: AxiosResponse<ResultData>) => {
+const onSuccess = (response: AxiosResponse<ResponseResult<any>>) => {
   const {
     config: { baseURL = '' },
     data: { code },
