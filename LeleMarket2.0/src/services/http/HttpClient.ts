@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Logger from 'utilities/Logger';
 import { CustomAxiosRequestConfig } from './typings';
-import { ResponseResult } from 'src/model/commonModel';
+import { ResponseResult } from 'src/models/commonModel';
 import {
   REQUEST_BASE_URL,
   REQUEST_KEY,

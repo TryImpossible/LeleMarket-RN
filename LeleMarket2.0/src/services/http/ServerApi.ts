@@ -1,4 +1,5 @@
 import HttpClient from './HttpClient';
+
 const ServerApi = {
   // logging: (data: object) => {
   //   HttpClient.get('', data, { baseURL: 'http://192.168.1.3:9090' });

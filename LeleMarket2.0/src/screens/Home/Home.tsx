@@ -55,7 +55,10 @@ const Pager = ({ index }: { index: number; jumpTo: (index: number) => void }) =>
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
-  const topNavData = useSelector((state: State) => state.home.topNav);
+  const topNavData = useSelector((state: State) => {
+    // console.warn(state);
+    return state.home.topNav;
+  });
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(actions.topNavReqeust());

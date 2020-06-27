@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { ResponseResult } from 'src/model/commonModel';
+import { ResponseResult } from 'src/models/commonModel';
 import { REQUEST_FAIL_TOAST, REQUEST_FAIL_ALERT } from '../Const';
 import { Toast } from 'components/common';
 

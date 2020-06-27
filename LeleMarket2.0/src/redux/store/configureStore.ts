@@ -30,6 +30,8 @@ import { actionPromise } from '../middlewares';
 //   // diff: false,
 // });
 
+export type RootState = ReturnType<typeof rootReducer>;
+
 const sagaMiddleware = createSagaMiddleware();
 
 interface MyStore extends Store {
