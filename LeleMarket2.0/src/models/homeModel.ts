@@ -11,6 +11,8 @@ export interface TopNavData {
 
 export interface TopNavResp extends ResponseResult<TopNavData> {}
 
+export type TopNavState = { key: string; title: string }[];
+
 export interface HandpickBean {
   id: number;
   imgUrl: string;
@@ -71,3 +73,9 @@ export interface ChoicenessData {
 }
 
 export interface ChoicenessResp extends ResponseResult<ChoicenessData> {}
+
+export type ChoicenessState = {
+  title: 'banners' | 'midNav' | 'handpick' | 'customization';
+  name?: string;
+  data: [BannerBean[]] | [MidNavBean[]] | [HandpickBean[]] | CustomizationBean[];
+}[];

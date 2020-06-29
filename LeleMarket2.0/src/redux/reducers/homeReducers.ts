@@ -1,6 +1,6 @@
 // import Immutable, { List, Map } from 'immutable';
 // import { combineReducers } from 'redux-immutable';
-import { combineReducers, Reducer } from 'redux';
+import { combineReducers } from 'redux';
 import { Action } from '../typings';
 import {
   TOP_NAV_REQUEST,
@@ -10,9 +10,7 @@ import {
   CHOICENESS_SUCCESS,
   CHOICENESS_FAILURE,
 } from '../actionTypes';
-import { TopNavBean, ChoicenessData } from 'src/models/homeModel';
-
-export type TopNavState = { key: string; title: string }[];
+import { TopNavBean, TopNavState, ChoicenessData, ChoicenessState } from 'src/models/homeModel';
 
 const topNav = (state: TopNavState = [], action: Action<TopNavBean[]>): TopNavState => {
   switch (action.type) {
@@ -29,20 +27,20 @@ const topNav = (state: TopNavState = [], action: Action<TopNavBean[]>): TopNavSt
 
 // const getKeyValue = <U extends keyof T, T extends object>(key: U) => (obj: T) => obj[key];
 
-const choiceness = (state = [], action: Action<ChoicenessData & { [key: string]: any }>) => {
+const choiceness = (state: ChoicenessState = [], action: Action<ChoicenessData>): ChoicenessState => {
   switch (action.type) {
     case CHOICENESS_REQUEST:
       return state;
     case CHOICENESS_SUCCESS:
-      // const data = [];
-      // const payload = action.payload || {};
-      // Object.keys(payload)
-      //   .filter((key) => key !== 'topNav')
-      //   .forEach((key) => {
-      //     data.push({ title: key, data: payload[key] });
-      //   });
-      // return data;
-      return state;
+      const data: ChoicenessState = [];
+      const payload = action.payload;
+      if (payload != null) {
+        data.push({ title: 'banners', data: [payload.banners] });
+        data.push({ title: 'midNav', data: [payload.midNav] });
+        data.push({ title: 'handpick', name: '开启定制之旅', data: [payload.handpick] });
+        data.push({ title: 'customization', name: '定制推荐', data: payload.customization });
+      }
+      return data;
     case CHOICENESS_FAILURE:
       return state;
     default:
@@ -50,4 +48,4 @@ const choiceness = (state = [], action: Action<ChoicenessData & { [key: string]:
   }
 };
 
-export default combineReducers({ topNav });
+export default combineReducers({ topNav, choiceness });
