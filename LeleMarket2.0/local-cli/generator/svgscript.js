@@ -1,24 +1,27 @@
 const fs = require('fs');
 const path = require('path');
 const logger = require('../logger');
-const { beautify, rewriteExport } = require('./utils');
 
-const SVG_SOURCE_DIR_PATH = path.resolve(__dirname, '../../svg');
-
-const SVG_DEST_DIR_PATH = path.resolve(__dirname, '../../src/resources/svg');
-
-function writeSVGFile() {
-  const files = fs.readdirSync(SVG_SOURCE_DIR_PATH);
-  files.forEach(file => {
-    const content = `export default ${JSON.stringify(fs.readFileSync(path.join(SVG_SOURCE_DIR_PATH, file), 'utf-8'))}`;
-    const filepath = path.join(SVG_DEST_DIR_PATH, file.replace(/svg$/i, 'js'));
-    fs.writeFileSync(filepath, content);
-    beautify(filepath);
-  });
-}
+const SVG_DIR_PATH = path.resolve(__dirname, '../../src/resources/svgs');
+const SVG_EXPORT_PATH = path.join(SVG_DIR_PATH, 'index.ts');
+const needFilterFiles = ['index.ts', '.DS_Store'];
 
 (function main() {
-  writeSVGFile();
-  rewriteExport(SVG_DEST_DIR_PATH);
+  const files = fs.readdirSync(SVG_DIR_PATH);
+  const content = ['export default {'];
+  files.forEach((file, index) => {
+    if (!needFilterFiles.includes(file)) {
+      const mi = file.lastIndexOf('.');
+
+      const name = file.substring(0, mi);
+      let line = `  ${name}: require('./${file}'),`;
+      if (index === files.length - 1) {
+        line = line.substring(0, line.lastIndexOf(','));
+      }
+      content.push(line);
+    }
+  });
+  content.push('};\n');
+  fs.writeFileSync(SVG_EXPORT_PATH, content.join('\n'));
   logger.info('generate satic svgfile successfully');
 })();

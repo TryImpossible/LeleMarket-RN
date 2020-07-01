@@ -20,7 +20,7 @@ module.exports = {
   // jsx 标签的反尖括号需要换行
   jsxBracketSameLine: false,
   // 箭头函数，只有一个参数的时候，也需要括号
-  arrowParens: 'always',
+  arrowParens: 'avoid',
   // 每个文件格式化的范围是文件的全部内容
   rangeStart: 0,
   rangeEnd: Infinity,

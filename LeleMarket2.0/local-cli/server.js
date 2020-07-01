@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
   if (req.method === 'GET') {
     console.log('get', req.url);
   } else if (req.method === 'POST') {
-    req.addListener('data', data => {
+    req.addListener('data', (data) => {
       console.log('post', data);
     });
   }
