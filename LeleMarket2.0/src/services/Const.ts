@@ -1,7 +1,7 @@
 import { DotEnv } from 'modules';
 
 // HttpClient
-export const REQUEST_BASE_URL: string = __WEB__ ? '/api' : 'http://api.51app.cn';
+export const REQUEST_BASE_URL: string = __WEB__ ? '/api' : DotEnv.HTTP_REQUEST_BASE_URL;
 export const REQUEST_KEY: string = '';
 export const REQUEST_SUCCESS: number = 200;
 export const REQUEST_FAIL: number = -1;

@@ -172,7 +172,7 @@ const devServerConfiguration = {
         '^/api': '',
       },
     },
-  }, // 配置多
+  }, // 配置跨域
 };
 
 /**
