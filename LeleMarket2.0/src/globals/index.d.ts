@@ -36,20 +36,20 @@ declare global {
       user: { [name: string]: any };
     }
   }
-  declare const _: LODASH;
-  declare const __ANDROID__: boolean;
-  declare const __IOS__: boolean;
-  declare const __IPHONEX__: boolean;
-  declare const __WEB__: boolean;
-  declare const __WIDTH__: number;
-  declare const __HEIGHT__: number;
-  declare const __ONEPX__: number;
-  declare const toDP: (size: number, enableHeightAdapt?: boolean) => number;
-  declare const toSP: (size: number) => number;
-  declare const color: () => string;
-  declare const Theme: THEME;
-  declare const Styles: Styles;
-  declare const Colors: Colors;
-  declare const Dimens: Dimens;
-  declare const Lang: LANG;
+  const _: LODASH;
+  const __ANDROID__: boolean;
+  const __IOS__: boolean;
+  const __IPHONEX__: boolean;
+  const __WEB__: boolean;
+  const __WIDTH__: number;
+  const __HEIGHT__: number;
+  const __ONEPX__: number;
+  const toDP: (size: number, enableHeightAdapt?: boolean) => number;
+  const toSP: (size: number) => number;
+  const color: () => string;
+  const Theme: THEME;
+  const Styles: Styles;
+  const Colors: Colors;
+  const Dimens: Dimens;
+  const Lang: LANG;
 }
