@@ -7,7 +7,7 @@ const PagedFlatList = PagedList(FlatList);
 
 const Item = ({ index }: { index: number }) => {
   return (
-    <Text style={{ textAlign: 'center', height: _toDP(88), lineHeight: _toDP(88), backgroundColor: _color() }}>
+    <Text style={{ textAlign: 'center', height: toDP(88), lineHeight: toDP(88), backgroundColor: color() }}>
       {index}
     </Text>
   );
@@ -45,7 +45,7 @@ const Discover = () => {
   return (
     <ScreenLayout>
       <PagedFlatList
-        style={{ flex: 1, marginTop: Theme.Dimens.statusBarHeight }}
+        style={{ flex: 1, marginTop: Dimens.statusBarHeight }}
         data={data}
         pullUpStatus={pullUpStatus}
         pullDownStatus={pullDownStatus}

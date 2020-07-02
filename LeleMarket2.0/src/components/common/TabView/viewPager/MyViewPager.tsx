@@ -142,14 +142,14 @@ class MyViewPager extends React.PureComponent<MyViewPagerProps> {
           return (
             <Scene
               key={`Scene${index}`}
-              getRef={(ref) => {
+              getRef={ref => {
                 this.sceneRefs[index] = ref;
               }}
               style={sceneContainerStyle}
               placeholder={renderLazyPlaceholder && renderLazyPlaceholder()}
               visible={!lazy || index === initialIndex}
             >
-              {renderScene({ route, index, jumpTo: (positon) => this.scrollToIndex(positon) })}
+              {renderScene({ route, index, jumpTo: positon => this.scrollToIndex(positon) })}
             </Scene>
           );
         })}

@@ -75,17 +75,17 @@ const NavBar: React.FC<NavBarProps> = ({
   return (
     <View
       style={[
-        Theme.NavBar.style,
+        Styles.NavBar.style,
         style,
-        { borderTopColor: Theme.Colors.dividerColor, borderTopWidth: dividerVisible ? Theme.Dimens.dividerHeight : 0 },
+        { borderTopColor: Colors.dividerColor, borderTopWidth: dividerVisible ? Dimens.dividerHeight : 0 },
       ]}
     >
-      <View style={[Theme.NavBar.backContainerStyle, backContainerStyle]}>
+      <View style={[Styles.NavBar.backContainerStyle, backContainerStyle]}>
         {backVisible &&
           (back || (
             <TouchableOpacity
-              style={[Theme.NavBar.backStyle, backStyle]}
-              activeOpacity={Theme.Dimens.activeOpacity}
+              style={[Styles.NavBar.backStyle, backStyle]}
+              activeOpacity={Dimens.activeOpacity}
               onPress={() => {
                 if (onBackPress) {
                   onBackPress();
@@ -95,27 +95,27 @@ const NavBar: React.FC<NavBarProps> = ({
               }}
             >
               {backIconVisible && (
-                <Image source={backIcon} style={[Theme.NavBar.backIconStyle, backIconStyle]} resizeMode="contain" />
+                <Image source={backIcon} style={[Styles.NavBar.backIconStyle, backIconStyle]} resizeMode="contain" />
               )}
-              {backTitle && <Text style={[Theme.NavBar.backTitleStyle, backTitleStyle]}>{backTitle}</Text>}
+              {backTitle && <Text style={[Styles.NavBar.backTitleStyle, backTitleStyle]}>{backTitle}</Text>}
             </TouchableOpacity>
           ))}
       </View>
-      <View style={[Theme.NavBar.titleContainerStyle, titleContainerStyle]}>
-        <Text style={[Theme.NavBar.titleStyle, titleStyle]} numberOfLines={1}>
+      <View style={[Styles.NavBar.titleContainerStyle, titleContainerStyle]}>
+        <Text style={[Styles.NavBar.titleStyle, titleStyle]} numberOfLines={1}>
           {title}
         </Text>
       </View>
-      <View style={[Theme.NavBar.menuContainerStyle, menuContainerStyle]}>
+      <View style={[Styles.NavBar.menuContainerStyle, menuContainerStyle]}>
         {menuVisible &&
           (menu || (
             <TouchableOpacity
-              style={[Theme.NavBar.menuStyle, menuStyle]}
-              activeOpacity={Theme.Dimens.activeOpacity}
+              style={[Styles.NavBar.menuStyle, menuStyle]}
+              activeOpacity={Dimens.activeOpacity}
               onPress={onMenuPress}
             >
-              <Image source={menuIcon} style={[Theme.NavBar.menuIconStyle, menuIconStyle]} resizeMode="contain" />
-              {menuTitle && <Text style={[Theme.NavBar.menuTitleStyle, menuTitleStyle]}>{menuTitle}</Text>}
+              <Image source={menuIcon} style={[Styles.NavBar.menuIconStyle, menuIconStyle]} resizeMode="contain" />
+              {menuTitle && <Text style={[Styles.NavBar.menuTitleStyle, menuTitleStyle]}>{menuTitle}</Text>}
             </TouchableOpacity>
           ))}
       </View>

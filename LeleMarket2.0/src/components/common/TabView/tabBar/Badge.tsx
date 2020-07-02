@@ -6,11 +6,11 @@ import { StyleSheet, View, StyleProp, ViewStyle } from 'react-native';
 const styles = StyleSheet.create({
   badgeStyle: {
     position: 'absolute',
-    right: _toDP(2),
-    top: _toDP(2),
-    width: _toDP(8),
-    height: _toDP(8),
-    borderRadius: _toDP(4),
+    right: toDP(2),
+    top: toDP(2),
+    width: toDP(8),
+    height: toDP(8),
+    borderRadius: toDP(4),
     backgroundColor: 'red',
   },
 });

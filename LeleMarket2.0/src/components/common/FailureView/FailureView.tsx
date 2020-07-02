@@ -16,16 +16,16 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Theme.Colors.backgroundColor,
+    backgroundColor: Colors.backgroundColor,
   },
   icon: {
-    width: _toDP(50),
-    height: _toDP(50),
-    backgroundColor: Theme.Colors.red,
+    width: toDP(50),
+    height: toDP(50),
+    backgroundColor: Colors.red,
   },
   prompt: {
-    marginTop: _toDP(12),
-    fontSize: Theme.Dimens.textNormalSize,
+    marginTop: toDP(12),
+    fontSize: Dimens.textNormalSize,
   },
 });
 

@@ -7,7 +7,7 @@ export default function prefetchImage(data: any) {
       Image.prefetch(data.replace(/(\?[\S\s]+)?/g, ''));
     }
   } else if (isObject(data)) {
-    Object.keys(data).forEach((key) => prefetchImage(data[key]));
+    Object.keys(data).forEach(key => prefetchImage(data[key]));
   } else if (isArray(data)) {
     data.forEach((item: any) => prefetchImage(item));
   }

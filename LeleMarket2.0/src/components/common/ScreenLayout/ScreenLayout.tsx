@@ -22,7 +22,7 @@ const ScreenLayout: React.FC<ScreenProps> = ({
   title,
 }) => {
   return (
-    <View style={[Theme.ScreenLayout.style, style]}>
+    <View style={[Styles.ScreenLayout.style, style]}>
       <NavigationEvents
         onWillFocus={onWillFocus}
         onDidFocus={onDidFocus}

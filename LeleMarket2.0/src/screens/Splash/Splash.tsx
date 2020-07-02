@@ -28,20 +28,18 @@ const SplashPage = ({ navigation }: Props) => {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          marginBottom: Theme.Dimens.safeBottomHeight,
+          marginBottom: Dimens.safeBottomHeight,
         }}
       >
         <Image
           style={{
-            width: _toDP(60),
-            height: _toDP(60),
-            borderRadius: _toDP(10),
+            width: toDP(60),
+            height: toDP(60),
+            borderRadius: toDP(10),
           }}
           source={IMAGES.app_logo}
         />
-        <Text
-          style={{ marginLeft: _toDP(30), fontSize: _toSP(24), color: Theme.Colors.textLightColor, fontWeight: 'bold' }}
-        >
+        <Text style={{ marginLeft: toDP(30), fontSize: toSP(24), color: Colors.textLightColor, fontWeight: 'bold' }}>
           {Lang.get('appName')}
         </Text>
       </View>

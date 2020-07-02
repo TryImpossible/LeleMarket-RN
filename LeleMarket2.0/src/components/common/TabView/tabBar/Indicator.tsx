@@ -8,10 +8,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     bottom: 0,
-    height: _toDP(3),
-    width: _toDP(3),
-    borderRadius: _toDP(3),
-    backgroundColor: Theme.Colors.accentColor,
+    height: toDP(3),
+    width: toDP(3),
+    borderRadius: toDP(3),
+    backgroundColor: Colors.accentColor,
   },
 });
 

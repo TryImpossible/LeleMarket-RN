@@ -7,14 +7,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: _toDP(44),
+    height: toDP(44),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
   prompt: {
-    fontSize: Theme.Dimens.textNormalSize,
-    color: Theme.Colors.textNormalColor,
+    fontSize: Dimens.textNormalSize,
+    color: Colors.textNormalColor,
     textAlign: 'center',
   },
 });

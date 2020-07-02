@@ -28,7 +28,7 @@ const Pager = ({ index }: { index: number; jumpTo: (index: number) => void }) =>
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: loader ? 'transparent' : _color(),
+        backgroundColor: loader ? 'transparent' : color(),
       }}
     >
       {loader && <ActivityIndicator size="large" />}
@@ -67,7 +67,7 @@ const Home: React.FC<HomeProps> = () => {
     <ScreenLayout style={styles.home}>
       <TabView
         ref={tabViewRef}
-        style={{ marginTop: Theme.Dimens.statusBarHeight }}
+        style={{ marginTop: Dimens.statusBarHeight }}
         navigationState={topNavData}
         renderScene={({ index, jumpTo }) => {
           if (index === 0) {

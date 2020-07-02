@@ -5,11 +5,11 @@ import TabItem, { ItemProps } from './TabItem';
 const styles = StyleSheet.create({
   mainTabBar: {
     width: '100%',
-    height: Theme.Dimens.bottomTabBarHeight + Theme.Dimens.safeBottomHeight,
-    paddingBottom: Theme.Dimens.safeBottomHeight,
+    height: Dimens.bottomTabBarHeight + Dimens.safeBottomHeight,
+    paddingBottom: Dimens.safeBottomHeight,
     flexDirection: 'row',
-    borderTopColor: Theme.Colors.dividerColor,
-    borderTopWidth: Theme.Dimens.dividerHeight,
+    borderTopColor: Colors.dividerColor,
+    borderTopWidth: Dimens.dividerHeight,
     overflow: 'visible',
   },
 });

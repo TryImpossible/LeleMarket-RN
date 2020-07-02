@@ -28,7 +28,7 @@ interface CompositeAnimation {
 
 const styles = StyleSheet.create({
   tabBar: {
-    minHeight: _toDP(Theme.Dimens.tabBarHeight),
+    minHeight: toDP(Dimens.tabBarHeight),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 //   tabs.forEach((item, i) => {
 //     inputRange.push(i);
 //     if (category === 'color') {
-//       outputRange.push(isActive && i === index ? Theme.Colors.textDarkColor : Theme.Colors.textLightColor);
+//       outputRange.push(isActive && i === index ? Colors.textDarkColor : Colors.textLightColor);
 //     }
 //     if (category === 'scale') {
 //       outputRange.push(isActive && i === index ? 1.5 : 1);
@@ -124,7 +124,7 @@ class TabBar extends React.PureComponent<TabBarProps, TabBarState> {
     this.indexValue = new Animated.Value(0);
     this.indicatorWidthValue = new Animated.Value(0);
     this.indicatorLeftValue = new Animated.Value(0);
-    this.labelColorValue = new Animated.Value(processColor(Theme.Colors.textLightColor));
+    this.labelColorValue = new Animated.Value(processColor(Colors.textLightColor));
     this.labelScaleValue = new Animated.Value(1.5);
     this.scrollView = React.createRef<ScrollView>();
     this.scrollViewWidth = 0;

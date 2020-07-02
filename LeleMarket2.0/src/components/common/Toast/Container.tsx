@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: Theme.Colors.transparent,
+    backgroundColor: Colors.transparent,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',

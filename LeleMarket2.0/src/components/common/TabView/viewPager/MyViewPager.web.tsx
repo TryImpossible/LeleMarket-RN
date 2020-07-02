@@ -82,7 +82,7 @@ class MyViewPager extends React.PureComponent<MyViewPagerProps> {
           this.scrollViewRef.current.scrollTo({ x: this.contentWidth * initialIndex, animated: false });
       }
 
-      Object.values(this.sceneRefs).forEach((ref) => ref && ref.setNativeProps({ style: { width: __WIDTH__ } }));
+      Object.values(this.sceneRefs).forEach(ref => ref && ref.setNativeProps({ style: { width: __WIDTH__ } }));
     }, 100);
   }
 
@@ -191,14 +191,14 @@ class MyViewPager extends React.PureComponent<MyViewPagerProps> {
           return (
             <Scene
               key={`Scene${index}`}
-              getRef={(ref) => {
+              getRef={ref => {
                 this.sceneRefs[index] = ref;
               }}
               style={[sceneContainerStyle, { flexGrow: 1 }]}
               placeholder={renderLazyPlaceholder && renderLazyPlaceholder()}
               visible={!lazy || index === initialIndex}
             >
-              {renderScene({ route, index, jumpTo: (positon) => this.scrollToIndex(positon) })}
+              {renderScene({ route, index, jumpTo: positon => this.scrollToIndex(positon) })}
             </Scene>
           );
         })}

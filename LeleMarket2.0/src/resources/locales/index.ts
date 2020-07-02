@@ -1,16 +1,19 @@
 import en from './en';
 import zhHans from './zh-Hans';
 
-export type Lang = 'en' | 'zh-Hans' | string;
+// Lang标识类型
+export type Lang = 'en' | 'zh-Hans';
 
+// Lang数据类型
 export type LangData = typeof en;
 
+// Locales类型
 interface Locales {
   en: LangData;
   'zh-Hans': LangData;
-  [name: string]: LangData;
 }
 
+// 所有的语言
 const locales: Locales = {
   en, // 英文
   'zh-Hans': zhHans, // 简体中文,
@@ -32,14 +35,20 @@ const locales: Locales = {
   // 'zh-Hant-TW': zhHant // 台湾使用的繁体中文
 };
 
-const LangManager = {
+// 当前的语言
+const Locale = {
   lang: 'en',
   ...locales.en,
+};
+
+// Lang管理类
+const LangManager = {
+  lang: Locale.lang,
   register(langData: LangData, lang: Lang) {
-    Object.assign(this, langData, { lang });
+    Object.assign(Locale, langData, { lang });
   },
   get(key: string): string {
-    let message = key.split(/\./).reduce((last: any, current) => last && last[current], this);
+    let message = key.split(/\./).reduce((last: any, current) => last && last[current], Locale);
     if (!message) {
       message = `Missing ${this.lang}.${key}`;
     }

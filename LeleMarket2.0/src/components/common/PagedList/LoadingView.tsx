@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: _toDP(44),
+    height: toDP(44),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -21,7 +21,7 @@ interface LoadingViewProps {
 const LoadingView: React.FC<LoadingViewProps> = ({ style }) => {
   return (
     <View style={[styles.loading, style]}>
-      <ActivityIndicator animating color={Theme.Colors.textLightColor} size="small" />
+      <ActivityIndicator animating color={Colors.textLightColor} size="small" />
     </View>
   );
 };

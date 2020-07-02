@@ -32,7 +32,7 @@ const Loader: LoaderFunction = ({ visible = defaultVisible }) => {
   }
   return (
     <View style={[StyleSheet.absoluteFill, styles.container]}>
-      <Animated.View style={[Theme.Loader.style]}>
+      <Animated.View style={[Styles.Loader.style]}>
         <Animated.View style={{ transform: [{ scale: bounceValue }] }}>
           <ActivityIndicator size={'large'} color="#FFF" animating={loaderVisible} />
         </Animated.View>

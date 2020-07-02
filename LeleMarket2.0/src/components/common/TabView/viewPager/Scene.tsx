@@ -57,7 +57,7 @@ class Scene extends React.PureComponent<SceneProps, SceneState> {
     const { style, children, placeholder } = this.props;
     const { visible } = this.state;
 
-    const rebuildChildren = React.Children.map(children, (child) => {
+    const rebuildChildren = React.Children.map(children, child => {
       if (React.isValidElement(child)) {
         return React.cloneElement(child);
       } else {

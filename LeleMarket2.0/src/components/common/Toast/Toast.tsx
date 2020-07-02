@@ -42,8 +42,8 @@ const Toast: ToastFunction = () => {
   const scale = bounceValue.interpolate({ inputRange: [0, 0.8, 1], outputRange: [0, 1.2, 1] });
   return (
     <Container position={position}>
-      <Animated.View style={[Theme.Toast.style, { opacity: opacityValue, transform: [{ scale }] }]}>
-        <Text style={Theme.Toast.textStyle} numberOfLines={0}>
+      <Animated.View style={[Styles.Toast.style, { opacity: opacityValue, transform: [{ scale }] }]}>
+        <Text style={Styles.Toast.textStyle} numberOfLines={0}>
           {message}
         </Text>
       </Animated.View>

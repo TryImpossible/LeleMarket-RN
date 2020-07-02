@@ -4,28 +4,28 @@ import { StyleSheet, TouchableOpacity, Image, Text, ImageRequireSource, StylePro
 const styles = StyleSheet.create({
   item: {
     flex: 1,
-    height: Theme.Dimens.bottomTabBarHeight,
-    width: Theme.Dimens.bottomTabBarHeight,
+    height: Dimens.bottomTabBarHeight,
+    width: Dimens.bottomTabBarHeight,
     justifyContent: 'flex-end',
     alignItems: 'center',
     overflow: 'visible',
   },
   normalIcon: {
-    width: _toDP(24),
-    height: _toDP(24),
+    width: toDP(24),
+    height: toDP(24),
   },
   raisedIcon: {
-    width: _toDP(44),
-    height: _toDP(44),
+    width: toDP(44),
+    height: toDP(44),
   },
   normalText: {
-    marginTop: _toDP(2),
-    marginBottom: _toDP(4),
-    fontSize: _toSP(Theme.Dimens.textSmallMiniSize),
+    marginTop: toDP(2),
+    marginBottom: toDP(4),
+    fontSize: toSP(Dimens.textSmallMiniSize),
   },
   raisedText: {
-    marginBottom: _toDP(4),
-    fontSize: _toSP(Theme.Dimens.textSmallMiniSize),
+    marginBottom: toDP(4),
+    fontSize: toSP(Dimens.textSmallMiniSize),
   },
 });
 
@@ -42,7 +42,7 @@ const NormalItem: React.FC<ItemProps> = ({ style, icon, selectedIcon, isSelected
   return (
     <TouchableOpacity activeOpacity={1} style={[styles.item]} onPress={onPress}>
       <Image source={!isSelected ? icon : selectedIcon} style={[styles.normalIcon, style]} />
-      <Text style={[styles.normalText, { color: isSelected ? Theme.Colors.accentColor : Theme.Colors.textLightColor }]}>
+      <Text style={[styles.normalText, { color: isSelected ? Colors.accentColor : Colors.textLightColor }]}>
         {text}
       </Text>
     </TouchableOpacity>
@@ -57,7 +57,7 @@ const RaisedItem: React.FC<ItemProps> = ({ style, icon, selectedIcon, isSelected
   return (
     <TouchableOpacity activeOpacity={1} style={[styles.item]} onPress={onPress}>
       <Image source={!isSelected ? icon : selectedIcon} style={[styles.raisedIcon, style]} />
-      <Text style={[styles.raisedText, { color: isSelected ? Theme.Colors.accentColor : Theme.Colors.textLightColor }]}>
+      <Text style={[styles.raisedText, { color: isSelected ? Colors.accentColor : Colors.textLightColor }]}>
         {text}
       </Text>
     </TouchableOpacity>

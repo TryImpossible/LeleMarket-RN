@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import ThemeManager from 'resources/themes';
+import ThemeManager, { Styles, Colors, Dimens } from 'resources/themes';
 import LangManager from 'resources/locales';
 
 type LODASH = typeof _;
@@ -25,10 +25,13 @@ declare global {
       __WIDTH__: number;
       __HEIGHT__: number;
       __ONEPX__: number;
-      _toDP: (size: number, enableHeightAdapt?: boolean) => number;
-      _toSP: (size: number) => number;
-      _color: () => string;
+      toDP: (size: number, enableHeightAdapt?: boolean) => number;
+      toSP: (size: number) => number;
+      color: () => string;
       Theme: THEME;
+      Styles: Styles;
+      Colors: Colors;
+      Dimens: Dimens;
       Lang: LANG;
       user: { [name: string]: any };
     }
@@ -41,9 +44,12 @@ declare global {
   declare const __WIDTH__: number;
   declare const __HEIGHT__: number;
   declare const __ONEPX__: number;
-  declare const _toDP: (size: number, enableHeightAdapt?: boolean) => number;
-  declare const _toSP: (size: number) => number;
-  declare const _color: () => string;
+  declare const toDP: (size: number, enableHeightAdapt?: boolean) => number;
+  declare const toSP: (size: number) => number;
+  declare const color: () => string;
   declare const Theme: THEME;
+  declare const Styles: Styles;
+  declare const Colors: Colors;
+  declare const Dimens: Dimens;
   declare const Lang: LANG;
 }

@@ -5,8 +5,8 @@ import { StyleSheet, Animated, StyleProp, ViewStyle, LayoutChangeEvent } from 'r
 
 const styles = StyleSheet.create({
   labelStyle: {
-    fontSize: _toSP(Theme.Dimens.textNormalSize),
-    marginHorizontal: _toDP(12),
+    fontSize: toSP(Dimens.textNormalSize),
+    marginHorizontal: toDP(12),
   },
 });
 
@@ -37,7 +37,7 @@ const Label: React.FC<LabelProps> = ({
           fontWeight: isActive ? 'bold' : 'normal',
           // color: colorValue,
           // transform: [{ scale: scaleValue }],
-          color: isActive ? Theme.Colors.accentColor : Theme.Colors.textDarkColor,
+          color: isActive ? Colors.accentColor : Colors.textDarkColor,
           transform: [{ scale: isActive ? 1.2 : 1 }],
         },
         style,

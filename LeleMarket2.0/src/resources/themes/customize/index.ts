@@ -10,14 +10,18 @@ import * as colors from './colors';
 import * as dimens from './dimens';
 
 export default {
-  ScreenLayout: _screenLayout,
-  NavBar: _navBar,
-  TabBar: _tabBar,
-  Toast: _toast,
-  Button: _button,
-  Form: _form,
-  Loader: _loader,
-  Badge: _badge,
-  Colors: colors,
-  Dimens: dimens,
+  styles: {
+    ScreenLayout: _screenLayout,
+    NavBar: _navBar,
+    TabBar: _tabBar,
+    Toast: _toast,
+    Button: _button,
+    Form: _form,
+    Loader: _loader,
+    Badge: _badge,
+    Colors: colors,
+    Dimens: dimens,
+  },
+  colors,
+  dimens,
 };

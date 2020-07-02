@@ -70,8 +70,8 @@ class TabView extends React.PureComponent<TabViewProps> {
     lazy: true,
     swipeEnabled: true,
     initialIndex: 0,
-    tabBarActiveColor: Theme.Colors.transparent,
-    tabBarInactiveColor: Theme.Colors.transparent,
+    tabBarActiveColor: Colors.transparent,
+    tabBarInactiveColor: Colors.transparent,
   };
 
   public jumpTo(position: number): void {
@@ -148,10 +148,10 @@ class TabView extends React.PureComponent<TabViewProps> {
             indicatorStyle={tabBarIndicatorStyle}
             renderIcon={renderTabBarIcon}
             renderBadge={renderTabBarBadge}
-            onTabPress={(index) => {
+            onTabPress={index => {
               onTabBarPress && onTabBarPress(index);
             }}
-            onTabChange={(index) => {
+            onTabChange={index => {
               this.viewPagerRef.current && this.viewPagerRef.current.scrollToIndex(index);
             }}
             initialIndex={initialIndex}

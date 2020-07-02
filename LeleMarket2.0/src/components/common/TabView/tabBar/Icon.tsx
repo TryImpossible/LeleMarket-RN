@@ -5,9 +5,9 @@ import { StyleSheet, Image, StyleProp, ImageStyle, ImageSourcePropType } from 'r
 
 const styles = StyleSheet.create({
   iconStyle: {
-    width: _toDP(24),
-    height: _toDP(24),
-    marginBottom: _toDP(4),
+    width: toDP(24),
+    height: toDP(24),
+    marginBottom: toDP(4),
   },
 });
 
