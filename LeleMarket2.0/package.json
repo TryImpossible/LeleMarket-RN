@@ -6,6 +6,7 @@
     "android": "cross-env ENVFILE=.env.development && react-native run-android --variant devDebug --appId com.lelemarket.dev",
     "ios": "cross-env ENVFILE=.env.development && react-native run-ios --configuration DevDebug --scheme LeleMarket-Dev",
     "start": "cross-env ENVFILE=.env.development && react-native start --verbose",
+    "start:clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && yarn start -- --reset-cache",
     "dll": "webpack-cli --config ./web/config/webpack.dll.config.js --progress --inline --colors",
     "web": "webpack-dev-server --config ./web/config/webpack.config.development.js --progress --inline --colors",
     "build:web": "webpack-cli --config ./web/config/webpack.config.production.js --progress --inline --colors",
