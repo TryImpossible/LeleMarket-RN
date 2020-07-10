@@ -82,7 +82,7 @@ const stackConfig: CreateNavigatorConfig<
     return (
       <MainTabBar
         data={mainTabBarData}
-        tabBarOnPress={index => {
+        tabBarOnPress={(index) => {
           jumpTo(Object.keys(routeConfigMap)[index]);
         }}
       />

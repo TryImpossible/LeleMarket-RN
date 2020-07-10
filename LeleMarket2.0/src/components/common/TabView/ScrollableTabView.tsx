@@ -148,10 +148,10 @@ class ScrollableTabView extends Component<ScrollableTabViewProps> {
             indicatorStyle={tabBarIndicatorStyle}
             renderIcon={renderTabBarIcon}
             renderBadge={renderTabBarBadge}
-            onTabPress={index => {
+            onTabPress={(index) => {
               onTabBarPress && onTabBarPress(index);
             }}
-            onTabChange={index => {
+            onTabChange={(index) => {
               this.viewPagerRef.current && this.viewPagerRef.current.scrollToIndex(index);
             }}
             initialIndex={initialIndex}

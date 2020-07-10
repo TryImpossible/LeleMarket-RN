@@ -71,7 +71,7 @@ const BannerComponent: React.FC<{ data: BannerBean[] }> = ({ data }) => {
         renderItem={({ item }: { item: BannerBean }) => {
           return <Image style={[styles.bannerImage]} source={{ uri: item.imgUrl }} />;
         }}
-        onSnapToItem={index => setActiveIndex(index)}
+        onSnapToItem={(index) => setActiveIndex(index)}
         sliderWidth={__WIDTH__}
         itemWidth={__WIDTH__}
         inactiveSlideScale={0.99}

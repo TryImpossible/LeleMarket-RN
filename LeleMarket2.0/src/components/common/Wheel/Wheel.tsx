@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Animated,
   Easing,
   PanResponder,
-  NativeTouchEvent,
   LayoutChangeEvent,
   StyleProp,
   ViewStyle,
 } from 'react-native';
 import WheelItem from './WheelItem';
-import { types } from '@babel/core';
 
 const styles = StyleSheet.create({
   wheel: {
@@ -46,10 +43,11 @@ interface WheelProps {
   itemHeight?: number;
   isCurved?: boolean;
   onChange?: (position: number) => void;
+  dragDistance?: number;
 }
 
 const Wheel: React.FC<WheelProps> = ({
-  data = Array.from({ length: 60 }).map((_item, index) => `${index}`),
+  data = Array.from({ length: 30 }).map((_item, index) => `${index}`),
   selectedIndex = 0,
   textSize = 16,
   textColor = 'black',
@@ -59,33 +57,28 @@ const Wheel: React.FC<WheelProps> = ({
   dividerHeight = StyleSheet.hairlineWidth,
   visibleItems = 7,
   itemHeight = 40,
-  isCurved = true,
+  // isCurved = true,
   onChange = (position) => {
-    console.log(position);
+    console.log('position is ' + position);
   },
+  dragDistance = 60,
 }) => {
-  const translateYValue = React.useRef(new Animated.Value(0)).current;
+  const _visibleItems = useRef(visibleItems % 2 === 0 ? visibleItems + 1 : visibleItems).current; // 判断visibleItems是否为奇数
 
-  const viewRef = React.useRef<View>(null);
-  let wheelPageY = 0; // wheel相对于屏幕的纵坐标
-  let wheelContainerHeight = 0; // wheel容器的高度
-  let wheelContentHeight = 0; // wheel内容的高度
-  let lastY = 0;
-  let prevTouchTime = 0;
+  const translateYValue = useRef(new Animated.Value(itemHeight * -(selectedIndex - Math.floor(_visibleItems / 2))))
+    .current; // translateY初始值，受selectedIndex控制
+  let translateYListener = useRef<string>(null).current;
 
-  React.useEffect(() => {
-    const listener = translateYValue.addListener(({ value }) => {
-      if (value > itemHeight) {
-        translateYValue.setValue(0);
-      }
-      if (value < wheelContainerHeight - wheelContentHeight - itemHeight) {
-        translateYValue.setValue(wheelContainerHeight - wheelContentHeight);
-      }
-    });
-    return () => translateYValue.removeListener(listener);
-  }, []);
+  const viewRef = useRef<View>(null);
+  let wheelPageY = useRef(0).current; // wheel相对于屏幕的纵坐标
+  let wheelContainerHeight = useRef(itemHeight * _visibleItems).current; // wheel容器的高度
+  let wheelContentHeight = useRef(itemHeight * data.length).current; // wheel内容的高度
 
-  const _panResponder = React.useRef(
+  const maxTop = useRef(itemHeight * Math.floor(_visibleItems / 2) + dragDistance).current; // 下拉的阀值，即向下滑动的最大值
+  const maxBottom = useRef(-(wheelContentHeight - wheelContainerHeight + maxTop)).current; // 上拉的阀值，即向上滑动的最大值
+  let prevTranslateY = 0; // 先前纵向移动的距离
+
+  const _panResponder = useRef(
     PanResponder.create({
       // 在用户开始触摸的时候（手指刚刚接触屏幕的瞬间），是否愿意成为响应者？
       onStartShouldSetPanResponder: (_evt, _gestureState) => true,
@@ -94,21 +87,17 @@ const Wheel: React.FC<WheelProps> = ({
       onMoveShouldSetPanResponder: (_evt, _gestureState) => true,
       onMoveShouldSetPanResponderCapture: (_evt, _gestureState) => false,
       // View 现在要开始响应触摸事件了。这也是需要做高亮的时候，使用户知道他到底点到了哪里。
-      onPanResponderGrant: (evt, gestureState) => {
+      onPanResponderGrant: (_evt, _gestureState) => {
         // 开始手势操作。给用户一些视觉反馈，让他们知道发生了什么事情！
         // gestureState.{x,y} 现在会被设置为0
 
-        translateYValue.stopAnimation(() => {
-          // @ts-ignore
-          lastY = translateYValue._value;
-
-          const {
-            nativeEvent: { touches, locationX, locationY, pageX, pageY, timestamp },
-          } = evt;
-          // const position = Math.ceil((pageY - wheelPageY - lastY) / itemHeight);
-
-          prevTouchTime = timestamp;
-        });
+        translateYValue.stopAnimation();
+        if (translateYListener != null) {
+          translateYValue.removeListener(translateYListener);
+          translateYListener = null;
+        }
+        // @ts-ignore
+        prevTranslateY = translateYValue._value;
       },
       // 响应者现在“另有其人”而且暂时不会“放权”，请另作安排。
       onPanResponderReject: (_evt, _gestureState) => {},
@@ -117,57 +106,89 @@ const Wheel: React.FC<WheelProps> = ({
         // 最近一次的移动距离为gestureState.move{X,Y}
         // 从成为响应者开始时的累计手势移动距离为gestureState.d{x,y}
         const { dy } = gestureState;
-        const value = lastY + dy;
+        let value = prevTranslateY + dy;
+        if (value > 0) {
+          value = Math.min(value, maxTop);
+        } else {
+          value = Math.max(value, maxBottom);
+        }
         translateYValue.setValue(value);
       },
       // 触摸操作结束时触发
-      onPanResponderRelease: (evt, gestureState) => {
+      onPanResponderRelease: (_evt, gestureState) => {
         // 用户放开了所有的触摸点，且此时视图已经成为了响应者。
         // 一般来说这意味着一个手势操作已经成功完成。
 
         const { y0, dy, vy } = gestureState;
-        // 通过dy, 判断是滑动还是点击
+
+        // 通过dy, 判断是惯性滑动还是点击
         if (Math.abs(dy) > 0) {
-          let value = lastY + dy;
-
-          if (Math.abs(vy) > 0.1) {
-            Animated.parallel([
-              Animated.spring(translateYValue, { toValue: value, friction: 9, useNativeDriver: false }),
-              Animated.decay(translateYValue, { velocity: vy, useNativeDriver: false }),
-            ]).start(() => {
-              // @ts-ignore
-              const position = Math.round(translateYValue._value / itemHeight);
-              translateYValue.setValue(position * itemHeight);
-              onChange(Math.abs(position) + Math.ceil(visibleItems / 2) - 1);
-            });
+          /// 惯性滑动
+          let value = prevTranslateY + dy;
+          if (value > 0) {
+            value = Math.min(value, maxTop);
           } else {
-            // Animated.spring(translateYValue, { toValue: value, friction: 9, useNativeDriver: false }).start(() => {
-            //   // @ts-ignore
-            //   const position = Math.round(translateYValue._value / itemHeight);
-            //   translateYValue.setValue(position * itemHeight);
-            //   onChange(Math.abs(position) + Math.ceil(visibleItems / 2) - 1);
-            // });
+            value = Math.max(value, maxBottom);
           }
-        } else {
-          const {
-            nativeEvent: { pageY },
-          } = evt;
-          const position = Math.round((pageY - wheelPageY - lastY) / itemHeight);
 
-          Animated.spring(translateYValue, {
-            toValue: -itemHeight * (position - Math.ceil(visibleItems / 2)),
-            friction: 9,
-            useNativeDriver: false,
-          }).start(() => {
-            onChange(position - 1);
+          translateYListener = translateYValue.addListener(({ value: val }) => {
+            if (val > maxTop - dragDistance) {
+              translateYValue.removeListener(translateYListener as string);
+              translateYListener = null;
+
+              Animated.spring(translateYValue, {
+                toValue: maxTop - dragDistance,
+                friction: 9,
+                useNativeDriver: false,
+              }).start(() => {
+                onChange(0);
+              });
+            } else if (val < maxBottom + dragDistance) {
+              translateYValue.removeListener(translateYListener as string);
+              translateYListener = null;
+
+              Animated.spring(translateYValue, {
+                toValue: maxBottom + dragDistance,
+                friction: 9,
+                useNativeDriver: false,
+              }).start(() => {
+                onChange(data.length - 1);
+              });
+            }
           });
+
+          Animated.sequence([
+            Animated.spring(translateYValue, { toValue: value, friction: 9, useNativeDriver: false }),
+            Animated.decay(translateYValue, { velocity: vy, useNativeDriver: false }),
+          ]).start(() => {
+            // @ts-ignore
+            const val = translateYValue._value;
+            if (val <= maxTop - dragDistance && val >= maxBottom + dragDistance) {
+              const position = Math.round(val / itemHeight);
+              translateYValue.setValue(position * itemHeight);
+              onChange(Math.floor(_visibleItems / 2) - position);
+            }
+          });
+        } else {
+          /// 点击
+          const position = Math.round((y0 - wheelPageY - prevTranslateY) / itemHeight) - 1;
+
+          if (position > -1 && position < data.length) {
+            Animated.spring(translateYValue, {
+              toValue: -itemHeight * (position - Math.floor(_visibleItems / 2)),
+              friction: 9,
+              useNativeDriver: false,
+            }).start(() => {
+              onChange(position);
+            });
+          }
         }
       },
       // 有其他组件请求接替响应者，当前的 View 是否“放权”？返回 true 的话则释放响应者权力
-      onPanResponderTerminationRequest: (evt, gestureState) => true,
+      onPanResponderTerminationRequest: (_evt, _gestureState) => true,
       // 响应者权力已经交出 , 另一个组件已经成为了新的响应者，所以当前手势将被取消。
-      onPanResponderTerminate: (evt, gestureState) => {},
-      onShouldBlockNativeResponder: (evt, gestureState) => {
+      onPanResponderTerminate: (_evt, _gestureState) => {},
+      onShouldBlockNativeResponder: (_evt, _gestureState) => {
         // 返回一个布尔值，决定当前组件是否应该阻止原生组件成为JS响应者
         // 默认返回true。目前暂时只支持android。
         return true;
@@ -181,13 +202,13 @@ const Wheel: React.FC<WheelProps> = ({
       style={[styles.wheel, { height: itemHeight * visibleItems }]}
       ref={viewRef}
       onLayout={() => {
-        viewRef.current?.measure((_x, _y, _width, height, _pageX, pageY) => {
-          wheelPageY = pageY;
+        viewRef.current?.measureInWindow((_x, y, _width, height) => {
+          wheelPageY = y;
           wheelContainerHeight = height;
         });
       }}
-      removeClippedSubviews
       {..._panResponder.panHandlers}
+      removeClippedSubviews
     >
       <Animated.View
         style={{ transform: [{ translateY: translateYValue }] }}
@@ -206,10 +227,14 @@ const Wheel: React.FC<WheelProps> = ({
           />
         ))}
       </Animated.View>
-      <View style={[styles.mask, { top: itemHeight * Math.ceil(visibleItems / 2) }]} />
+      {/* 遮罩1 */}
       <View style={[styles.mask, { bottom: itemHeight * Math.ceil(visibleItems / 2) }]} />
-      {isShowDivider && <View style={[dividerStyle, { top: itemHeight * ((visibleItems - 1) / 2) }]} />}
-      {isShowDivider && <View style={[dividerStyle, { bottom: itemHeight * ((visibleItems - 1) / 2) }]} />}
+      {/* 遮罩2 */}
+      <View style={[styles.mask, { top: itemHeight * Math.ceil(visibleItems / 2) }]} />
+      {/* 分隔线1 */}
+      {isShowDivider && <View style={[dividerStyle, { bottom: itemHeight * Math.ceil(visibleItems / 2) }]} />}
+      {/* 分隔线2 */}
+      {isShowDivider && <View style={[dividerStyle, { top: itemHeight * Math.ceil(visibleItems / 2) }]} />}
     </View>
   );
 };

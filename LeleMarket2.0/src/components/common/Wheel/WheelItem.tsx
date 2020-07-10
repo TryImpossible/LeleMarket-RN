@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleProp, TextStyle } from 'react-native';
+import { Text } from 'react-native';
 
 interface WheelItemProps {
   data: string;
@@ -9,13 +9,14 @@ interface WheelItemProps {
   selectedTextColor?: string;
 }
 
-const WheelItem: React.FC<WheelItemProps> = ({ data, height, textSize, textColor, selectedTextColor }) => {
+const WheelItem: React.FC<WheelItemProps> = ({ data, height, textSize, textColor }) => {
   return (
     <Text
       style={[
         {
           height,
           lineHeight: height,
+          textAlign: 'center',
           color: textColor,
           fontSize: textSize,
           transform: [{ scaleX: 1 }, { scaleY: 1 }],
