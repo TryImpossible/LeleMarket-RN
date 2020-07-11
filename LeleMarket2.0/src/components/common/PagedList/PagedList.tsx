@@ -2,7 +2,14 @@
 'use strict';
 
 import React from 'react';
-import { FlatList, FlatListProps, SectionListProps, SectionList } from 'react-native';
+import {
+  FlatList,
+  FlatListProps,
+  SectionListProps,
+  SectionList,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 import EmptyView, { EmptyViewProps } from '../EmptyView';
 import Loader from '../Loader';
 import FailureView from '../FailureView';
@@ -20,29 +27,37 @@ interface PagedListProps {
   getListRef?: React.RefObject<FlatList> | React.RefObject<SectionList>;
   emptyProps?: EmptyViewProps;
   renderEmpty?: () => React.ReactNode;
-  onLoadMore?: (() => void) | null;
+  onLoadMore?: () => void;
+  onScrollUp?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  onScrollDown?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
 
 const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
   function _buildProps(P: (FlatListProps<any> & PagedListProps) | (SectionListProps<any> & PagedListProps)) {
+    let startScrollOffsetY = 0;
+    let isScrollUp = false;
+
     const {
       getListRef,
       contentContainerStyle,
-      data = [],
       pullUpStatus,
       pullDownStatus,
       onRefresh,
       onEndReachedThreshold = 0.2,
       keyExtractor = (item, index) => String(index),
       initialNumToRender = 20,
+      maxToRenderPerBatch = 6,
       showsVerticalScrollIndicator = false,
       emptyProps,
       renderEmpty,
       onLoadMore,
-      // onScrollBeginDrag,
+      onScrollBeginDrag,
       // onScrollEndDrag,
       // onMomentumScrollBegin,
       // onMomentumScrollEnd,
+      onScroll,
+      onScrollUp,
+      onScrollDown,
       refreshing,
       onEndReached,
       ListEmptyComponent,
@@ -54,19 +69,20 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
     Object.assign(props, {
       ref: getListRef,
       contentContainerStyle: [contentContainerStyle, { flexGrow: 1 }],
-      data,
       refreshing: pullDownStatus === 'refreshing',
       onRefresh: () => {
         // console.log('onRefresh-status', status)
         if (pullDownStatus === 'refreshing' || pullUpStatus === 'loading') {
           return;
         }
+        isScrollUp = false;
         onRefresh && onRefresh();
       },
       onEndReachedThreshold,
       onEndReached: ({ distanceFromEnd }: { distanceFromEnd: number }) => {
         // console.log('onEndReached-status', pullUpStatus);
-        if (data && data.length > 0 && pullDownStatus === 'refreshCompleted' && pullUpStatus === 'loadMore') {
+        if (isScrollUp && pullDownStatus === 'refreshCompleted' && pullUpStatus === 'loadMore') {
+          isScrollUp = false;
           onLoadMore && onLoadMore();
         }
       },
@@ -99,11 +115,13 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
       },
       keyExtractor,
       initialNumToRender: initialNumToRender,
+      maxToRenderPerBatch: maxToRenderPerBatch,
       showsVerticalScrollIndicator,
-      // onScrollBeginDrag: () => {
-      //   this.canAction = true
-      //   onScrollBeginDrag && onScrollBeginDrag()
-      // },
+      onScrollBeginDrag: (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        startScrollOffsetY = event.nativeEvent.contentOffset.y;
+        // console.warn('onScrollBeginDrag', startScrollOffsetY);
+        onScrollBeginDrag && onScrollBeginDrag(event);
+      },
       // onScrollEndDrag: () => {
       //   this.canAction = false
       //   onScrollEndDrag && onScrollEndDrag()
@@ -120,35 +138,35 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
       //   console.log(contentHeight)
       //   this.contentHeight = contentHeight
       // },
-      // onScroll: (event) => {
-      //   const {
-      //     nativeEvent: {
-      //       contentOffset: { y },
-      //     },
-      //   } = event
-      //   // console.log(event.nativeEvent)
-      //   const offsetY = event.nativeEvent.contentOffset.y // 滑动距离
-      //   const contentSizeHeight = event.nativeEvent.contentSize.height // scrollView contentSize高度
-      //   const oriageScrollHeight = event.nativeEvent.layoutMeasurement.height // scrollView高度
-      //   if (offsetY + oriageScrollHeight + 200 >= contentSizeHeight) {
-      //     // todo:这里需加判断请求中
-      //     console.log('上传滑动到底部事件')
-      //     if (!loading && status === loadMore) {
-      //       onEndReached && onEndReached()
-      //     }
-      //   }
-      // },
+      onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const {
+          nativeEvent: {
+            contentOffset: { y: offsetY },
+          },
+        } = event;
+        // console.log(event.nativeEvent)
+        // const offsetY = event.nativeEvent.contentOffset.y; // 滑动距离
+        // const contentSizeHeight = event.nativeEvent.contentSize.height; // scrollView contentSize高度
+        // const oriageScrollHeight = event.nativeEvent.layoutMeasurement.height; // scrollView高度
+        // if (offsetY + oriageScrollHeight + 200 >= contentSizeHeight) {
+        //   // todo:这里需加判断请求中
+        //   console.log('上传滑动到底部事件');
+        //   if (!loading && status === loadMore) {
+        //     onEndReached && onEndReached();
+        //   }
+        // }
+
+        if (startScrollOffsetY > offsetY) {
+          onScrollDown && onScrollDown(event);
+        } else if (startScrollOffsetY < offsetY) {
+          onScrollUp && onScrollUp(event);
+          isScrollUp = true;
+        }
+        onScroll && onScroll(event);
+      },
       ...restProps,
     });
     return props;
-  }
-
-  if (WrapComponent.name === 'SectionList') {
-    return class extends React.PureComponent<P & SectionListProps<any> & PagedListProps> {
-      render() {
-        return <WrapComponent {...(_buildProps(this.props) as P)} />;
-      }
-    };
   }
 
   if (WrapComponent.name === 'FlatList') {

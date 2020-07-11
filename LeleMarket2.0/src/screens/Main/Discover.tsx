@@ -53,6 +53,18 @@ const Discover = () => {
         keyExtractor={(item, index) => String(index)}
         renderItem={({ item, index }) => <MItem index={index} />}
         onLoadMore={onLoadMore}
+        onScrollBeginDrag={() => {
+          console.warn('onScrollBeginDrag');
+        }}
+        onScrollUp={() => {
+          console.warn('onScrollUp');
+        }}
+        onScrollDown={() => {
+          console.warn('onScrollDown');
+        }}
+        onScroll={() => {
+          console.warn('onScroll');
+        }}
       />
     </ScreenLayout>
   );
