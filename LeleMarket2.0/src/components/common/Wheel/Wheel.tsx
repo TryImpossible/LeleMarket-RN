@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import {
   StyleSheet,
   View,
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   mask: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   divider: {
     position: 'absolute',
@@ -53,15 +53,15 @@ const Wheel: React.FC<WheelProps> = ({
   textColor = 'black',
   selectedTextColor = 'red',
   isShowDivider = true,
-  dividerColor = 'blue',
-  dividerHeight = StyleSheet.hairlineWidth,
+  dividerColor = '#ccc',
+  dividerHeight = 0.5,
   visibleItems = 7,
   itemHeight = 40,
   // isCurved = true,
   onChange = (position) => {
     console.log('position is ' + position);
   },
-  dragDistance = 60,
+  dragDistance = 160,
 }) => {
   const _visibleItems = useRef(visibleItems % 2 === 0 ? visibleItems + 1 : visibleItems).current; // 判断visibleItems是否为奇数
 
@@ -77,6 +77,13 @@ const Wheel: React.FC<WheelProps> = ({
   const maxTop = useRef(itemHeight * Math.floor(_visibleItems / 2) + dragDistance).current; // 下拉的阀值，即向下滑动的最大值
   const maxBottom = useRef(-(wheelContentHeight - wheelContainerHeight + maxTop)).current; // 上拉的阀值，即向上滑动的最大值
   let prevTranslateY = 0; // 先前纵向移动的距离
+
+  const _onChange = useCallback(
+    (position) => {
+      onChange(position);
+    },
+    [onChange],
+  );
 
   const _panResponder = useRef(
     PanResponder.create({
@@ -141,7 +148,7 @@ const Wheel: React.FC<WheelProps> = ({
                 friction: 9,
                 useNativeDriver: false,
               }).start(() => {
-                onChange(0);
+                _onChange(0);
               });
             } else if (val < maxBottom + dragDistance) {
               translateYValue.removeListener(translateYListener as string);
@@ -152,7 +159,7 @@ const Wheel: React.FC<WheelProps> = ({
                 friction: 9,
                 useNativeDriver: false,
               }).start(() => {
-                onChange(data.length - 1);
+                _onChange(data.length - 1);
               });
             }
           });
@@ -166,7 +173,7 @@ const Wheel: React.FC<WheelProps> = ({
             if (val <= maxTop - dragDistance && val >= maxBottom + dragDistance) {
               const position = Math.round(val / itemHeight);
               translateYValue.setValue(position * itemHeight);
-              onChange(Math.floor(_visibleItems / 2) - position);
+              _onChange(Math.floor(_visibleItems / 2) - position);
             }
           });
         } else {
@@ -179,7 +186,7 @@ const Wheel: React.FC<WheelProps> = ({
               friction: 9,
               useNativeDriver: false,
             }).start(() => {
-              onChange(position);
+              _onChange(position);
             });
           }
         }

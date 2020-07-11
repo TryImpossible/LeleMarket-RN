@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     // overflow: 'hidden',
-    backgroundColor: 'green',
+    backgroundColor: '#FFF',
   },
 });
 
