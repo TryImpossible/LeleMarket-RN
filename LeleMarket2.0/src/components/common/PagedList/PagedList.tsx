@@ -144,6 +144,8 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
             contentOffset: { y: offsetY },
           },
         } = event;
+        console.log(offsetY);
+
         // console.log(event.nativeEvent)
         // const offsetY = event.nativeEvent.contentOffset.y; // 滑动距离
         // const contentSizeHeight = event.nativeEvent.contentSize.height; // scrollView contentSize高度
@@ -171,6 +173,14 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
 
   if (WrapComponent.name === 'FlatList') {
     return class extends React.PureComponent<P & FlatListProps<any> & PagedListProps> {
+      render() {
+        return <WrapComponent {...(_buildProps(this.props) as P)} />;
+      }
+    };
+  }
+
+  if (WrapComponent.name === 'SectionList') {
+    return class extends React.PureComponent<P & SectionListProps<any> & PagedListProps> {
       render() {
         return <WrapComponent {...(_buildProps(this.props) as P)} />;
       }
