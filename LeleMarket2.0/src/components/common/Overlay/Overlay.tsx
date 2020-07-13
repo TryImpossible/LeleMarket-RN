@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
 });
 
-interface OverlayProps {
+export interface OverlayProps {
   style?: StyleProp<ViewStyle>;
   cancelable?: boolean;
 }
@@ -20,7 +20,10 @@ export interface OverlayHandle {
   dismiss: () => void;
 }
 
-const Overlay = React.forwardRef<OverlayHandle, OverlayProps>(({ children, style, cancelable = true }, ref) => {
+const Overlay: React.ForwardRefRenderFunction<OverlayHandle, OverlayProps> = (
+  { children, style, cancelable = true },
+  ref,
+) => {
   const [visible, setVisible] = useState<boolean>(false);
   const valuePath = useRef(new Animated.Value(0)).current;
 
@@ -75,6 +78,6 @@ const Overlay = React.forwardRef<OverlayHandle, OverlayProps>(({ children, style
       {children}
     </Animated.View>
   );
-});
+};
 
-export default Overlay;
+export default React.forwardRef(Overlay);

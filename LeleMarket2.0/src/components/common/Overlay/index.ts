@@ -1,4 +1,4 @@
-import Overlay, { OverlayHandle } from './Overlay';
+import Overlay, { OverlayProps, OverlayHandle } from './Overlay';
 
+export type { OverlayProps, OverlayHandle };
 export default Overlay;
-export type { OverlayHandle };

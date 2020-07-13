@@ -41,29 +41,32 @@ const Discover = () => {
       setData([...data, ...Array(20).fill(1)]);
       setPullUpStatus('loadFail');
     }, 500);
+    // ref.current?.scrollToOffset({ offset: 0 });
   };
+  const ref = React.useRef<FlatList>(null);
   return (
     <ScreenLayout>
       <PagedFlatList
+        forwardRef={ref}
         style={{ flex: 1, marginTop: Dimens.statusBarHeight }}
         data={data}
         pullUpStatus={pullUpStatus}
         pullDownStatus={pullDownStatus}
         onRefresh={onRefresh}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={({ item, index }) => <MItem index={index} />}
+        keyExtractor={(_item: any, index: number) => String(index)}
+        renderItem={({ index }: { index: number }) => <MItem index={index} />}
         onLoadMore={onLoadMore}
         onScrollBeginDrag={() => {
-          console.warn('onScrollBeginDrag');
+          // console.warn('onScrollBeginDrag');
         }}
         onScrollUp={() => {
-          console.warn('onScrollUp');
+          // console.warn('onScrollUp');
         }}
         onScrollDown={() => {
-          console.warn('onScrollDown');
+          // console.warn('onScrollDown');
         }}
         onScroll={() => {
-          console.warn('onScroll');
+          // console.warn('onScroll');
         }}
       />
     </ScreenLayout>

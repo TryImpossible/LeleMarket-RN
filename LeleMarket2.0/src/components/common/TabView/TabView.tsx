@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
   },
 });
 
-type TabBarPosition = 'top' | 'bottom';
+export type TabBarPosition = 'top' | 'bottom';
 
-interface TabViewProps {
+export interface TabViewProps {
   style?: StyleProp<ViewStyle>;
   navigationState: Array<RouteProps>;
   renderTabBar?: (props: any) => React.ReactElement | null;
@@ -70,8 +70,6 @@ class TabView extends React.PureComponent<TabViewProps> {
     lazy: true,
     swipeEnabled: true,
     initialIndex: 0,
-    tabBarActiveColor: Colors.transparent,
-    tabBarInactiveColor: Colors.transparent,
   };
 
   public jumpTo(position: number): void {

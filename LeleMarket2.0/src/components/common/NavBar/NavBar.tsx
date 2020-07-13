@@ -13,7 +13,7 @@ import {
 import IMAGES from 'resources/images';
 import NavigationService from 'src/navigators/NavigationService';
 
-interface NavBarProps {
+export interface NavBarProps {
   style?: StyleProp<ViewStyle>;
   dividerVisible?: boolean;
 

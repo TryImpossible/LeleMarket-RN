@@ -21,10 +21,10 @@ import NoMoreDataView from './NoMoreDataView';
 export type PullUpStatus = 'pending' | 'loading' | 'loadFail' | 'loadMore' | 'noMoreData' | 'loadCompleted';
 export type PullDownStatus = 'pending' | 'refreshing' | 'emptyData' | 'refreshingFail' | 'refreshCompleted';
 
-interface PagedListProps {
-  pullUpStatus: PullUpStatus;
-  pullDownStatus: PullDownStatus;
-  getListRef?: React.RefObject<FlatList> | React.RefObject<SectionList>;
+export interface PagedListProps {
+  pullUpStatus?: PullUpStatus;
+  pullDownStatus?: PullDownStatus;
+  forwardRef?: React.RefObject<FlatList> | React.RefObject<SectionList>;
   emptyProps?: EmptyViewProps;
   renderEmpty?: () => React.ReactNode;
   onLoadMore?: () => void;
@@ -38,13 +38,13 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
     let isScrollUp = false;
 
     const {
-      getListRef,
+      forwardRef,
       contentContainerStyle,
-      pullUpStatus,
-      pullDownStatus,
+      pullUpStatus = 'pending',
+      pullDownStatus = 'refreshCompleted',
       onRefresh,
       onEndReachedThreshold = 0.2,
-      keyExtractor = (item, index) => String(index),
+      keyExtractor = (_item, index) => String(index),
       initialNumToRender = 20,
       maxToRenderPerBatch = 6,
       showsVerticalScrollIndicator = false,
@@ -67,7 +67,7 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
 
     const props = {};
     Object.assign(props, {
-      ref: getListRef,
+      ref: forwardRef,
       contentContainerStyle: [contentContainerStyle, { flexGrow: 1 }],
       refreshing: pullDownStatus === 'refreshing',
       onRefresh: () => {
@@ -79,7 +79,7 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
         onRefresh && onRefresh();
       },
       onEndReachedThreshold,
-      onEndReached: ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+      onEndReached: () => {
         // console.log('onEndReached-status', pullUpStatus);
         if (isScrollUp && pullDownStatus === 'refreshCompleted' && pullUpStatus === 'loadMore') {
           isScrollUp = false;
@@ -144,8 +144,6 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
             contentOffset: { y: offsetY },
           },
         } = event;
-        console.log(offsetY);
-
         // console.log(event.nativeEvent)
         // const offsetY = event.nativeEvent.contentOffset.y; // 滑动距离
         // const contentSizeHeight = event.nativeEvent.contentSize.height; // scrollView contentSize高度
@@ -172,19 +170,28 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
   }
 
   if (WrapComponent.name === 'FlatList') {
-    return class extends React.PureComponent<P & FlatListProps<any> & PagedListProps> {
+    class PagedFlatList extends React.PureComponent<P & FlatListProps<any> & PagedListProps> {
       render() {
         return <WrapComponent {...(_buildProps(this.props) as P)} />;
       }
-    };
+    }
+    // todo: forwardRef转发ref，这里多种情况使用时报ts错误，暂时没找到解决方案
+    // return React.forwardRef<FlatList, P & FlatListProps<any> & PagedListProps>((props, ref) => (
+    //   <PagedFlatList {...props} forwardRef={ref} />
+    // ));
+    return PagedFlatList;
   }
 
   if (WrapComponent.name === 'SectionList') {
-    return class extends React.PureComponent<P & SectionListProps<any> & PagedListProps> {
+    class PagedSectionList extends React.PureComponent<P & SectionListProps<any> & PagedListProps> {
       render() {
         return <WrapComponent {...(_buildProps(this.props) as P)} />;
       }
-    };
+    }
+    // return React.forwardRef<SectionList, P & SectionListProps<any> & PagedListProps>((props, ref) => (
+    //   <PagedSectionList {...props} forwardRef={ref} />
+    // ));
+    return PagedSectionList;
   }
 
   return class extends React.PureComponent<P & PagedListProps> {

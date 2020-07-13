@@ -3,7 +3,7 @@ import { View, StyleProp, ViewStyle } from 'react-native';
 import { NavigationEvents, NavigationEventCallback } from 'react-navigation';
 import NavBar from '../NavBar';
 
-interface ScreenProps {
+export interface ScreenLayoutProps {
   style?: StyleProp<ViewStyle>;
   onWillFocus?: NavigationEventCallback;
   onDidFocus?: NavigationEventCallback;
@@ -12,7 +12,7 @@ interface ScreenProps {
   title?: string;
 }
 
-const ScreenLayout: React.FC<ScreenProps> = ({
+const ScreenLayout: React.FC<ScreenLayoutProps> = ({
   children,
   style,
   onWillFocus,

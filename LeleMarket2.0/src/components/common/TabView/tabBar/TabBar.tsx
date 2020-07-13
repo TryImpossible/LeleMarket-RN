@@ -59,14 +59,13 @@ const styles = StyleSheet.create({
 //   return { inputRange, outputRange };
 // }
 
-interface TabBarProps extends Omit<TabItemProps, 'style' | 'onTabLayout' | 'onLabelLayout' | 'onPress' | 'route'> {
+export interface TabBarProps
+  extends Omit<TabItemProps, 'style' | 'onTabLayout' | 'onLabelLayout' | 'onPress' | 'route'> {
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
   tabStyle?: StyleProp<ViewStyle>;
   labelStyle?: StyleProp<TextStyle>;
   indicatorStyle?: StyleProp<ViewStyle>;
-  activeColor?: string;
-  inactiveColor?: string;
   renderLabel?: ({ route, isActive }: { route: RouteProps; isActive?: boolean }) => React.ReactNode;
   renderIcon?: ({ route, isActive }: { route: RouteProps; isActive?: boolean }) => React.ReactNode;
   renderBadge?: ({ route, isActive }: { route: RouteProps; isActive?: boolean }) => React.ReactNode;

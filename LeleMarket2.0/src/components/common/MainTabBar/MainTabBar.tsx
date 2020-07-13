@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-interface MainTabBarProps {
+export interface MainTabBarProps {
   style?: StyleProp<ViewStyle>;
   data?: Array<Omit<ItemProps, 'onPress'>> | undefined;
   initialIndex?: number;
