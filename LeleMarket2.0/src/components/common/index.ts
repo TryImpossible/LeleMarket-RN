@@ -21,7 +21,15 @@ import TabView, {
 import PagedList, { PullUpStatus, PullDownStatus, PagedListProps } from './PagedList';
 import Wheel from './Wheel';
 import Picker from './Picker';
-import Overlay, { OverlayProps, OverlayHandle } from './Overlay';
+import Overlay, {
+  OverlayViewProps,
+  OverlayViewHandle,
+  OverlayPullViewProps,
+  OverlayPullViewHandle,
+  OverlayPopViewProps,
+  OverlayPopViewHandle,
+} from './Overlay';
+import Carousel, { CarouselProps } from './Carousel';
 
 export {
   Window,
@@ -40,6 +48,7 @@ export {
   Wheel,
   Picker,
   Overlay,
+  Carousel,
 };
 
 export type {
@@ -61,6 +70,11 @@ export type {
   PullUpStatus,
   PullDownStatus,
   PagedListProps,
-  OverlayProps,
-  OverlayHandle,
+  OverlayViewProps,
+  OverlayViewHandle,
+  OverlayPullViewProps,
+  OverlayPullViewHandle,
+  OverlayPopViewProps,
+  OverlayPopViewHandle,
+  CarouselProps,
 };
