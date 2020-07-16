@@ -28,6 +28,9 @@ import Overlay, {
   OverlayPullViewHandle,
   OverlayPopViewProps,
   OverlayPopViewHandle,
+  OverlayStackRouteProps,
+  OverlayStackViewProps,
+  OverlayStackViewHandle,
 } from './Overlay';
 import Carousel, { CarouselProps } from './Carousel';
 
@@ -76,5 +79,8 @@ export type {
   OverlayPullViewHandle,
   OverlayPopViewProps,
   OverlayPopViewHandle,
+  OverlayStackRouteProps,
+  OverlayStackViewProps,
+  OverlayStackViewHandle,
   CarouselProps,
 };
