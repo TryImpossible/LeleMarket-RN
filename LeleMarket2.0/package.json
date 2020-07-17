@@ -19,6 +19,7 @@
     "svg": "node local-cli/generator/svgscript.js"
   },
   "dependencies": {
+    "@react-native-community/hooks": "^2.6.0",
     "@react-native-community/viewpager": "^4.0.0",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "axios": "^0.19.2",

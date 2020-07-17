@@ -32,7 +32,7 @@ import Overlay, {
   OverlayStackViewProps,
   OverlayStackViewHandle,
 } from './Overlay';
-import Carousel, { CarouselProps } from './Carousel';
+import Carousel, { CarouselViewHandles, CarouselViewProps, CarouselImageProps } from './Carousel';
 
 export {
   Window,
@@ -82,5 +82,7 @@ export type {
   OverlayStackRouteProps,
   OverlayStackViewProps,
   OverlayStackViewHandle,
-  CarouselProps,
+  CarouselViewHandles,
+  CarouselViewProps,
+  CarouselImageProps,
 };

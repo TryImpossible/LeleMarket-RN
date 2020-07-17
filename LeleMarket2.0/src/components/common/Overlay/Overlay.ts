@@ -5,9 +5,9 @@ import OverlayStackView from './OverlayStackView';
 
 class Overlay {
   static View = OverlayView;
-  static pullView = OverlayPullView;
-  static popView = OverlayPopView;
-  static stackView = OverlayStackView;
+  static PullView = OverlayPullView;
+  static PopView = OverlayPopView;
+  static StackView = OverlayStackView;
 }
 
 export default Overlay;

@@ -2,7 +2,6 @@ import './globals/basics';
 import './globals/common';
 
 import React from 'react';
-import { StyleSheet, StatusBar, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { NavigationState, NavigationAction } from 'react-navigation';
 import AppNavigator from 'src/navigators/AppNavigator';
@@ -20,17 +19,10 @@ import rootSaga from 'src/redux/sagas';
 export const store = configureStore();
 store.runSaga(rootSaga);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
 const App = () => {
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent animated />
+      <Window>
         <AppNavigator
           ref={(nav: any) => {
             // NOTE: ref至少会回调两次，组件装载和组件卸载的时候
@@ -57,8 +49,7 @@ const App = () => {
             console.log('----------------------------------------');
           }}
         />
-        <Window />
-      </View>
+      </Window>
     </Provider>
   );
 };
