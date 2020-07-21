@@ -30,7 +30,7 @@ const App = () => {
 
       <Carousel.View ref={ref} style={{ height: toDP(120) }}>
         {images.map((item, index) => {
-          return <Image key={`${index}`} style={{ width: __WIDTH__ - 10, height: toDP(120) }} source={item} />;
+          return <Image key={`${index}`} style={{ width: __WIDTH__, height: toDP(120) }} source={item} />;
         })}
       </Carousel.View>
 
