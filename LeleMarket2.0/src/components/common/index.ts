@@ -10,6 +10,7 @@ import ScreenLayout, { ScreenLayoutProps } from './ScreenLayout';
 import MainTabBar, { MainTabBarProps } from './MainTabBar';
 import NavBar, { NavBarProps } from './NavBar';
 import TabView, {
+  NestedScrollTabView,
   TabViewProps,
   TabBarPosition,
   IconType,
@@ -47,6 +48,7 @@ export {
   MainTabBar,
   NavBar,
   TabView,
+  NestedScrollTabView,
   PagedList,
   Wheel,
   Picker,

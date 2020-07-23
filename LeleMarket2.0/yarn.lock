@@ -1382,10 +1382,10 @@
   resolved "https://registry.npm.taobao.org/@react-native-community/hooks/download/@react-native-community/hooks-2.6.0.tgz#dd5f19601eb3684c6bcdd3df3d0c04cf44c24cff"
   integrity sha1-3V8ZYB6zaExrzdPfPQwEz0TCTP8=
 
-"@react-native-community/viewpager@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.npm.taobao.org/@react-native-community/viewpager/download/@react-native-community/viewpager-4.0.0.tgz#bae6fc2d0689c85488a1f413ecf19e39b3b7e1d9"
-  integrity sha1-uub8LQaJyFSIofQT7PGeObO34dk=
+"@react-native-community/viewpager@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.npm.taobao.org/@react-native-community/viewpager/download/@react-native-community/viewpager-4.1.0.tgz#b6908329a39e27e5cd3236540aadd65133420563"
+  integrity sha1-tpCDKaOeJ+XNMjZUCq3WUTNCBWM=
 
 "@react-navigation/core@^3.7.5":
   version "3.7.5"

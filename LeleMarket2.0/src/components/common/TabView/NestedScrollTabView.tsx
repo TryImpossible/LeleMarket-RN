@@ -66,6 +66,8 @@ class ScrollableTabView extends Component<ScrollableTabViewProps> {
   mainViewRef: React.RefObject<View> = React.createRef<View>();
   tabBarRef: React.RefObject<TabBar> = React.createRef<TabBar>();
   viewPagerRef: React.RefObject<ViewPager> = React.createRef<ViewPager>();
+  isLock: boolean = false;
+  mainViewHeight: number = 0;
 
   static defaultProps = {
     tabBarPosition: 'top',
@@ -74,13 +76,16 @@ class ScrollableTabView extends Component<ScrollableTabViewProps> {
     lazy: true,
     swipeEnabled: true,
     initialIndex: 0,
-    tabBarActiveColor: Colors.transparent,
-    tabBarInactiveColor: Colors.transparent,
   };
 
   public jumpTo(position: number): void {
     this.tabBarRef.current && this.tabBarRef.current.scrollToIndex(position);
     this.viewPagerRef.current && this.viewPagerRef.current.scrollToIndex(position);
+  }
+
+  public setLock(isLock: boolean) {
+    this.scrollViewRef.current && this.scrollViewRef.current.setNativeProps({ scrollEnabled: !isLock });
+    this.isLock = isLock;
   }
 
   render() {
@@ -122,7 +127,7 @@ class ScrollableTabView extends Component<ScrollableTabViewProps> {
       onPagerScroll,
       initialIndex,
     } = this.props;
-    const TabBarComponent = () => {
+    const renderTabBarComponent = () => {
       if (renderTabBar) {
         return renderTabBar({
           ref: this.tabBarRef,
@@ -171,17 +176,43 @@ class ScrollableTabView extends Component<ScrollableTabViewProps> {
       <ScrollView
         ref={this.scrollViewRef}
         contentContainerStyle={{ flexGrow: 1 }}
-        onLayout={({
+        scrollEventThrottle={200}
+        onScroll={({
           nativeEvent: {
-            layout: { width, height },
+            contentOffset: { y },
           },
         }) => {
-          // console.warn('scrollView', width, height);
+          if (y >= this.mainViewHeight) {
+            this.scrollViewRef.current && this.scrollViewRef.current.scrollTo({ x: 0, y: 500, animated: false });
+          }
+          this.setLock(y >= this.mainViewHeight);
         }}
       >
-        <View ref={this.headerViewRef} style={{ height: 500, backgroundColor: 'red' }} />
-        <View ref={this.mainViewRef} style={[styles.container, style, { height: __HEIGHT__ }]}>
-          <TabBarComponent />
+        <View
+          ref={this.headerViewRef}
+          style={{ height: 500, backgroundColor: 'red' }}
+          onLayout={({
+            nativeEvent: {
+              layout: { height },
+            },
+          }) => {
+            this.mainViewHeight = height;
+          }}
+        />
+        <View
+          ref={this.mainViewRef}
+          style={[styles.container, style, { height: __HEIGHT__ }]}
+          onStartShouldSetResponder={() => {
+            // console.warn('onStartShouldSetResponder', locationY, pageY);
+            return !this.isLock;
+          }}
+          onMoveShouldSetResponder={() => {
+            console.log('onMoveShouldSetResponder', this.isLock + '');
+
+            return !this.isLock;
+          }}
+        >
+          {renderTabBarComponent()}
           <ViewPager
             ref={this.viewPagerRef}
             routes={navigationState}
