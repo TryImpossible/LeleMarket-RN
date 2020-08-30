@@ -2,14 +2,14 @@ import './globals/basics';
 import './globals/common';
 
 import React from 'react';
-import { StyleSheet, StatusBar, SafeAreaView, Image, Text, View, ScrollView, Button, FlatList } from 'react-native';
+import { StyleSheet, StatusBar, SafeAreaView, Text, View, FlatList } from 'react-native';
 import {
-  Picker,
-  Overlay,
-  OverlayHandle,
-  Carousel,
-  CarouselViewHandles,
-  TabView,
+  // Picker,
+  // Overlay,
+  // OverlayHandle,
+  // Carousel,
+  // CarouselViewHandles,
+  // TabView,
   NestedScrollTabView,
 } from 'components/common';
 
@@ -19,16 +19,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const images = [
-  { uri: 'https://y.gtimg.cn/music/common/upload/category_area/2717637.jpg?max_age=2592000' },
-  { uri: 'https://y.gtimg.cn/music/common/upload/category_area/2538905.jpg?max_age=2592000' },
-  { uri: 'https://y.gtimg.cn/music/common/upload/category_area/2701695.jpg?max_age=2592000' },
-  // { uri: 'https://y.gtimg.cn/music/common/upload/category_area/1674712.jpg?max_age=2592000' },
-  // { uri: 'https://y.gtimg.cn/music/common/upload/category_area/2609005.jpg?max_age=2592000' },
-];
+// const images = [
+//   { uri: 'https://y.gtimg.cn/music/common/upload/category_area/2717637.jpg?max_age=2592000' },
+//   { uri: 'https://y.gtimg.cn/music/common/upload/category_area/2538905.jpg?max_age=2592000' },
+//   { uri: 'https://y.gtimg.cn/music/common/upload/category_area/2701695.jpg?max_age=2592000' },
+//   // { uri: 'https://y.gtimg.cn/music/common/upload/category_area/1674712.jpg?max_age=2592000' },
+//   // { uri: 'https://y.gtimg.cn/music/common/upload/category_area/2609005.jpg?max_age=2592000' },
+// ];
 
 const App = () => {
-  const ref = React.useRef<CarouselViewHandles>(null);
+  // const ref = React.useRef<CarouselViewHandles>(null);
   const tabviewRef = React.useRef<NestedScrollTabView>(null);
 
   return (

@@ -3,7 +3,7 @@
 
 // const LOG_INFO_PATH = `${FS.ExternalDirectoryPath}/log-info.txt`;
 
-function formatting(data) {
+function formatting() {
   // const date = moment().format('YYYY-MM-DD HH:mm:ss:SSS');
   // const log = [];
   // log.push(`\n---------------------------${date} logging-start--------------------------\n`);
@@ -13,7 +13,8 @@ function formatting(data) {
 }
 
 class Logger {
-  static async info(data) {
+  static async info() {
+    formatting();
     // if (__ANDROID__) {
     //   try {
     //     const isExist = await FS.exists(LOG_INFO_PATH);

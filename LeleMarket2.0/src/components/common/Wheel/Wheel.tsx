@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   Animated,
-  Easing,
+  // Easing,
   PanResponder,
   LayoutChangeEvent,
   StyleProp,

@@ -10,12 +10,6 @@ import Window from 'components/common/Window';
 import configureStore from 'src/redux/store/configureStore';
 import rootSaga from 'src/redux/sagas';
 
-// "husky": {
-//   "hooks": {
-//     "pre-commit": "lint-staged"
-//   }
-// },
-
 export const store = configureStore();
 store.runSaga(rootSaga);
 
@@ -32,11 +26,9 @@ const App = () => {
             NavigationService.setTopLevelNavigator(nav);
           }}
           onNavigationStateChange={(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            prevState: NavigationState,
+            _prevState: NavigationState,
             nextState: NavigationState,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            action: NavigationAction,
+            _action: NavigationAction,
           ) => {
             if (!nextState.isTransitioning) {
               return;
