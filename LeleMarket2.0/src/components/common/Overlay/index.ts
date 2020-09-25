@@ -1,18 +1,20 @@
-import { OverlayViewProps, OverlayViewHandle } from './OverlayView';
-import { OverlayPullViewProps, OverlayPullViewHandle } from './OverlayPullView';
-import { OverlayPopViewProps, OverlayPopViewHandle } from './OverlayPopView';
-import { OverlayStackRouteProps, OverlayStackViewProps, OverlayStackViewHandle } from './OverlayStackView';
+import { OverlayViewProps, OverlayViewHandles } from './OverlayView';
+import { OverlayPullViewProps, OverlayPullViewHandles } from './OverlayPullView';
+import { OverlayPopViewProps, OverlayPopViewHandles } from './OverlayPopView';
+import { OverlayStackRouteProps, OverlayStackViewProps, OverlayStackViewHandles } from './OverlayStackView';
+import { OverlayPopoverViewProps } from './OverlayPopoverView';
 import Overlay from './Overlay';
 
 export type {
   OverlayViewProps,
-  OverlayViewHandle,
+  OverlayViewHandles,
   OverlayPullViewProps,
-  OverlayPullViewHandle,
+  OverlayPullViewHandles,
   OverlayPopViewProps,
-  OverlayPopViewHandle,
+  OverlayPopViewHandles,
   OverlayStackRouteProps,
   OverlayStackViewProps,
-  OverlayStackViewHandle,
+  OverlayStackViewHandles,
+  OverlayPopoverViewProps,
 };
 export default Overlay;

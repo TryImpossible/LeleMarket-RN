@@ -18,7 +18,6 @@ module.exports = {
     __WEB__: true,
     __WIDTH__: true,
     __HEIGHT__: true,
-    __ONEPX__: true,
     toDP: true,
     toSP: true,
     color: true,
@@ -27,6 +26,12 @@ module.exports = {
     Colors: true,
     Dimens: true,
     Lang: true,
+    HermesInternal: true,
+    Overlay: true,
+    Alert: true,
+    Loader: true,
+    AlbumView: true,
+    Toast: true,
   },
   rules: {
     // 禁止使用 var

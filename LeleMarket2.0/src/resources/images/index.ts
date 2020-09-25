@@ -1,5 +1,8 @@
 export default {
   app_logo: require('./app_logo.png'),
+  ic_checkbox: require('./ic_checkbox.png'),
+  ic_checkbox_active: require('./ic_checkbox_active.png'),
+  ic_del: require('./ic_del.png'),
   ic_mainTabBar_customization_normal: require('./ic_mainTabBar_customization_normal.png'),
   ic_mainTabBar_customization_selected: require('./ic_mainTabBar_customization_selected.png'),
   ic_mainTabBar_discover_normal: require('./ic_mainTabBar_discover_normal.png'),

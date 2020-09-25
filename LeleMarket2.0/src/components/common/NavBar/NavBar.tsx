@@ -10,8 +10,8 @@ import {
   TextStyle,
   ImageRequireSource,
 } from 'react-native';
-import IMAGES from 'resources/images';
-import NavigationService from 'src/navigators/NavigationService';
+import IMAGES from '@resources/images';
+import NavigationService from '@navigators/NavigationService';
 
 export interface NavBarProps {
   style?: StyleProp<ViewStyle>;

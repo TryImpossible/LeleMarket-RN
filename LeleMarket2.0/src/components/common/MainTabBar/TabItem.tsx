@@ -4,8 +4,8 @@ import { StyleSheet, TouchableOpacity, Image, Text, ImageRequireSource, StylePro
 const styles = StyleSheet.create({
   item: {
     flex: 1,
-    height: Dimens.bottomTabBarHeight,
-    width: Dimens.bottomTabBarHeight,
+    height: Dimens.TabBarHeight,
+    width: Dimens.TabBarHeight,
     justifyContent: 'flex-end',
     alignItems: 'center',
     overflow: 'visible',
@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
   normalText: {
     marginTop: toDP(2),
     marginBottom: toDP(4),
-    fontSize: toSP(Dimens.textSmallMiniSize),
+    fontSize: toSP(Dimens.textSmallSize),
   },
   raisedText: {
     marginBottom: toDP(4),
-    fontSize: toSP(Dimens.textSmallMiniSize),
+    fontSize: toSP(Dimens.textSmallSize),
   },
 });
 
@@ -41,7 +41,7 @@ export interface ItemProps {
 const NormalItem: React.FC<ItemProps> = ({ style, icon, selectedIcon, isSelected, text, onPress }) => {
   return (
     <TouchableOpacity activeOpacity={1} style={[styles.item]} onPress={onPress}>
-      <Image source={!isSelected ? icon : selectedIcon} style={[styles.normalIcon, style]} />
+      <Image source={!isSelected ? icon : selectedIcon} style={[styles.normalIcon, style]} resizeMode="contain" />
       <Text style={[styles.normalText, { color: isSelected ? Colors.accentColor : Colors.textLightColor }]}>
         {text}
       </Text>

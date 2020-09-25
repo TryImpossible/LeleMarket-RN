@@ -1,19 +1,19 @@
-import React, { useRef, useImperativeHandle, useCallback, useMemo } from 'react';
+import React, { useRef, useEffect, useImperativeHandle, useCallback, useMemo } from 'react';
 import { StyleSheet, Animated, StyleProp, ViewStyle, Easing } from 'react-native';
-import OverlayView, { OverlayViewProps, OverlayViewHandle } from './OverlayView';
+import OverlayView, { OverlayViewProps, OverlayViewHandles } from './OverlayView';
 
 export interface OverlayPullViewProps extends OverlayViewProps {
   side?: 'top' | 'right' | 'bottom' | 'left';
   containerStyle?: StyleProp<ViewStyle>;
 }
 
-export interface OverlayPullViewHandle extends OverlayViewHandle {}
+export interface OverlayPullViewHandles extends OverlayViewHandles {}
 
-const OverlayPullView: React.ForwardRefRenderFunction<OverlayPullViewHandle, OverlayPullViewProps> = (
-  { style, containerStyle, side = 'bottom', children, onCloseRequest, ...rest },
+const OverlayPullView: React.ForwardRefRenderFunction<OverlayPullViewHandles, OverlayPullViewProps> = (
+  { style, containerStyle, side = 'bottom', children, onCloseRequest, display = false, ...restProps },
   ref,
 ) => {
-  const overlayViewRef = useRef<OverlayViewHandle>(null);
+  const overlayViewRef = useRef<OverlayViewHandles>(null);
   const pathValue = useRef(new Animated.Value(0)).current;
 
   // 是否显示
@@ -40,6 +40,7 @@ const OverlayPullView: React.ForwardRefRenderFunction<OverlayPullViewHandle, Ove
       onCloseRequest && onCloseRequest();
       Animated.timing(pathValue, {
         toValue: 0,
+        duration: 200,
         easing: Easing.out(Easing.linear),
         useNativeDriver: false,
       }).start(() => {
@@ -107,17 +108,21 @@ const OverlayPullView: React.ForwardRefRenderFunction<OverlayPullViewHandle, Ove
     }
   }, [pathValue, side]);
 
+  useEffect(() => {
+    display && show();
+  }, [display, show]);
+
   return (
-    <OverlayView ref={overlayViewRef} style={getStyle} onCloseRequest={dismiss} {...rest}>
+    <OverlayView ref={overlayViewRef} style={getStyle} onCloseRequest={dismiss} {...restProps}>
       <Animated.View
         style={[
           containerStyle,
           {
-            backgroundColor: 'red',
             opacity: pathValue.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0, 0, 1] }),
             transform: getTransform,
           },
         ]}
+        pointerEvents="box-none"
       >
         {children}
       </Animated.View>

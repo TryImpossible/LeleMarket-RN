@@ -11,8 +11,8 @@ import {
   CreateNavigatorConfig,
   NavigationTabRouterConfig,
 } from 'react-navigation';
-import { MainTabBar } from 'components/common';
-import IMAGES from 'resources/images';
+import { MainTabBar } from '@components';
+import IMAGES from '@resources/images';
 import Home from '../Home';
 import Discover from './Discover';
 import Customization from './Customization';

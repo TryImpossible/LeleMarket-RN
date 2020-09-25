@@ -1,4 +1,4 @@
-import Loader, { LoaderProps } from '../Loader';
+import LoadingView, { LoadingViewProps } from './LoadingView';
 
-export type { LoaderProps };
-export default Loader;
+export type { LoadingViewProps };
+export default LoadingView;

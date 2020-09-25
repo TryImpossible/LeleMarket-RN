@@ -1,15 +1,11 @@
 import React, { useState, useEffect, memo } from 'react';
 import { FlatList, Text } from 'react-native';
-import { ScreenLayout } from 'components/common';
-import PagedList, { PullUpStatus, PullDownStatus } from 'components/common/PagedList';
-
-const PagedFlatList = PagedList(FlatList);
+import { Screen } from '@components';
+import { PagedFlatList, PullUpStatus, PullDownStatus } from '@components';
 
 const Item = ({ index }: { index: number }) => {
   return (
-    <Text style={{ textAlign: 'center', height: toDP(88), lineHeight: toDP(88), backgroundColor: color() }}>
-      {index}
-    </Text>
+    <Text style={{ textAlign: 'center', height: toDP(88), lineHeight: toDP(88), backgroundColor: color }}>{index}</Text>
   );
 };
 
@@ -45,7 +41,7 @@ const Discover = () => {
   };
   const ref = React.useRef<FlatList>(null);
   return (
-    <ScreenLayout>
+    <Screen>
       <PagedFlatList
         forwardRef={ref}
         style={{ flex: 1, marginTop: Dimens.statusBarHeight }}
@@ -69,7 +65,7 @@ const Discover = () => {
           // console.warn('onScroll');
         }}
       />
-    </ScreenLayout>
+    </Screen>
   );
 };
 

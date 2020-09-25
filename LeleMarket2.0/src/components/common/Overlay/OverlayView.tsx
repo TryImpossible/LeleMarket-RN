@@ -1,5 +1,15 @@
-import React, { useState, useRef, useCallback, useImperativeHandle } from 'react';
-import { StyleSheet, Animated, PanResponder, StyleProp, ViewStyle, Easing, BackHandler } from 'react-native';
+import React, { useState, useEffect, useRef, useCallback, useImperativeHandle } from 'react';
+import {
+  StyleSheet,
+  Animated,
+  PanResponder,
+  StyleProp,
+  ViewStyle,
+  Easing,
+  BackHandler,
+  TouchableOpacity,
+} from 'react-native';
+import KeyboardSpacer from '../KeyboardSpacer';
 
 const styles = StyleSheet.create({
   overlay: {
@@ -10,26 +20,44 @@ const styles = StyleSheet.create({
 
 export interface OverlayViewProps {
   style?: StyleProp<ViewStyle>;
-  closeOnTouch?: boolean;
+  display?: boolean;
+  closeOnTouchOutside?: boolean;
   closeOnBackPress?: boolean;
   onCloseRequest?: () => void;
+  onShowCompleted?: () => void;
+  onDismissCompleted?: () => void;
   children?: React.ReactNode;
+  autoKeyboardInsets?: boolean;
 }
 
-export interface OverlayViewHandle {
+export interface OverlayViewHandles {
   isVisible: () => boolean;
   show: (callback?: Function) => void;
   dismiss: (callback?: Function) => void;
 }
 
-const OverlayView: React.ForwardRefRenderFunction<OverlayViewHandle, OverlayViewProps> = (
-  { children, style, closeOnTouch = true, closeOnBackPress = true, onCloseRequest },
+const OverlayView: React.ForwardRefRenderFunction<OverlayViewHandles, OverlayViewProps> = (
+  {
+    children,
+    style,
+    closeOnTouchOutside = true,
+    closeOnBackPress = true,
+    onCloseRequest,
+    onShowCompleted,
+    onDismissCompleted,
+    display = false,
+    autoKeyboardInsets = false,
+  },
   ref,
 ) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const panReponder = PanResponder.create({
     onStartShouldSetPanResponder: (_evt, _gestureState) => true,
-    onPanResponderGrant: (_evt, _gestureState) => {},
-    onPanResponderRelease: (_evt, _gestureState) => closeOnTouch && (onCloseRequest ? onCloseRequest() : dismiss()),
+    onPanResponderGrant: (_evt, gestureState) => {
+      console.log(gestureState);
+    },
+    onPanResponderRelease: (_evt, _gestureState) =>
+      closeOnTouchOutside && (onCloseRequest ? onCloseRequest() : dismiss()),
   });
 
   const [visible, setVisible] = useState<boolean>(false);
@@ -65,11 +93,12 @@ const OverlayView: React.ForwardRefRenderFunction<OverlayViewHandle, OverlayView
         easing: Easing.out(Easing.cubic),
         useNativeDriver: false,
       }).start(() => {
-        dismissCallback.current && dismissCallback.current();
         setVisible(false);
+        dismissCallback.current && dismissCallback.current();
+        onDismissCompleted && onDismissCompleted();
       });
     },
-    [isVisible, valuePath],
+    [isVisible, onDismissCompleted, valuePath],
   );
 
   // 暴露方法给外部调用，类似于类组件的ref.
@@ -82,7 +111,7 @@ const OverlayView: React.ForwardRefRenderFunction<OverlayViewHandle, OverlayView
   );
 
   // Android端监听返回键事件
-  React.useEffect(() => {
+  useEffect(() => {
     if (!__ANDROID__) {
       return;
     }
@@ -99,7 +128,7 @@ const OverlayView: React.ForwardRefRenderFunction<OverlayViewHandle, OverlayView
     return () => backHandlerListener.remove();
   }, [closeOnBackPress, dismiss, visible]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (visible) {
       Animated.timing(valuePath, {
         toValue: 1,
@@ -108,9 +137,14 @@ const OverlayView: React.ForwardRefRenderFunction<OverlayViewHandle, OverlayView
         useNativeDriver: false,
       }).start(() => {
         showCallback.current && showCallback.current();
+        onShowCompleted && onShowCompleted();
       });
     }
-  }, [valuePath, visible]);
+  }, [onShowCompleted, valuePath, visible]);
+
+  useEffect(() => {
+    display && show();
+  }, [display, show]);
 
   if (!visible) {
     return null;
@@ -122,9 +156,14 @@ const OverlayView: React.ForwardRefRenderFunction<OverlayViewHandle, OverlayView
         StyleSheet.flatten(style),
         { opacity: valuePath.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0, 1, 1] }) },
       ]}
-      {...panReponder.panHandlers}
+      // {...panReponder.panHandlers}
     >
+      <TouchableOpacity
+        style={StyleSheet.absoluteFill}
+        onPress={() => closeOnTouchOutside && (onCloseRequest ? onCloseRequest() : dismiss())}
+      />
       {children}
+      {autoKeyboardInsets && __IOS__ && <KeyboardSpacer />}
     </Animated.View>
   );
 };

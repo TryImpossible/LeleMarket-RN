@@ -1,22 +1,37 @@
-import './globals/basics';
-import './globals/common';
+import '@utilities/setUp';
 
 import React from 'react';
+import { Text, TextInput, YellowBox } from 'react-native';
 import { Provider } from 'react-redux';
 import { NavigationState, NavigationAction } from 'react-navigation';
-import AppNavigator from 'src/navigators/AppNavigator';
-import NavigationService from 'src/navigators/NavigationService';
-import Window from 'components/common/Window';
-import configureStore from 'src/redux/store/configureStore';
-import rootSaga from 'src/redux/sagas';
+import AppNavigator from '@navigators/AppNavigator';
+import NavigationService from '@navigators/NavigationService';
+import { RootView } from '@components';
+import configureStore from '@src/redux/store/configureStore';
+import rootSaga from '@src/redux/sagas';
 
 export const store = configureStore();
 store.runSaga(rootSaga);
 
+//关闭字体跟随系统放大
+Text.defaultProps = {
+  ...(Text.defaultProps || {}),
+  allowFontScaling: false,
+  textAlignVertical: 'center',
+};
+TextInput.defaultProps = {
+  ...(Text.defaultProps || {}),
+  allowFontScaling: false,
+  textAlignVertical: 'center',
+  underlineColorAndroid: 'transparent',
+};
+
+YellowBox.ignoreWarnings(['VirtualizedLists should never']);
+
 const App = () => {
   return (
     <Provider store={store}>
-      <Window>
+      <RootView>
         <AppNavigator
           ref={(nav: any) => {
             // NOTE: ref至少会回调两次，组件装载和组件卸载的时候
@@ -41,7 +56,7 @@ const App = () => {
             console.log('----------------------------------------');
           }}
         />
-      </Window>
+      </RootView>
     </Provider>
   );
 };

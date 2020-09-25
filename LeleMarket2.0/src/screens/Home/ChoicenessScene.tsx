@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, SectionList, Image, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
 import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from 'src/redux/actions';
-import { State } from 'src/redux/typings';
+import * as actions from '@src/redux/actions';
+import { State } from '@src/redux/typings';
 import {
   ChoicenessState,
   BannerBean,
@@ -12,7 +12,7 @@ import {
   CustomizationBean,
   GoodsBean,
 } from 'src/models/homeModel';
-import PagedList, { PullDownStatus } from 'components/common/PagedList';
+import { PagedSectionList, PullDownStatus } from '@components';
 
 const styles = StyleSheet.create({
   bannerImage: {
@@ -56,8 +56,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
 });
-
-const PagedSectionList = PagedList(SectionList);
 
 const BannerComponent: React.FC<{ data: BannerBean[] }> = ({ data }) => {
   const [activeIdnex, setActiveIndex] = React.useState<number>(0);

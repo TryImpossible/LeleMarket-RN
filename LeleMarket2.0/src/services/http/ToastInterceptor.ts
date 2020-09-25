@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
-import { ResponseResult } from 'src/models/commonModel';
+import { ResponseResult } from '@src/models/commonModel';
 import { REQUEST_FAIL_TOAST, REQUEST_FAIL_ALERT } from '../Const';
-import { Toast } from 'components/common';
+import { Toast } from '@components';
 
 function toast(res: AxiosResponse<ResponseResult<any>>) {
   // console.log('res', res);

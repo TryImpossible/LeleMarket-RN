@@ -11,7 +11,7 @@ import {
   NativeScrollEvent,
 } from 'react-native';
 import EmptyView, { EmptyViewProps } from '../EmptyView';
-import Loader from '../Loader';
+import Loader from '../LoadingView';
 import FailureView from '../FailureView';
 import LoadingView from './LoadingView';
 import LoadFailView from './LoadFailView';
@@ -62,7 +62,7 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
       onEndReached,
       ListEmptyComponent,
       ListFooterComponent,
-      ...restProps
+      ...restPropsProps
     } = P;
 
     const props = {};
@@ -88,7 +88,7 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
       },
       ListEmptyComponent: () => {
         if (pullDownStatus === 'pending') {
-          return <Loader visible />;
+          return <Loader />;
         }
         if (pullDownStatus === 'emptyData') {
           return (renderEmpty && renderEmpty()) || <EmptyView {...emptyProps} />;
@@ -164,7 +164,7 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
         }
         onScroll && onScroll(event);
       },
-      ...restProps,
+      ...restPropsProps,
     });
     return props;
   }

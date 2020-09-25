@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { CustomAxiosRequestConfig } from './typings';
-import { Loader } from 'components/common';
+import { Loader } from '@components';
 
 function show(req: CustomAxiosRequestConfig) {
   const { showLoader } = req;

@@ -1,8 +1,8 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
-import ServerApi from 'services/http';
+import ServerApi from '@services/http';
 import { TOP_NAV_REQUEST, CHOICENESS_REQUEST } from '../actionTypes';
 import { topNavSuccess, topNavFailure, choicenessSuccess, choicenessFailure } from '../actions';
-import { TopNavResp, ChoicenessResp } from 'src/models/homeModel';
+import { TopNavResp, ChoicenessResp } from '@src/models/homeModel';
 
 function* fetchTopNavData() {
   try {

@@ -1,73 +1,26 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, ActivityIndicator, Animated, Easing, ViewStyle } from 'react-native';
+import React, { useState, useImperativeHandle } from 'react';
+import {} from 'react-native';
+import LoadingView, { LoadingViewProps } from '../LoadingView';
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-export interface LoaderProps {
-  style?: ViewStyle;
-  visible?: boolean;
-}
-
-interface LoaderFunction extends React.FC<LoaderProps> {
+export interface LoaderHandles {
   show: () => void;
   dismiss: () => void;
-  //   Captcha: React.FunctionComponent<LoginItemProps>;
 }
 
-const defaultVisible: boolean = false;
-let loaderVisible: boolean = defaultVisible;
-let setLoaderVisible: Function = () => {};
+export interface LoaderProps extends Omit<LoadingViewProps, 'visible'> {}
 
-const bounceValue = new Animated.Value(1);
-
-const Loader: LoaderFunction = ({ visible = defaultVisible }) => {
-  [loaderVisible, setLoaderVisible] = useState<boolean>(visible);
-  if (!loaderVisible) {
-    return null;
-  }
-  return (
-    <View style={[StyleSheet.absoluteFill, styles.container]}>
-      <Animated.View style={[Styles.Loader.style]}>
-        <Animated.View style={{ transform: [{ scale: bounceValue }] }}>
-          <ActivityIndicator size={'large'} color="#FFF" animating={loaderVisible} />
-        </Animated.View>
-      </Animated.View>
-    </View>
+const Loader: React.ForwardRefRenderFunction<LoaderHandles, LoaderProps> = (props, ref) => {
+  const [visible, setVisible] = useState(false);
+  // 暴露方法给外部调用，类似于类组件的ref.
+  useImperativeHandle(
+    ref,
+    () => ({
+      show: () => setVisible(true),
+      dismiss: () => setVisible(false),
+    }),
+    [],
   );
+  return <LoadingView visible={visible} {...props} />;
 };
 
-Loader.show = () => {
-  setLoaderVisible(true);
-
-  Animated.timing(bounceValue, { toValue: 1.2, easing: Easing.ease, useNativeDriver: false }).start();
-  bounceValue.addListener(({ value }) => {
-    if (value === 1.2) {
-      Animated.timing(bounceValue, {
-        toValue: 1,
-        easing: Easing.inOut(Easing.linear),
-        useNativeDriver: false,
-      }).start();
-    }
-    if (value === 1) {
-      Animated.timing(bounceValue, {
-        toValue: 1.2,
-        easing: Easing.inOut(Easing.linear),
-        useNativeDriver: false,
-      }).start();
-    }
-  });
-};
-
-Loader.dismiss = () => {
-  bounceValue.stopAnimation(() => {
-    bounceValue.removeAllListeners();
-    setLoaderVisible(false);
-  });
-};
-
-export default Loader;
+export default React.forwardRef(Loader);

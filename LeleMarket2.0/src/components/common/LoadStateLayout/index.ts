@@ -1,4 +1,4 @@
-import LoadStateLayout, { LoadStateLayoutProps } from './LoadStateLayout';
+import LoadStateLayout, { LoadStateType, LoadStateLayoutProps } from './LoadStateLayout';
 
-export type { LoadStateLayoutProps };
+export type { LoadStateType, LoadStateLayoutProps };
 export default LoadStateLayout;

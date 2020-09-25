@@ -1,4 +1,4 @@
-import { DotEnv } from 'modules';
+import { DotEnv } from '@src/modules';
 
 // HttpClient
 export const REQUEST_BASE_URL: string = __WEB__ ? '/api' : DotEnv.HTTP_REQUEST_BASE_URL;

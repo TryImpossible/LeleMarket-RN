@@ -3,6 +3,5 @@ import ViewPager, { IconType, RouteProps, SceneProps, MyViewPagerProps } from '.
 import TabBar, { TabBarProps } from './tabBar/TabBar';
 import NestedScrollTabView from './NestedScrollTabView';
 
-export { TabView as default, ViewPager, TabBar, NestedScrollTabView };
-
 export type { TabViewProps, TabBarPosition, IconType, RouteProps, SceneProps, MyViewPagerProps, TabBarProps };
+export { TabView as default, ViewPager, TabBar, NestedScrollTabView };

@@ -10,7 +10,7 @@ import {
   ImageStyle,
   TextStyle,
 } from 'react-native';
-import IMAGES from 'resources/images';
+import IMAGES from '@resources/images';
 
 const styles = StyleSheet.create({
   container: {

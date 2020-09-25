@@ -1,15 +1,18 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleProp, ViewStyle } from 'react-native';
+import LoadingView, { LoadingViewProps } from '../LoadingView';
 import EmptyView, { EmptyViewProps } from '../EmptyView';
-import LoadingView, { LoaderProps as LoadingProps } from '../LoadingView';
 import FailureView, { FailureViewProps } from '../FailureView';
 import NoNetworkView, { NoNetworkViewProps } from '../NoNetworkView';
 
+export type LoadStateType = 'none' | 'empty' | 'loading' | 'noNetwork' | 'failure';
+
 export interface LoadStateLayoutProps {
-  state?: 'empty' | 'loading' | 'failure' | 'noNetwork';
+  style?: StyleProp<ViewStyle>;
+  state?: LoadStateType;
   emptyProps?: EmptyViewProps;
   empty?: React.ReactNode;
-  loadingProps?: Omit<LoadingProps, 'visible'>;
+  loadingProps?: Omit<LoadingViewProps, 'visible'>;
   loading?: React.ReactNode;
   failurePorps?: FailureViewProps;
   failure?: React.ReactNode;
@@ -19,7 +22,8 @@ export interface LoadStateLayoutProps {
 
 const LoadStateLayout: React.FC<LoadStateLayoutProps> = ({
   children,
-  state,
+  style,
+  state = 'none',
   emptyProps,
   empty,
   loadingProps,
@@ -30,7 +34,7 @@ const LoadStateLayout: React.FC<LoadStateLayoutProps> = ({
   noNetwork,
 }) => {
   return (
-    <View style={{ flex: 1, backgroundColor: 'red', justifyContent: 'flex-end' }}>
+    <View style={[{ flex: 1 }, style]}>
       {children}
       {state === 'empty' && (empty || <EmptyView {...emptyProps} />)}
       {state === 'loading' && (loading || <LoadingView visible {...loadingProps} />)}

@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Image, View, Text } from 'react-native';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
-import NavigationApi from 'navigators';
-import { ScreenLayout } from 'components/common';
-import IMAGES from 'resources/images';
+import NavigationApi from '@navigators';
+import { Screen } from '@components';
+import IMAGES from '@resources/images';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +22,7 @@ const SplashPage = ({ navigation }: Props) => {
   }, 2000);
 
   return (
-    <ScreenLayout style={styles.container}>
+    <Screen style={styles.container}>
       <View
         style={{
           flexDirection: 'row',
@@ -53,7 +53,7 @@ const SplashPage = ({ navigation }: Props) => {
       >
         闪屏页
       </Text> */}
-    </ScreenLayout>
+    </Screen>
   );
 };
 

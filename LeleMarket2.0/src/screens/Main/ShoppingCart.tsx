@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { ScreenLayout } from 'components/common';
+import { Screen } from '@components';
 
 const styles = StyleSheet.create({
   shoppingCart: {
@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
 
 const ShoppingCart: React.FC<{}> = () => {
   return (
-    <ScreenLayout style={styles.shoppingCart}>
+    <Screen style={styles.shoppingCart}>
       <Text>ShoppingCart</Text>
-    </ScreenLayout>
+    </Screen>
   );
 };
 

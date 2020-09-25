@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { ScreenLayout } from 'components/common';
-import TabView, { ScrollableTabView } from 'components/common/TabView';
+import { Screen } from '@components';
+import { TabView } from '@components';
 import Discover from '../Main/Discover';
-import * as actions from 'src/redux/actions';
-import { State } from 'src/redux/typings';
+import * as actions from '@src/redux/actions';
+import { State } from '@src/redux/typings';
 import ChoicenessScene from './ChoicenessScene';
 
 const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-let tabViewRef: React.RefObject<ScrollableTabView> = React.createRef<ScrollableTabView>();
+let tabViewRef: React.RefObject<TabView> = React.createRef<TabView>();
 
 const Pager = ({ index }: { index: number; jumpTo: (index: number) => void }) => {
   const [loader, setLoader] = React.useState(true);
@@ -28,7 +28,7 @@ const Pager = ({ index }: { index: number; jumpTo: (index: number) => void }) =>
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: loader ? 'transparent' : color(),
+        backgroundColor: loader ? 'transparent' : color,
       }}
     >
       {loader && <ActivityIndicator size="large" />}
@@ -64,7 +64,7 @@ const Home: React.FC<HomeProps> = () => {
     dispatch(actions.topNavReqeust());
   }, [dispatch]);
   return (
-    <ScreenLayout style={styles.home}>
+    <Screen style={styles.home}>
       <TabView
         ref={tabViewRef}
         style={{ marginTop: Dimens.statusBarHeight }}
@@ -78,7 +78,7 @@ const Home: React.FC<HomeProps> = () => {
         tabBarIndicatorMode="label"
         tabBarMode="scrollable"
       />
-    </ScreenLayout>
+    </Screen>
   );
 };
 

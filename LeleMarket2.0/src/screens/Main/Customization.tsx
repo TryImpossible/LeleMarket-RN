@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { ScreenLayout } from 'components/common';
+import { Screen } from '@components';
 
 const styles = StyleSheet.create({
   customization: {
@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
 
 const Customization: React.FC<{}> = () => {
   return (
-    <ScreenLayout style={styles.customization}>
+    <Screen style={styles.customization}>
       <Text>Customization</Text>
-    </ScreenLayout>
+    </Screen>
   );
 };
 

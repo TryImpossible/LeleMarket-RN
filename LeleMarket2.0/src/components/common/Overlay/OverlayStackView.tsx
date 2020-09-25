@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useImperativeHandle } from 'react';
 import { Animated, View, Easing, Text } from 'react-native';
-import OverlayView, { OverlayViewProps, OverlayViewHandle } from './OverlayView';
+import OverlayView, { OverlayViewProps, OverlayViewHandles } from './OverlayView';
 
 export interface OverlayStackRouteProps {
   key: string;
@@ -11,12 +11,12 @@ export interface OverlayStackViewProps extends OverlayViewProps {
   routes?: OverlayStackRouteProps[];
 }
 
-export interface OverlayStackViewHandle extends OverlayViewHandle {
+export interface OverlayStackViewHandles extends OverlayViewHandles {
   push: () => void;
   pop: () => void;
 }
 
-const OverlayStackView: React.ForwardRefRenderFunction<OverlayStackViewHandle, OverlayStackViewProps> = (
+const OverlayStackView: React.ForwardRefRenderFunction<OverlayStackViewHandles, OverlayStackViewProps> = (
   {
     style,
     onCloseRequest,
@@ -48,12 +48,12 @@ const OverlayStackView: React.ForwardRefRenderFunction<OverlayStackViewHandle, O
         ),
       },
     ],
-    ...rest
+    ...restProps
   },
   ref,
 ) => {
   const [index, setIndex] = React.useState<number>(0);
-  const overlayViewRef = useRef<OverlayViewHandle>(null);
+  const overlayViewRef = useRef<OverlayViewHandles>(null);
   const pathValue = useRef(new Animated.Value(0)).current;
 
   const widthValue = useRef(new Animated.Value(-1)).current;
@@ -116,7 +116,7 @@ const OverlayStackView: React.ForwardRefRenderFunction<OverlayStackViewHandle, O
       ref={overlayViewRef}
       style={[style, { justifyContent: 'center', alignItems: 'center' }]}
       onCloseRequest={dismiss}
-      {...rest}
+      {...restProps}
     >
       <Animated.View
         style={{
@@ -127,6 +127,7 @@ const OverlayStackView: React.ForwardRefRenderFunction<OverlayStackViewHandle, O
           transform: [{ translateX: 0 }, { translateY: 0 }],
           overflow: 'hidden',
         }}
+        onStartShouldSetResponder={() => true}
       >
         <View
           style={{ flex: 0 }}

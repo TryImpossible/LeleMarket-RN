@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
-import { ResponseResult } from 'src/models/commonModel';
+import { ResponseResult } from '@src/models/commonModel';
 import { REQUEST_FAIL_TOKEN_EXPIRE } from '../Const';
-import { Toast } from 'components/common';
+import { Toast } from '@components';
 
 function tokenExpire(res: AxiosResponse<ResponseResult<any>>) {
   const {

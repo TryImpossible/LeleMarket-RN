@@ -89,7 +89,10 @@ const CarouselView: React.ForwardRefRenderFunction<CarouselViewHandles, Carousel
    * 移除定时器
    */
   const _removeTimer = useCallback(() => {
-    _timer.current && clearInterval(_timer.current);
+    if (_timer.current) {
+      clearInterval(_timer.current);
+      _timer.current = undefined;
+    }
   }, []);
 
   /**

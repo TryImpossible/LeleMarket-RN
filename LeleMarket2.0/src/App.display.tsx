@@ -1,5 +1,4 @@
-import './globals/basics';
-import './globals/common';
+import '@utilities/setUp';
 
 import React from 'react';
 import { StyleSheet, StatusBar, SafeAreaView, Text, View, FlatList } from 'react-native';
@@ -11,7 +10,7 @@ import {
   // CarouselViewHandles,
   // TabView,
   NestedScrollTabView,
-} from 'components/common';
+} from '@components';
 
 const styles = StyleSheet.create({
   container: {

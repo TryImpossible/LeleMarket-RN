@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, StyleProp, ViewStyle } from 'react-native';
 import TabItem, { ItemProps } from './TabItem';
 
 const styles = StyleSheet.create({
   mainTabBar: {
     width: '100%',
-    height: Dimens.bottomTabBarHeight + Dimens.safeBottomHeight,
+    height: Dimens.TabBarHeight + Dimens.safeBottomHeight,
     paddingBottom: Dimens.safeBottomHeight,
     flexDirection: 'row',
     borderTopColor: Colors.dividerColor,
@@ -18,19 +18,24 @@ export interface MainTabBarProps {
   style?: StyleProp<ViewStyle>;
   data?: Array<Omit<ItemProps, 'onPress'>> | undefined;
   initialIndex?: number;
+  raisedIndex?: number;
   tabBarOnPress?: (index: number) => void;
 }
 
 const MainTabBar: React.FC<MainTabBarProps> & {
   NormalItem: React.FunctionComponent<ItemProps>;
   RaisedItem: React.FunctionComponent<ItemProps>;
-} = ({ children, data, initialIndex, tabBarOnPress }) => {
+} = ({ children, data, initialIndex = 0, raisedIndex = -1, tabBarOnPress }) => {
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
+
+  useEffect(() => {
+    setSelectedIndex(initialIndex);
+  }, [initialIndex]);
   return (
     <View style={styles.mainTabBar}>
       {data !== undefined &&
         data.map((item, index) => {
-          const Item = index === 2 ? TabItem.RaisedItem : TabItem.NormalItem;
+          const Item = index === raisedIndex ? TabItem.RaisedItem : TabItem.NormalItem;
           return (
             <Item
               key={String(index)}
@@ -43,13 +48,16 @@ const MainTabBar: React.FC<MainTabBarProps> & {
             />
           );
         })}
-      {React.Children.map(children, (child: any, index) => {
-        const { onPress = () => {} } = child.props || {};
-        return React.cloneElement(child, {
+      {React.Children.map(children, (child, index) => {
+        if (!React.isValidElement(child)) {
+          return child;
+        }
+        const { onPress } = (child.props || {}) as ItemProps;
+        return React.cloneElement<ItemProps>(child, {
           isSelected: selectedIndex === index,
           onPress: () => {
             setSelectedIndex(index);
-            onPress();
+            onPress && onPress();
           },
         });
       })}

@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import DateUtils from 'utilities/DateUtils';
+import DateUtils from '@utilities/DateUtils';
 
 // type Content = [string, any, string?];
 
