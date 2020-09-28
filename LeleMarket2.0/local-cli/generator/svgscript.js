@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const logger = require('../logger');
+const logger = require('../utils/logger');
 
 const SVG_DIR_PATH = path.resolve(__dirname, '../../src/resources/svgs');
 const SVG_EXPORT_PATH = path.join(SVG_DIR_PATH, 'index.ts');

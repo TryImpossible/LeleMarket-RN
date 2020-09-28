@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const colors = require('colors');
 
 const logger = {
@@ -10,7 +9,7 @@ const logger = {
   },
   error(msg) {
     console.log(colors.red(msg));
-  }
+  },
 };
 
 module.exports = logger;

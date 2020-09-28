@@ -128,17 +128,22 @@ const AgentWeb = React.forwardRef<AgentWebHandles, AgentWebProps>(
             onMessage && onMessage(event);
           }}
           onLoadProgress={_onLoadProgress}
-          // source={{ uri: 'http://192.168.1.2:8082/src/components/EWebview/test.html' }} // NOTE: debug
+          source={{ uri: 'http://192.168.1.101:8081/src/components/common/AgentWeb/test.html' }} // NOTE: debug
           // onLoadEnd={async () => {
-          //   const result = await invoker.call({
-          //     action: 'hello',
-          //     callback: {
-          //       success: (res) => {
-          //         console.warn('res is ', res);
+          //   const result = await setTimeout(async () => {
+          //     invoker.call({
+          //       command: 'fetch',
+          //       callback: {
+          //         success: (payload) => {
+          //           console.warn('res is ', payload);
+          //         },
+          //         progress: (p) => {
+          //           console.warn('p is', p);
+          //         },
           //       },
-          //     },
-          //   });
-          //   console.warn('result is ', result);
+          //     });
+          //     console.warn('result is ', result);
+          //   }, 2000);
           // }}
         />
         {indicator && (

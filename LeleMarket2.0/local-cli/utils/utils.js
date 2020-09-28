@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
-const logger = require('../logger');
+const logger = require('./logger');
 
 function beautify(filepath) {
   const binpath = path.resolve(__dirname, '../../node_modules/.bin');

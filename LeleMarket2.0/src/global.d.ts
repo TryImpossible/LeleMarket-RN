@@ -38,7 +38,7 @@ declare global {
       user: { [key: string]: any };
       _windowRef: React.MutableRefObject<WindowHandles>;
       Overlay: OVERLAY;
-      Alert: React.MutableRefObject<AlertHandles>;
+      Alert: React.RefObject<AlertHandles>;
       Loader: React.MutableRefObject<LoaderHandles>;
       AlbumView: React.MutableRefObject<AlbumViewHandles>;
       Toast: {

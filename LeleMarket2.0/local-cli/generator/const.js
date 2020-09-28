@@ -2,15 +2,15 @@ const CATEGORY = {
   COMPONENT: 'component',
   SCREEN: 'screen',
   IMAGE: 'image',
-  SVG: 'svg'
+  SVG: 'svg',
 };
 
 const ACTION = {
   ADD: 'add',
-  REMOVE: 'remove'
+  REMOVE: 'remove',
 };
 
 module.exports = {
   CATEGORY,
-  ACTION
+  ACTION,
 };

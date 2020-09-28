@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const logger = require('../logger');
+const logger = require('../utils/logger');
 const { ACTION } = require('./const');
-const utils = require('./utils');
+const utils = require('../utils/utils');
 
 const COMPONENT_TEMPLATE_DIR_PATH = path.join(__dirname, 'component.template');
 const COMPONENT_DIR_PATH = path.resolve(__dirname, '../../src/components');
@@ -35,7 +35,7 @@ function remove(name) {
     if (fs.existsSync(destDirPath)) {
       if (fs.statSync(destDirPath).isDirectory()) {
         const files = fs.readdirSync(destDirPath);
-        files.forEach(element => {
+        files.forEach((element) => {
           const p = path.join(destDirPath, element);
           execute(p);
         });
