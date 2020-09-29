@@ -11,8 +11,8 @@ import {
   // TabView,
   // NestedScrollTabView,
   AgentWeb,
+  AgentWebHandles,
 } from '@components';
-import WebView from 'react-native-webview';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -112,8 +112,12 @@ import WebView from 'react-native-webview';
 // };
 
 const App = () => {
-  const ref = useRef<WebView>(null);
-  return <AgentWeb ref={ref} />;
+  const ref = useRef<AgentWebHandles>(null);
+
+  setTimeout(() => {
+    ref.current && ref.current.reload && ref.current.reload();
+  }, 3000);
+  return <AgentWeb ref={ref} source={{ uri: 'http://192.168.1.101:8081/src/components/common/AgentWeb/test.html' }} />;
 };
 
 export default App;
