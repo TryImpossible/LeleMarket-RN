@@ -25,7 +25,7 @@ export interface MainTabBarProps {
 const MainTabBar: React.FC<MainTabBarProps> & {
   NormalItem: React.FunctionComponent<ItemProps>;
   RaisedItem: React.FunctionComponent<ItemProps>;
-} = ({ children, data, initialIndex = 0, raisedIndex = -1, tabBarOnPress }) => {
+} = ({ children, data, initialIndex, raisedIndex, tabBarOnPress }) => {
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
 
   useEffect(() => {
@@ -67,6 +67,7 @@ const MainTabBar: React.FC<MainTabBarProps> & {
 
 MainTabBar.defaultProps = {
   initialIndex: 0,
+  raisedIndex: -1,
 };
 
 MainTabBar.NormalItem = TabItem.NormalItem;

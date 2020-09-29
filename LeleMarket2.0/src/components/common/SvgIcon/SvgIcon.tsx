@@ -10,6 +10,8 @@ export interface SvgIconProps {
   style?: StyleProp<ViewStyle>;
 }
 
+// const getKeyValue = <T, K extends keyof T>(obj: T, key: K): T[K] => obj[key];
+
 const SvgIcon: React.FC<SvgIconProps> = ({ style, icon, size, color }) => {
   const svgXmlData = SVGS[icon];
 

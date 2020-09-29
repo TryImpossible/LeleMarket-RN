@@ -36,11 +36,11 @@ declare global {
       Dimens: Dimens;
       Lang: LANG;
       user: { [key: string]: any };
-      _windowRef: React.MutableRefObject<WindowHandles>;
+      _windowRef: React.RefObject<WindowHandles>;
       Overlay: OVERLAY;
       Alert: React.RefObject<AlertHandles>;
-      Loader: React.MutableRefObject<LoaderHandles>;
-      AlbumView: React.MutableRefObject<AlbumViewHandles>;
+      Loader: React.RefObject<LoaderHandles>;
+      AlbumView: React.RefObject<AlbumViewHandles>;
       Toast: {
         show: (msg?: string, duration?: number) => void;
       };
@@ -62,9 +62,9 @@ declare global {
   const Dimens: Dimens;
   const Lang: LANG;
   const Overlay: OVERLAY;
-  const Alert: React.MutableRefObject<AlertHandles>;
-  const Loader: React.MutableRefObject<LoaderHandles>;
-  const AlbumView: React.MutableRefObject<AlbumViewHandles>;
+  const Alert: React.RefObject<AlertHandles>;
+  const Loader: React.RefObject<LoaderHandles>;
+  const AlbumView: React.RefObject<AlbumViewHandles>;
   const Toast: {
     show: (msg?: string, duration?: number) => void;
   };

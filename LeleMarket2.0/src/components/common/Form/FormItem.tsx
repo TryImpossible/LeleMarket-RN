@@ -21,8 +21,8 @@ export type FormItemType =
 
 export interface FormItemProps {
   style?: StyleProp<ViewStyle>;
-  type?: FormItemType;
-  name?: string;
+  type: FormItemType;
+  name: string;
   rules?: Rule[];
 }
 
@@ -38,7 +38,10 @@ const FormItem: React.FC<FormItemProps> = ({ style, type, name, rules, children 
 
   return (
     <View style={style}>
-      {React.Children.map(children, (child: React.FunctionComponentElement<any>) => {
+      {React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) {
+          return child;
+        }
         if (['text', 'search', 'number', 'email', 'password'].includes(type)) {
           const { onChangeText } = (child.props || {}) as TextInputProps;
           return React.cloneElement<TextInputProps>(child, {
@@ -56,6 +59,7 @@ const FormItem: React.FC<FormItemProps> = ({ style, type, name, rules, children 
             onPress: () => {
               if (validate()) {
                 onSubmit();
+                // @ts-ignore
                 onPress && onPress(null);
               }
             },
@@ -66,6 +70,7 @@ const FormItem: React.FC<FormItemProps> = ({ style, type, name, rules, children 
           return React.cloneElement<TouchableWithoutFeedbackProps>(child, {
             onPress: () => {
               onReset();
+              // @ts-ignore
               onPress && onPress(null);
             },
           });

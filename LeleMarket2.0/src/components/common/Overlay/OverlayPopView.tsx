@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useRef, useEffect, useImperativeHandle, useCallback, useMemo } from 'react';
-import { Animated, StyleProp, ViewStyle, Easing, StyleSheet, LayoutRectangle, View } from 'react-native';
+import React, { useRef, useImperativeHandle, useCallback } from 'react';
+import { Animated, StyleProp, ViewStyle, StyleSheet, LayoutRectangle, LayoutChangeEvent } from 'react-native';
 import OverlayView, { OverlayViewProps, OverlayViewHandles } from './OverlayView';
 
 const styles = StyleSheet.create({
@@ -171,7 +170,7 @@ const OverlayPopView: React.ForwardRefRenderFunction<OverlayPopViewHandles, Over
           },
         ]}
         pointerEvents="box-none"
-        onLayout={({ nativeEvent: { layout } }) => {
+        onLayout={({ nativeEvent: { layout } }: LayoutChangeEvent) => {
           viewLayoutRef.current = layout;
           display && show();
         }}

@@ -12,7 +12,7 @@ class Overlay {
   static StackView = OverlayStackView;
   static PopoverView = OverlayPopoverView;
 
-  static show(overlayView) {
+  static show(overlayView: React.FunctionComponentElement<any>) {
     const element = React.cloneElement(overlayView, {
       display: true,
       onDismissCompleted: () => {

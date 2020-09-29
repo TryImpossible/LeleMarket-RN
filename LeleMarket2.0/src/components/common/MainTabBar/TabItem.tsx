@@ -1,5 +1,15 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity, Image, Text, ImageRequireSource, StyleProp, ImageStyle } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Text,
+  ImageRequireSource,
+  StyleProp,
+  ImageStyle,
+  Animated,
+  Easing,
+} from 'react-native';
 
 const styles = StyleSheet.create({
   item: {
@@ -39,9 +49,26 @@ export interface ItemProps {
 }
 
 const NormalItem: React.FC<ItemProps> = ({ style, icon, selectedIcon, isSelected, text, onPress }) => {
+  const scaleValue = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    if (isSelected) {
+      scaleValue.setValue(0.85);
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        easing: Easing.elastic(5),
+        useNativeDriver: false,
+      }).start();
+    } else {
+      scaleValue.setValue(1);
+    }
+  }, [isSelected, scaleValue]);
   return (
     <TouchableOpacity activeOpacity={1} style={[styles.item]} onPress={onPress}>
-      <Image source={!isSelected ? icon : selectedIcon} style={[styles.normalIcon, style]} resizeMode="contain" />
+      <Animated.Image
+        source={!isSelected ? icon : selectedIcon}
+        style={[styles.normalIcon, { transform: [{ scale: scaleValue }] }, style]}
+        resizeMode="contain"
+      />
       <Text style={[styles.normalText, { color: isSelected ? Colors.accentColor : Colors.textLightColor }]}>
         {text}
       </Text>
