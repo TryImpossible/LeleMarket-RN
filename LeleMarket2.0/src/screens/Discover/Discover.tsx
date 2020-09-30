@@ -5,7 +5,9 @@ import { PagedFlatList, PullUpStatus, PullDownStatus } from '@components';
 
 const Item = ({ index }: { index: number }) => {
   return (
-    <Text style={{ textAlign: 'center', height: toDP(88), lineHeight: toDP(88), backgroundColor: color }}>{index}</Text>
+    <Text style={{ textAlign: 'center', height: toDP(88), lineHeight: toDP(88), backgroundColor: color() }}>
+      {index}
+    </Text>
   );
 };
 

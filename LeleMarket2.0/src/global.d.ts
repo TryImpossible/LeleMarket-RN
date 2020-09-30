@@ -29,7 +29,7 @@ declare global {
       __HEIGHT__: number;
       toDP: (size: number, enableHeightAdapt?: boolean) => number;
       toSP: (size: number) => number;
-      color: string;
+      color: () => string;
       Theme: THEME;
       Styles: Styles;
       Colors: Colors;
@@ -55,7 +55,7 @@ declare global {
   const __HEIGHT__: number;
   const toDP: (size: number, enableHeightAdapt?: boolean) => number;
   const toSP: (size: number) => number;
-  const color: string;
+  const color: () => string;
   const Theme: THEME;
   const Styles: Styles;
   const Colors: Colors;

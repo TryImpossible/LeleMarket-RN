@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     marginLeft: toDP(6),
     width: toDP(14),
     height: toDP(14),
-    backgroundColor: color,
+    backgroundColor: color(),
   },
 });
 

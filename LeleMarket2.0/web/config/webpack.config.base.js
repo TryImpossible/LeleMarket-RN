@@ -82,7 +82,7 @@ const babelLoaderConfiguration = {
     path.resolve(appDirectory, 'node_modules/react-navigation-tabs'),
     path.resolve(appDirectory, 'node_modules/react-native-reanimated'),
     path.resolve(appDirectory, 'node_modules/react-native-device-info'),
-    path.resolve(appDirectory, 'node_modules/react-native-snap-carousel'),
+    path.resolve(appDirectory, 'node_modules/react-native-webview'),
   ],
   use: [
     'thread-loader',

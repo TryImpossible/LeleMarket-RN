@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
-import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel';
+// import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '@src/redux/actions';
 import { State } from '@src/redux/typings';
@@ -61,7 +62,7 @@ const BannerComponent: React.FC<{ data: BannerBean[] }> = ({ data }) => {
   const [activeIdnex, setActiveIndex] = React.useState<number>(0);
   return (
     <View>
-      <Carousel
+      {/* <Carousel
         // ref={(c) => {
         //   this._carousel = c;
         // }}
@@ -83,7 +84,7 @@ const BannerComponent: React.FC<{ data: BannerBean[] }> = ({ data }) => {
         activeDotIndex={activeIdnex}
         dotStyle={styles.bannerDot}
         inactiveDotScale={1}
-      />
+      /> */}
     </View>
   );
 };
@@ -106,7 +107,7 @@ const MidNavComponent: React.FC<{ data: MidNavBean[] }> = ({ data }) => {
 const HandPickComponent: React.FC<{ data: HandpickBean[] }> = ({ data }) => {
   return (
     <View style={{ backgroundColor: Colors.white, paddingBottom: toDP(12) }}>
-      <Carousel
+      {/* <Carousel
         // ref={(c) => {
         //   this._carousel = c;
         // }}
@@ -135,7 +136,7 @@ const HandPickComponent: React.FC<{ data: HandpickBean[] }> = ({ data }) => {
         activeSlideAlignment="start"
         enableSnap
         loop
-      />
+      /> */}
     </View>
   );
 };

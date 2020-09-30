@@ -1,126 +1,117 @@
+import React from 'react';
 import {
-  NavigationContainer,
-  NavigationProp,
-  NavigationState,
-  NavigationRoute,
-  NavigationActions,
+  CommonActions,
   StackActions,
-  NavigationParams,
-  NavigationNavigateAction,
-} from 'react-navigation';
+  NavigationContainerRef,
+  Route,
+  NavigationState,
+  PartialState,
+  InitialState,
+} from '@react-navigation/native';
 
-export type AppNavigatorRef = NavigationContainer & NavigationProp<NavigationState>;
+export const isReadyRef = React.createRef<boolean>();
 
-let topLevelNavigator: AppNavigatorRef;
+export const navigationRef = React.createRef<NavigationContainerRef>();
 
-const getTopLevelNavigator = (): NavigationContainer & NavigationProp<NavigationState> => {
-  if (!topLevelNavigator) {
-    throw Error('topLevelNavigator is undefined, maybe not initialize');
+const validateNavigation = () => {
+  if (isReadyRef.current && navigationRef.current) {
+    return true;
   }
-  return topLevelNavigator;
+  throw Error('navigation is undefined, maybe not setup');
 };
 
-const setTopLevelNavigator = (navigatorRef: NavigationContainer & NavigationProp<NavigationState>) => {
-  topLevelNavigator = navigatorRef;
+export const getRoutes = () => {
+  validateNavigation();
+  return navigationRef.current?.getRootState().routes || [];
 };
 
-const getRoutes = () => {
-  const state: any = getTopLevelNavigator().state;
-  if (!state) {
-    throw Error('internal error, it should not appear');
-  }
-  return state.nav.routes;
+export const getIndex = () => {
+  validateNavigation();
+  return navigationRef.current?.getRootState().index;
 };
 
-const getIndex = () => {
-  const state: any = getTopLevelNavigator().state;
-  if (!state) {
-    throw Error('internal error, it should not appear');
-  }
-  return state.nav.index;
+export const getCurrentRoute = (): Route<string> | undefined => {
+  validateNavigation();
+  return navigationRef.current?.getCurrentRoute();
 };
 
-const navigate = (routeName: string, params?: NavigationParams) => {
-  const options = NavigationActions.navigate({
-    routeName,
-    params,
-  });
-  getTopLevelNavigator().dispatch(options);
+export const navigate = (routeName: string, params?: object) => {
+  validateNavigation();
+  const action = CommonActions.navigate({ name: routeName, params });
+  navigationRef.current?.dispatch(action);
 };
 
-const goBack = (routeName: string | undefined = undefined) => {
+export const goBack = (routeName: string | undefined = undefined) => {
+  validateNavigation();
   let action = null;
   if (routeName) {
-    let routes;
+    let routes = null;
     try {
       routes = getRoutes();
     } catch (err) {
       throw Error(`Can't go back to "${routeName}", no routes`);
     }
-
-    const index = routes.findIndex((route: NavigationRoute) => route.routeName === routeName);
+    const index = routes.findIndex(
+      (
+        route: Route<string> & {
+          state?: NavigationState | PartialState<NavigationState>;
+        },
+      ) => route.name === routeName,
+    );
     // NOTE: key不是目标页面的key,而是可以在key为undefined时goBack到目标页面的那个页面的key. 如果key为null, 那么会回到任何地方.
     const screenRoute = routes[index + 1];
     if (!(screenRoute && screenRoute.key)) {
       throw Error(`Can't go back to "${routeName}"`);
     }
-    action = NavigationActions.back({
-      key: screenRoute.key,
-    });
+    action = { ...CommonActions.goBack(), source: screenRoute?.key, target: screenRoute?.params?.key };
   } else {
-    action = NavigationActions.back();
+    action = CommonActions.goBack();
   }
-  getTopLevelNavigator().dispatch(action);
+  navigationRef.current?.dispatch(action);
 };
 
-const reset = (index: number, actions: NavigationNavigateAction[]) => {
-  const action = StackActions.reset({
+export const reset = (
+  index: number,
+  routes: (Omit<Route<string>, 'key'> & {
+    key?: string;
+    state?: InitialState;
+  })[],
+) => {
+  validateNavigation();
+  const action = CommonActions.reset({
     index,
-    actions,
+    routes,
   });
-  getTopLevelNavigator().dispatch(action);
+  navigationRef.current?.dispatch(action);
 };
 
-const resetTo = (routeName: string, params?: NavigationParams) =>
-  reset(0, [NavigationActions.navigate({ routeName, params })]);
+export const resetTo = (routeName: string, params?: object) => reset(0, [{ name: routeName, params }]);
 
-const replace = (routeName: string, params?: NavigationParams) => {
-  const action = StackActions.replace({
-    routeName,
-    params,
-  });
-  getTopLevelNavigator().dispatch(action);
+export const resetRoot = (routeName: string) => {
+  validateNavigation();
+  navigationRef.current?.resetRoot({ index: 0, routes: [{ name: routeName }] });
 };
 
-const push = (routeName: string, params?: NavigationParams) => {
-  const action = StackActions.push({
-    routeName,
-    params,
-  });
-  getTopLevelNavigator().dispatch(action);
+export const replace = (routeName: string, params?: object | undefined) => {
+  validateNavigation();
+  const action = StackActions.replace(routeName, params);
+  navigationRef.current?.dispatch(action);
 };
 
-const pop = (n: number = 1): void => {
-  const action = StackActions.pop({ n });
-  getTopLevelNavigator().dispatch(action);
+export const push = (routeName: string, params?: object | undefined) => {
+  validateNavigation();
+  const action = StackActions.push(routeName, params);
+  navigationRef.current?.dispatch(action);
 };
 
-const popToTop = (): void => {
+export const pop = (n: number = 1): void => {
+  validateNavigation();
+  const action = StackActions.pop(n);
+  navigationRef.current?.dispatch(action);
+};
+
+export const popToTop = (): void => {
+  validateNavigation();
   const action = StackActions.popToTop();
-  getTopLevelNavigator().dispatch(action);
-};
-
-export default {
-  getTopLevelNavigator,
-  setTopLevelNavigator,
-  getRoutes,
-  getIndex,
-  navigate,
-  goBack,
-  reset,
-  resetTo,
-  replace,
-  push,
-  pop,
-  popToTop,
+  navigationRef.current?.dispatch(action);
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Image, View, Text } from 'react-native';
-import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
+// import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import NavigationApi from '@navigators';
 import { Screen } from '@components';
 import IMAGES from '@resources/images';
@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
   },
 });
 
-interface Props {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
-}
+// interface Props {
+//   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+// }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SplashPage = ({ navigation }: Props) => {
@@ -28,7 +28,7 @@ const SplashPage = ({ navigation }: Props) => {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          marginBottom: Dimens.safeBottomHeight,
+          marginBottom: Dimens.safeBottomHeight + toDP(16),
         }}
       >
         <Image

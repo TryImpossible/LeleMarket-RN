@@ -1,11 +1,12 @@
+import 'react-native-gesture-handler';
 import '@utilities/setUp';
 
 import React from 'react';
 import { Text, TextInput, YellowBox } from 'react-native';
 import { Provider } from 'react-redux';
-import { NavigationState, NavigationAction } from 'react-navigation';
-import AppNavigator from '@navigators/AppNavigator';
-import NavigationService from '@navigators/NavigationService';
+// import { NavigationState, NavigationAction } from 'react-navigation';
+import AppNavigation from '@src/navigators/AppNavigation';
+// import NavigationService from '@navigators/NavigationService';
 import { RootView } from '@components';
 import configureStore from '@src/redux/store/configureStore';
 import rootSaga from '@src/redux/sagas';
@@ -32,7 +33,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <RootView>
-        <AppNavigator
+        {/* <AppNavigator
           ref={(nav: any) => {
             // NOTE: ref至少会回调两次，组件装载和组件卸载的时候
             if (!nav) {
@@ -55,7 +56,8 @@ const App = () => {
             console.log(`params: ${route.params}`);
             console.log('----------------------------------------');
           }}
-        />
+        /> */}
+        <AppNavigation />
       </RootView>
     </Provider>
   );

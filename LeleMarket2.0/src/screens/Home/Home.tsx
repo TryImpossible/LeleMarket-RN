@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Screen } from '@components';
 import { TabView } from '@components';
-import Discover from '../Main/Discover';
+import Discover from '../Discover';
 import * as actions from '@src/redux/actions';
 import { State } from '@src/redux/typings';
 import ChoicenessScene from './ChoicenessScene';
@@ -28,7 +28,7 @@ const Pager = ({ index }: { index: number; jumpTo: (index: number) => void }) =>
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: loader ? 'transparent' : color,
+        backgroundColor: loader ? 'transparent' : color(),
       }}
     >
       {loader && <ActivityIndicator size="large" />}
