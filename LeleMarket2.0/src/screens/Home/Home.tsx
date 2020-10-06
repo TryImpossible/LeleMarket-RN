@@ -56,7 +56,6 @@ interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
   const topNavData = useSelector((state: State) => {
-    // console.warn(state);
     return state.home.topNav;
   });
   const dispatch = useDispatch();
@@ -67,7 +66,7 @@ const Home: React.FC<HomeProps> = () => {
     <Screen style={styles.home}>
       <TabView
         ref={tabViewRef}
-        // style={{ marginTop: Dimens.statusBarHeight }}
+        style={{ marginTop: __IOS__ ? Dimens.statusBarHeight : 0 }}
         navigationState={topNavData}
         renderScene={({ index, jumpTo }) => {
           if (index === 0) {

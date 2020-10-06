@@ -27,11 +27,11 @@ const RootStackNavigator = () => {
       screenOptions={{
         cardOverlayEnabled: true,
         cardStyle: {},
-        // headerStyle: {
-        //   backgroundColor: Colors.red,
-        //   paddingTop: Dimens.statusBarHeight,
-        //   height: __ANDROID__ ? Dimens.navBarHeight + Dimens.statusBarHeight : Dimens.navBarHeight,
-        // },
+        headerStyle: {
+          backgroundColor: Colors.primaryColor,
+          paddingTop: Dimens.statusBarHeight,
+          height: __ANDROID__ ? Dimens.navBarHeight + Dimens.statusBarHeight : Dimens.navBarHeight,
+        },
       }}
     >
       <RootStack.Screen
