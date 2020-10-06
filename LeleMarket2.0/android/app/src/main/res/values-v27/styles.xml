@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--适配Android P刘海屏-->
+    <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    <!--底部导航栏颜色-->
+    <item name="android:navigationBarColor">#FFFFFF</item>
+  </style>
+</resources>

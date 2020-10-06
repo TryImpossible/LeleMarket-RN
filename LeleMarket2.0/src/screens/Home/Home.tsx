@@ -67,7 +67,7 @@ const Home: React.FC<HomeProps> = () => {
     <Screen style={styles.home}>
       <TabView
         ref={tabViewRef}
-        style={{ marginTop: Dimens.statusBarHeight }}
+        // style={{ marginTop: Dimens.statusBarHeight }}
         navigationState={topNavData}
         renderScene={({ index, jumpTo }) => {
           if (index === 0) {

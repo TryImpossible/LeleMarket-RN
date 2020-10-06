@@ -24,6 +24,18 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <!-- 华为全面屏适配 -->
+      <meta-data
+        android:name="android.notch_support"
+        android:value="true" />
+      <!-- Android官方全面屏适配 -->
+      <meta-data
+        android:name="android.max_aspect"
+        android:value="2.34" />
+      <!-- 小米全面屏适配 -->
+      <meta-data
+        android:name="notch.config"
+        android:value="portrait|landscape" />
     </application>
 
 </manifest>
