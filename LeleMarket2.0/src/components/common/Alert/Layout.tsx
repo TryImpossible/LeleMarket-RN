@@ -10,7 +10,10 @@ import {
   ImageSourcePropType,
   ImageStyle,
 } from 'react-native';
-import { Button, HeadLine, Divider, Label } from '..';
+import Button from '../Button';
+import HeadLine from '../HeadLine';
+import Divider from '../Divider';
+import Label from '../Label';
 import IMAGES from '@resources/images';
 
 const styles = StyleSheet.create({

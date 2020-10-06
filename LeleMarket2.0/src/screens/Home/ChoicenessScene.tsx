@@ -13,7 +13,7 @@ import {
   CustomizationBean,
   GoodsBean,
 } from 'src/models/homeModel';
-import { PagedSectionList, PullDownStatus } from '@components';
+import { PagedSectionList, PullDownStatus, Carousel, Button } from '@components';
 
 const styles = StyleSheet.create({
   bannerImage: {
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.92)',
   },
   midNavItem: {
-    backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
     width: __WIDTH__ / 4,
@@ -54,14 +53,27 @@ const styles = StyleSheet.create({
   line: {
     width: toDP(30),
     height: toDP(2),
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.dividerColor,
+  },
+  customBtn: {
+    borderRadius: 18,
+    borderWidth: Dimens.borderWidth,
+    borderColor: Colors.borderColor,
+    height: toDP(24),
+    width: toDP(74),
+    alignSelf: 'center',
+    marginTop: toDP(6),
+    marginBottom: toDP(8),
   },
 });
 
-const BannerComponent: React.FC<{ data: BannerBean[] }> = ({ data }) => {
+const BannerComponent: React.FC<{ data: BannerBean[] }> = ({ data = [] }) => {
   const [activeIdnex, setActiveIndex] = React.useState<number>(0);
   return (
-    <View>
+    <Carousel.View carousel>
+      {data.map((item: BannerBean, index: number) => {
+        return <Image key={String(index)} style={[styles.bannerImage]} source={{ uri: item.imgUrl }} />;
+      })}
       {/* <Carousel
         // ref={(c) => {
         //   this._carousel = c;
@@ -85,13 +97,13 @@ const BannerComponent: React.FC<{ data: BannerBean[] }> = ({ data }) => {
         dotStyle={styles.bannerDot}
         inactiveDotScale={1}
       /> */}
-    </View>
+    </Carousel.View>
   );
 };
 
 const MidNavComponent: React.FC<{ data: MidNavBean[] }> = ({ data }) => {
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingVertical: toDP(10), backgroundColor: Colors.white }}>
       {data.map(({ imgUrl, name }, index) => {
         return (
           <TouchableOpacity key={String(index)} activeOpacity={Dimens.activeOpacity} style={styles.midNavItem}>
@@ -106,54 +118,84 @@ const MidNavComponent: React.FC<{ data: MidNavBean[] }> = ({ data }) => {
 
 const HandPickComponent: React.FC<{ data: HandpickBean[] }> = ({ data }) => {
   return (
-    <View style={{ backgroundColor: Colors.white, paddingBottom: toDP(12) }}>
-      {/* <Carousel
-        // ref={(c) => {
-        //   this._carousel = c;
-        // }}
-        data={data}
-        renderItem={({ item }: { item: HandpickBean }, parallaxProps) => {
-          return (
-            <View style={{ width: __WIDTH__ - 60, aspectRatio: 2.05 }}>
-              <ParallaxImage
-                source={{ uri: item.imgUrl }}
-                containerStyle={{
-                  flex: 1,
-                  marginBottom: 1, // Prevent a random Android rendering issue
-                  borderRadius: toDP(12),
-                }}
-                style={{ ...StyleSheet.absoluteFillObject, resizeMode: 'contain' }}
-                parallaxFactor={0.4}
-                {...parallaxProps}
-              />
-            </View>
-          );
-        }}
-        sliderWidth={__WIDTH__}
-        itemWidth={__WIDTH__ - 60}
-        layoutCardOffset={30}
-        hasParallaxImages
-        activeSlideAlignment="start"
-        enableSnap
-        loop
-      /> */}
-    </View>
+    <Carousel.View>
+      {data.map((item: HandpickBean, index: number) => {
+        return (
+          <Image
+            key={String(index)}
+            style={{ width: __WIDTH__, aspectRatio: 2.7, borderRadius: toDP(12) }}
+            source={{ uri: item.imgUrl }}
+          />
+        );
+      })}
+    </Carousel.View>
   );
+  // return (
+  //   <View style={{ backgroundColor: Colors.white, paddingBottom: toDP(12) }}>
+  //     <Carousel
+  //       // ref={(c) => {
+  //       //   this._carousel = c;
+  //       // }}
+  //       data={data}
+  //       renderItem={({ item }: { item: HandpickBean }, parallaxProps) => {
+  //         return (
+  //           <View style={{ width: __WIDTH__ - 60, aspectRatio: 2.05 }}>
+  //             <ParallaxImage
+  //               source={{ uri: item.imgUrl }}
+  //               containerStyle={{
+  //                 flex: 1,
+  //                 marginBottom: 1, // Prevent a random Android rendering issue
+  //                 borderRadius: toDP(12),
+  //               }}
+  //               style={{ ...StyleSheet.absoluteFillObject, resizeMode: 'contain' }}
+  //               parallaxFactor={0.4}
+  //               {...parallaxProps}
+  //             />
+  //           </View>
+  //         );
+  //       }}
+  //       sliderWidth={__WIDTH__}
+  //       itemWidth={__WIDTH__ - 60}
+  //       layoutCardOffset={30}
+  //       hasParallaxImages
+  //       activeSlideAlignment="start"
+  //       enableSnap
+  //       loop
+  //     />
+  //   </View>
+  // );
 };
 
 const CustomizationComponent: React.FC<{ data: CustomizationBean }> = ({ data }) => {
   const { imgUrl, goods = [] } = data;
   return (
     <View style={{ backgroundColor: Colors.white }}>
-      <Image style={{ width: __WIDTH__, aspectRatio: 2.07 }} source={{ uri: imgUrl }} />
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <Image style={{ width: __WIDTH__, aspectRatio: 2.2 }} source={{ uri: imgUrl }} />
+      <View style={{ flexDirection: 'row' }}>
         {goods.slice(0, 3).map((item: GoodsBean, index: number) => {
           return (
-            <View key={String(index)} style={{ flex: 1, alignItems: 'center', paddingHorizontal: toDP(12) }}>
-              <Image style={{ width: __WIDTH__ / 3, aspectRatio: 1 }} source={{ uri: item.imgUrl }} />
-              <Text numberOfLines={1} style={{ fontSize: Dimens.textNormalSize, color: Colors.textNormalColor }}>
+            <View key={String(index)} style={{ flex: 1, alignItems: 'center' }}>
+              <Image
+                style={{ width: __WIDTH__ / 3, aspectRatio: 1 }}
+                source={{ uri: item.imgUrl }}
+                resizeMode="contain"
+              />
+              <Text
+                numberOfLines={1}
+                style={{
+                  marginTop: toDP(6),
+                  fontSize: Dimens.textNormalSize,
+                  color: Colors.textNormalColor,
+                  lineHeight: toDP(14),
+                }}
+              >
                 {item.param1}
               </Text>
+              <Button
+                title="去定制"
+                titleStyle={{ fontSize: Dimens.textNormalSize, color: Colors.textLightColor }}
+                style={styles.customBtn}
+              />
             </View>
           );
         })}

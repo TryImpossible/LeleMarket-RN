@@ -28,7 +28,7 @@ interface CompositeAnimation {
 
 const styles = StyleSheet.create({
   tabBar: {
-    minHeight: toDP(Dimens.tabBarHeight),
+    minHeight: toDP(Dimens.tabsHeight),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

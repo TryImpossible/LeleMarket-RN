@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useRef, useState, useEffect, useCallback } from 'react';
-import { Overlay, OverlayPopViewHandles } from '../../common';
+import Overlay, { OverlayPopViewHandles } from '../Overlay';
 import Layout from './Layout';
 
 export interface AlertHandles {

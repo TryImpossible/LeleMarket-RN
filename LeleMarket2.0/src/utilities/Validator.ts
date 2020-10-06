@@ -30,21 +30,21 @@ export const isValidPhoneNumber = (phone: string, areacode: '86' | '91' = '86'):
   return false;
 };
 
-export const isValidEmailAddress = (email: string | undefined | null): boolean => {
+export const isValidEmailAddress = (email: string | undefined | null): email is string => {
   if (typeof email === 'string') {
     return /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(email);
   }
   return false;
 };
 
-export const isValidVerifyCode = (code: string | null | undefined): boolean => {
+export const isValidVerifyCode = (code: string | null | undefined): code is string => {
   if (typeof code === 'string') {
     return code.length === 6;
   }
   return false;
 };
 
-export const isValidPassword = (password: string | null | undefined): boolean => {
+export const isValidPassword = (password: string | null | undefined): password is string => {
   if (typeof password === 'string') {
     return /^[0-9a-zA-Z]{6,16}$/g.test(password);
   }
@@ -52,14 +52,14 @@ export const isValidPassword = (password: string | null | undefined): boolean =>
 };
 
 // export const isValidNickname = name => /^[0-9a-zA-Z|_]{0,20}$/g.test(name);
-export const isValidNickname = (nickName: string | null | undefined): boolean => {
+export const isValidNickname = (nickName: string | null | undefined): nickName is string => {
   if (typeof nickName === 'string') {
     return nickName.length > 0 && nickName.length <= 20;
   }
   return false;
 };
 
-export const isValidSignature = (signature: string | null | undefined): boolean => {
+export const isValidSignature = (signature: string | null | undefined): signature is string => {
   if (isString(signature)) {
     return (signature as string).length > 0 && (<string>signature).length <= 40;
   }
