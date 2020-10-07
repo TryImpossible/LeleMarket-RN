@@ -3,53 +3,6 @@ source 'https://cdn.cocoapods.org/'
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-def use_flipper!(versions = {})
-  versions['Flipper'] ||= '~> 0.41.1'
-  versions['Flipper-DoubleConversion'] ||= '1.1.7'
-  versions['Flipper-Folly'] ||= '~> 2.2'
-  versions['Flipper-Glog'] ||= '0.3.6'
-  versions['Flipper-PeerTalk'] ||= '~> 0.0.4'
-  versions['Flipper-RSocket'] ||= '~> 1.1'
-  pod 'FlipperKit', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/FlipperKitLayoutPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/SKIOSNetworkPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/FlipperKitUserDefaultsPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/FlipperKitReactPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  # List all transitive dependencies for FlipperKit pods
-  # to avoid them being linked in Release builds
-  pod 'Flipper', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'Flipper-DoubleConversion', versions['Flipper-DoubleConversion'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'Flipper-Folly', versions['Flipper-Folly'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'Flipper-Glog', versions['Flipper-Glog'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'Flipper-PeerTalk', versions['Flipper-PeerTalk'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'Flipper-RSocket', versions['Flipper-RSocket'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/Core', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/CppBridge', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/FBCxxFollyDynamicConvert', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/FBDefines', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/FKPortForwarding', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/FlipperKitHighlightOverlay', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/FlipperKitLayoutTextSearchable', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-  pod 'FlipperKit/FlipperKitNetworkPlugin', versions['Flipper'], :configuration => ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug']
-end
-
-# # filter configuration for Flipper
-# def flipper_filter(installer)
-#  installer.pods_project.targets.each do |target|
-#    if target.name.index('Flipper') == 0
-#      configurations = []
-#      target.build_configurations.each do |config|
-#        if (config.name.include?("Debug"))
-#          configurations << config
-#        end
-#      end
-
-#      target.build_configurations.clear
-#      target.build_configurations.concat configurations
-#    end
-#  end
-# end
-
 platform :ios, '10.0'
 
 target 'LeleMarket' do
@@ -68,9 +21,8 @@ target 'LeleMarket' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
-  use_flipper!
+  use_flipper!(versions = {}, configurations: ['Debug', 'DevDebug', 'StagDebug', 'ProdDebug'])
   post_install do |installer|
-    # flipper_filter(installer)
     flipper_post_install(installer)
   end
 end
