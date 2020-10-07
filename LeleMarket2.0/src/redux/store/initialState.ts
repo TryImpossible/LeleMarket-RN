@@ -1,1 +1,1 @@
-export default { home: { topNav: [], choiceness: [] } };
+export default { home: { topNav: [], choiceness: [], topNavInfo: [] } };

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   card: {
     alignSelf: 'stretch',
     backgroundColor: Colors.cardColor,
-    borderRadius: toDP(Dimens.borderRadiusMD),
+    // borderRadius: toDP(Dimens.borderRadiusMD),
   },
 });
 

@@ -1,6 +1,6 @@
 import { Dispatch, Middleware, MiddlewareAPI } from 'redux';
 import { PROMISE_SUFFIX, FULFILLED_SUFFIX, REJECTED_SUFFIX } from '../actionTypes';
-import { Action } from '../typings';
+import { Action } from '../types';
 
 interface P {
   [key: string]: { resolve: (value?: any) => void; reject: (value?: any) => void };

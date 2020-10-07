@@ -4,7 +4,7 @@ import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
 // import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '@src/redux/actions';
-import { State } from '@src/redux/typings';
+import { State } from '@src/redux/types';
 import {
   ChoicenessState,
   BannerBean,
@@ -13,7 +13,7 @@ import {
   CustomizationBean,
   GoodsBean,
 } from 'src/models/homeModel';
-import { PagedSectionList, PullDownStatus, Carousel, Button } from '@components';
+import { PagedSectionList, PullDownStatus, Carousel, Button, WebImage } from '@components';
 
 const styles = StyleSheet.create({
   bannerImage: {
@@ -72,7 +72,7 @@ const BannerComponent: React.FC<{ data: BannerBean[] }> = ({ data = [] }) => {
   return (
     <Carousel.View carousel>
       {data.map((item: BannerBean, index: number) => {
-        return <Image key={String(index)} style={[styles.bannerImage]} source={{ uri: item.imgUrl }} />;
+        return <WebImage key={String(index)} style={[styles.bannerImage]} uri={item.imgUrl} />;
       })}
       {/* <Carousel
         // ref={(c) => {
@@ -107,7 +107,7 @@ const MidNavComponent: React.FC<{ data: MidNavBean[] }> = ({ data }) => {
       {data.map(({ imgUrl, name }, index) => {
         return (
           <TouchableOpacity key={String(index)} activeOpacity={Dimens.activeOpacity} style={styles.midNavItem}>
-            <Image style={{ width: toDP(40), height: toDP(40) }} source={{ uri: imgUrl }} />
+            <WebImage style={{ width: toDP(40), height: toDP(40) }} uri={imgUrl} />
             <Text style={{ marginTop: toDP(6) }}>{name}</Text>
           </TouchableOpacity>
         );
@@ -121,10 +121,10 @@ const HandPickComponent: React.FC<{ data: HandpickBean[] }> = ({ data }) => {
     <Carousel.View>
       {data.map((item: HandpickBean, index: number) => {
         return (
-          <Image
+          <WebImage
             key={String(index)}
             style={{ width: __WIDTH__, aspectRatio: 2.7, borderRadius: toDP(12) }}
-            source={{ uri: item.imgUrl }}
+            uri={item.imgUrl}
           />
         );
       })}
@@ -170,23 +170,19 @@ const CustomizationComponent: React.FC<{ data: CustomizationBean }> = ({ data })
   const { imgUrl, goods = [] } = data;
   return (
     <View style={{ backgroundColor: Colors.white }}>
-      <Image style={{ width: __WIDTH__, aspectRatio: 2.2 }} source={{ uri: imgUrl }} />
+      <WebImage style={{ width: __WIDTH__, aspectRatio: 2.2 }} uri={imgUrl} />
       <View style={{ flexDirection: 'row' }}>
         {goods.slice(0, 3).map((item: GoodsBean, index: number) => {
           return (
             <View key={String(index)} style={{ flex: 1, alignItems: 'center' }}>
-              <Image
-                style={{ width: __WIDTH__ / 3, aspectRatio: 1 }}
-                source={{ uri: item.imgUrl }}
-                resizeMode="contain"
-              />
+              <WebImage style={{ width: __WIDTH__ / 3, aspectRatio: 1 }} uri={item.imgUrl} resizeMode="contain" />
               <Text
                 numberOfLines={1}
                 style={{
                   marginTop: toDP(6),
                   fontSize: Dimens.textNormalSize,
                   color: Colors.textNormalColor,
-                  lineHeight: toDP(14),
+                  lineHeight: toDP(18),
                 }}
               >
                 {item.param1}

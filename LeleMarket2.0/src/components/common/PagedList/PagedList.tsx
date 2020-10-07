@@ -72,7 +72,8 @@ const PagedList = <P extends object>(WrapComponent: React.ComponentType<P>) => {
       refreshing: pullDownStatus === 'refreshing',
       onRefresh: () => {
         // console.log('onRefresh-status', status)
-        if (pullDownStatus === 'refreshing' || pullUpStatus === 'loading') {
+        // if (pullDownStatus === 'refreshing' || pullUpStatus === 'loading') {
+        if (pullDownStatus === 'refreshing') {
           return;
         }
         isScrollUp = false;

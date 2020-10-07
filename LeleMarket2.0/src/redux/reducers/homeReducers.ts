@@ -1,7 +1,7 @@
 // import Immutable, { List, Map } from 'immutable';
 // import { combineReducers } from 'redux-immutable';
 import { combineReducers } from 'redux';
-import { Action } from '../typings';
+import { Action } from '../types';
 import {
   TOP_NAV_REQUEST,
   TOP_NAV_SUCCESS,
@@ -9,8 +9,11 @@ import {
   CHOICENESS_REQUEST,
   CHOICENESS_SUCCESS,
   CHOICENESS_FAILURE,
+  TOP_NAV_INFO_REQUEST,
+  TOP_NAV_INFO_SUCCESS,
+  TOP_NAV_INFO_FAILURE,
 } from '../actionTypes';
-import { TopNavBean, TopNavState, ChoicenessData, ChoicenessState } from 'src/models/homeModel';
+import { TopNavBean, TopNavState, ChoicenessData, ChoicenessState, RecommendGoodsBean } from 'src/models/homeModel';
 
 const topNav = (state: TopNavState = [], action: Action<TopNavBean[]>): TopNavState => {
   switch (action.type) {
@@ -48,4 +51,17 @@ const choiceness = (state: ChoicenessState = [], action: Action<ChoicenessData>)
   }
 };
 
-export default combineReducers({ topNav, choiceness });
+const topNavInfo = (state: RecommendGoodsBean[] = [], action: Action<RecommendGoodsBean[]>): RecommendGoodsBean[] => {
+  switch (action.type) {
+    case TOP_NAV_INFO_REQUEST:
+      return state;
+    case TOP_NAV_INFO_SUCCESS:
+      return action.payload || state;
+    case TOP_NAV_INFO_FAILURE:
+      return state;
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({ topNav, choiceness, topNavInfo });

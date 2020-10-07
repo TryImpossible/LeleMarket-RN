@@ -79,3 +79,20 @@ export type ChoicenessState = {
   name?: string;
   data: [BannerBean[]] | [MidNavBean[]] | [HandpickBean[]] | CustomizationBean[];
 }[];
+
+export interface RecommendGoodsBean {
+  icoUrl: string;
+  type: number;
+  id: number;
+  name: string;
+  nowPrice: number;
+  sell: string;
+  ispostage: number;
+  speAct: number;
+  act: string;
+  companyId: number;
+  isSelf: string;
+  title?: any;
+}
+
+export interface TopNavInfoResp extends ResponseResult<RecommendGoodsBean[]> {}
