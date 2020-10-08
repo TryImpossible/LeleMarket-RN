@@ -33,7 +33,11 @@ const Home: React.FC<HomeProps> = () => {
   return (
     <Screen style={styles.home}>
       <TabView
-        tabBarStyle={{ paddingTop: Dimens.statusBarHeight, backgroundColor: Colors.white, minHeight: toDP(24) }}
+        tabBarStyle={{
+          paddingTop: __WEB__ ? 0 : Dimens.statusBarHeight,
+          backgroundColor: Colors.white,
+          minHeight: toDP(24),
+        }}
         navigationState={topNavData}
         renderScene={({ index, route: { key } }) => {
           if (index === 0) {

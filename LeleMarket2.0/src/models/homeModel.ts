@@ -1,4 +1,4 @@
-import { ResponseResult } from './commonModel';
+import { ResponseResult } from 'src/models/commonModel';
 
 export interface TopNavBean {
   id: number;

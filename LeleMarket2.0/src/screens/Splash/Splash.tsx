@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 const SplashPage = ({ navigation }: Props) => {
   setTimeout(() => {
     NavigationApi.startMain();
-  }, 2000);
+  }, 3000);
 
   return (
     <Screen style={styles.container}>
