@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Screen } from '@components';
-import { TabView } from '@components';
+import { Screen, TabView } from '@components';
 import * as actions from '@src/redux/actions';
 import { State } from '@src/redux/types';
 import ChoicenessScene from './ChoicenessScene';
@@ -24,12 +24,16 @@ const Home: React.FC<HomeProps> = () => {
   React.useEffect(() => {
     dispatch(actions.topNavReqeust());
   }, [dispatch]);
+  useFocusEffect(
+    React.useCallback(() => {
+      __ANDROID__ && StatusBar.setBackgroundColor(Colors.white);
+    }, []),
+  );
 
   return (
     <Screen style={styles.home}>
       <TabView
-        style={{ marginTop: Dimens.statusBarHeight }}
-        tabBarStyle={{ backgroundColor: Colors.white, minHeight: toDP(24) }}
+        tabBarStyle={{ paddingTop: Dimens.statusBarHeight, backgroundColor: Colors.white, minHeight: toDP(24) }}
         navigationState={topNavData}
         renderScene={({ index, route: { key } }) => {
           if (index === 0) {

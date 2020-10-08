@@ -58,7 +58,7 @@ const MainTab = createBottomTabNavigator<MainTabParamList>();
 const MainTabNavigator = () => {
   return (
     <MainTab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Mine"
       tabBarOptions={{
         activeTintColor: Colors.accentColor,
         inactiveTintColor: Colors.textLightColor,

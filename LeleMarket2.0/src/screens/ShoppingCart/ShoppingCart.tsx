@@ -1,18 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
-import { Screen } from '@components';
+import { StyleSheet } from 'react-native';
+import { Screen, NavBar } from '@components';
 
 const styles = StyleSheet.create({
-  shoppingCart: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  shoppingCart: {},
 });
 
 const ShoppingCart: React.FC<{}> = () => {
   return (
     <Screen style={styles.shoppingCart}>
-      <Text>ShoppingCart</Text>
+      <NavBar title={'购物车'} backVisible={false} />
     </Screen>
   );
 };

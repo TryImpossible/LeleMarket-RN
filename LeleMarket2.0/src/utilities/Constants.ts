@@ -9,7 +9,15 @@ export const IS_WEB = Platform.OS === 'web';
 
 export const SCREEN_WIDTH: number = width;
 export const SCREEN_HEIGHT: number = height;
-export const STATUSBAR_HEIGHT: number = IS_ANDROID ? StatusBar.currentHeight || 24 : IOS_IS_IPHONE_X ? 44 : 20;
+export const STATUSBAR_HEIGHT: number = (function () {
+  if (IS_ANDROID) {
+    return StatusBar.currentHeight || 24;
+  }
+  if (IOS_IS_IPHONE_X) {
+    return 44;
+  }
+  return 20;
+})();
 export const NAVBAR_HEIGHT: number = 44;
 export const TABBAR_HEIGHT: number = 49;
 export const SAFE_BOTTOM_HEIGHT: number = IOS_IS_IPHONE_X ? 34 : 0;

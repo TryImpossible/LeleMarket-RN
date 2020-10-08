@@ -110,12 +110,12 @@ const Tabs: React.FC<TabBarProps> = ({
   const indicatorLeftValue = useRef(new Animated.Value(0)).current;
   const labelColorValue = useRef(new Animated.Value(processColor(Colors.textLightColor) as number)).current;
   const labelScaleValue = useRef(new Animated.Value(1.2)).current;
-  const scrollViewRef = useRef<ScrollView>();
+  const scrollViewRef = useRef<ScrollView>(null);
   const scrollViewWidthRef = useRef(0);
   const scrollViewHeightRef = useRef(0);
   const tabItemLayoutRef = useRef<{ [key: number]: LayoutRectangle }>({});
   const tabLabelLayoutRef = useRef<{ [key: number]: LayoutRectangle }>({});
-  const timerRef = useRef<number>();
+  const timerRef = useRef<NodeJS.Timeout>();
   const selectedIndexRef = useRef(0);
 
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
@@ -306,9 +306,9 @@ const Tabs: React.FC<TabBarProps> = ({
         })}
         {renderIndicator ? (
           renderIndicator({
-            indexValue: this.indexValue,
-            leftValue: this.indicatorLeftValue,
-            widthValue: this.indicatorWidthValue,
+            indexValue: indexValue,
+            leftValue: indicatorLeftValue,
+            widthValue: indicatorWidthValue,
           })
         ) : (
           <Indicator style={indicatorStyle} leftValue={indicatorLeftValue} widthValue={indicatorWidthValue} />

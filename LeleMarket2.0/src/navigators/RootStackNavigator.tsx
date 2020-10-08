@@ -22,15 +22,15 @@ const RootStack = createStackNavigator<RootStackParamList>();
 const RootStackNavigator = () => {
   return (
     <RootStack.Navigator
-      initialRouteName="Splash"
+      initialRouteName="Main"
       headerMode="float"
       screenOptions={{
         cardOverlayEnabled: true,
-        cardStyle: {},
+        cardStyle: { backgroundColor: Colors.screenBackgroundColor },
         headerStyle: {
           backgroundColor: Colors.primaryColor,
-          paddingTop: Dimens.statusBarHeight,
-          height: __ANDROID__ ? Dimens.navBarHeight + Dimens.statusBarHeight : Dimens.navBarHeight,
+          height: Dimens.navBarHeight + Dimens.statusBarHeight,
+          elevation: 0,
         },
       }}
     >

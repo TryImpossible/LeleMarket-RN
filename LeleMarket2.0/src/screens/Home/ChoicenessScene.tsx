@@ -12,13 +12,14 @@ import {
   MidNavBean,
   CustomizationBean,
   GoodsBean,
-} from 'src/models/homeModel';
+} from '@src/models/homeModel';
 import { PagedSectionList, PullDownStatus, Carousel, Button, WebImage } from '@components';
 
 const styles = StyleSheet.create({
   bannerImage: {
     width: __WIDTH__,
-    aspectRatio: 2.25,
+    height: __WIDTH__ / 2.25,
+    // aspectRatio: 2.25, // web不支持
   },
   bannerPagination: {
     position: 'absolute',
@@ -123,7 +124,12 @@ const HandPickComponent: React.FC<{ data: HandpickBean[] }> = ({ data }) => {
         return (
           <WebImage
             key={String(index)}
-            style={{ width: __WIDTH__, aspectRatio: 2.7, borderRadius: toDP(12) }}
+            style={{
+              width: __WIDTH__,
+              height: __WIDTH__ / 2.7,
+              //  aspectRatio: 2.7, //web不支持
+              borderRadius: toDP(12),
+            }}
             uri={item.imgUrl}
           />
         );
@@ -170,12 +176,16 @@ const CustomizationComponent: React.FC<{ data: CustomizationBean }> = ({ data })
   const { imgUrl, goods = [] } = data;
   return (
     <View style={{ backgroundColor: Colors.white }}>
-      <WebImage style={{ width: __WIDTH__, aspectRatio: 2.2 }} uri={imgUrl} />
+      <WebImage style={{ width: __WIDTH__, height: __WIDTH__ / 2.2 }} uri={imgUrl} />
       <View style={{ flexDirection: 'row' }}>
         {goods.slice(0, 3).map((item: GoodsBean, index: number) => {
           return (
             <View key={String(index)} style={{ flex: 1, alignItems: 'center' }}>
-              <WebImage style={{ width: __WIDTH__ / 3, aspectRatio: 1 }} uri={item.imgUrl} resizeMode="contain" />
+              <WebImage
+                style={{ width: __WIDTH__ / 3, height: __WIDTH__ / 3, backgroundColor: Colors.white }}
+                uri={item.imgUrl}
+                resizeMode="contain"
+              />
               <Text
                 numberOfLines={1}
                 style={{

@@ -1,5 +1,15 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, TextStyle, StyleProp, Image, ViewStyle, ImageStyle, View } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  TextStyle,
+  StyleProp,
+  Image,
+  ViewStyle,
+  ImageStyle,
+  View,
+} from 'react-native';
 import Label from '../Label';
 import { ImageSourcePropType } from 'react-native';
 
@@ -32,7 +42,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export interface ListRowProps {
+export interface ListRowProps extends TouchableOpacityProps {
   style?: StyleProp<ViewStyle>;
   image?: ImageSourcePropType;
   imageStyle?: StyleProp<ImageStyle>;
@@ -44,7 +54,6 @@ export interface ListRowProps {
   iconStyle?: StyleProp<ImageStyle>;
   accessoryType?: 'none' | 'arrow' | 'custom';
   accessoryView?: React.ReactNode;
-  disabled?: boolean;
 }
 
 const ListRow: React.FC<ListRowProps> = ({
@@ -59,7 +68,9 @@ const ListRow: React.FC<ListRowProps> = ({
   iconStyle,
   accessoryType,
   accessoryView,
+  activeOpacity = Dimens.activeOpacity,
   disabled = true,
+  ...restProps
 }) => {
   const renderAccessoryView = () => {
     if (accessoryType === 'none') {
@@ -74,7 +85,7 @@ const ListRow: React.FC<ListRowProps> = ({
     return null;
   };
   return (
-    <TouchableOpacity style={[styles.listCell, style]} activeOpacity={0.7} disabled={disabled}>
+    <TouchableOpacity style={[styles.listCell, style]} activeOpacity={activeOpacity} disabled={disabled} {...restProps}>
       {image && <Image source={image} style={[styles.image, imageStyle]} />}
       <Label style={[styles.text, textStyle]}>{text}</Label>
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>

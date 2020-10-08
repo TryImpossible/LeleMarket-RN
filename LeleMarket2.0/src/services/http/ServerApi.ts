@@ -37,6 +37,6 @@ const ServerApi = {
    * 顶部导航，其它Tab栏，分页接口
    */
   topNavInfoByPage: (id: number, page: number) =>
-    HttpClient.get('/diyMall/index/topNavInfoByPage.do', undefined, { params: { id, page } }),
+    HttpClient.get('/diyMall/index/topNavInfoByPage.do', undefined, { params: { id, page }, showLoader: false }),
 };
 export default ServerApi;

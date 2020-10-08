@@ -2,13 +2,14 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import * as actions from '@src/redux/actions';
-import { RecommendGoodsBean } from 'src/models/homeModel';
+import { RecommendGoodsBean } from '@src/models/homeModel';
 import { WebImage, Divider, Card, Label, Button, PagedFlatList, PullDownStatus, PullUpStatus } from '@components';
 
 const styles = StyleSheet.create({
   icon: {
     width: (__WIDTH__ - toDP(8)) / 2,
-    aspectRatio: 1,
+    height: (__WIDTH__ - toDP(8)) / 2,
+    // aspectRatio: 1, // web不支持
   },
   tag: {
     alignSelf: 'flex-start',

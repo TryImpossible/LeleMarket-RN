@@ -11,7 +11,7 @@ import {
   ImageRequireSource,
 } from 'react-native';
 import IMAGES from '@resources/images';
-// import NavigationService from '@navigators/NavigationService';
+import { goBack } from '@navigators/NavigationService';
 
 export interface NavBarProps {
   style?: StyleProp<ViewStyle>;
@@ -90,7 +90,7 @@ const NavBar: React.FC<NavBarProps> = ({
                 if (onBackPress) {
                   onBackPress();
                 } else {
-                  // NavigationService.goBack();
+                  goBack();
                 }
               }}
             >
