@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, StatusBar, ImageBackground, Image, View, SectionList, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -44,10 +45,10 @@ const Mine: React.FC<{}> = () => {
   );
 
   const indexData: MineIndexState = useSelector((state: State) => state.mine.indexData);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(actions.mineIndexData());
-  }, [dispatch]);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(actions.mineIndexData());
+  // }, [dispatch]);
 
   const ListHeaderComponent = useCallback(() => {
     return (
