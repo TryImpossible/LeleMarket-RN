@@ -103,7 +103,7 @@ const Tabs: React.FC<TabBarProps> = ({
   tabMode,
   initialIndex,
   indicatorMode,
-  indicatorWidthRatio,
+  indicatorWidthRatio = 1,
 }) => {
   const indexValue = useRef(new Animated.Value(0)).current;
   const indicatorWidthValue = useRef(new Animated.Value(0)).current;
@@ -324,7 +324,6 @@ Tabs.defaultProps = {
   bounces: true,
   scrollEnabled: true,
   indicatorMode: 'tab',
-  indicatorWidthRatio: 1,
   tabMode: 'fixed',
 };
 

@@ -1,0 +1,10 @@
+- Carousel 添加分页器
+- CountDown 待完成
+- KeyboardAvoidingScrollView 待完成
+- OverlayPopView，customBounds 待更新
+- Picker 组件
+- ProgressBar 组件
+- SegmentedBar 组件
+- Toast 组件全局注入
+- WebImage 组件默认视图的处理
+- Wheel 组件 Bug 修复

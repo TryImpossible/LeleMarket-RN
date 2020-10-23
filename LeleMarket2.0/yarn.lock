@@ -9522,7 +9522,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fprop-types%2Fdownload%2Fprop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
@@ -9739,6 +9739,18 @@ react-native-iphone-x-helper@^1.2.1:
   resolved "https://registry.npm.taobao.org/react-native-iphone-x-helper/download/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha1-ZF4v+7tJ6AhEu0y740oSb9oeZ3I=
 
+react-native-motion@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npm.taobao.org/react-native-motion/download/react-native-motion-1.0.5.tgz#4132abd74674c8eee0e170c1e1c358fee6564dc3"
+  integrity sha1-QTKr10Z0yO7g4XDB4cNY/uZWTcM=
+  dependencies:
+    prop-types "^15.5.10"
+
+react-native-read-more-text@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npm.taobao.org/react-native-read-more-text/download/react-native-read-more-text-1.1.2.tgz#3f64aee61ec4d3109437f4125f10e49eccdee65a"
+  integrity sha1-P2Su5h7E0xCUN/QSXxDknsze5lo=
+
 react-native-reanimated@^1.13.1:
   version "1.13.1"
   resolved "https://registry.npm.taobao.org/react-native-reanimated/download/react-native-reanimated-1.13.1.tgz#c370c32cc4d447ae896cb029bb9c6a2f7608c5b4"
@@ -9755,6 +9767,11 @@ react-native-screens@^2.11.0:
   version "2.11.0"
   resolved "https://registry.npm.taobao.org/react-native-screens/download/react-native-screens-2.11.0.tgz?cache=0&sync_timestamp=1600251912806&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-screens%2Fdownload%2Freact-native-screens-2.11.0.tgz#34b30b07c2d04aa100cba984b944b303bfa43ea6"
   integrity sha1-NLMLB8LQSqEAy6mEuUSzA7+kPqY=
+
+react-native-shared-element@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.npm.taobao.org/react-native-shared-element/download/react-native-shared-element-0.7.0.tgz#c5e02eb372f6e38e48eb1030fd59be8f3d8c7a1f"
+  integrity sha1-xeAus3L2445I6xAw/Vm+jz2Meh8=
 
 react-native-svg-uri@^1.2.3:
   version "1.2.3"

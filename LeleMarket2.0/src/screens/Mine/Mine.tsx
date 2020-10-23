@@ -54,7 +54,7 @@ const Mine: React.FC<{}> = () => {
       <ImageBackground style={{ width: __WIDTH__, height: __WIDTH__ / 1.8 }} source={IMAGES.bg_mine_header}>
         <View style={styles.loginLabelBox}>
           <Image
-            style={{ width: toDP(54), height: toDP(54), borderRadius: toDP(27) }}
+            style={{ width: toDP(56), height: toDP(56), borderRadius: toDP(28) }}
             source={IMAGES.ic_mine_user_default_header}
             resizeMode="contain"
           />
